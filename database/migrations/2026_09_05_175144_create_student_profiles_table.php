@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('zip_code', 8)->nullable();
             $table->string('emergency_contact',150)->nullable();
             $table->string('emergency_phone',11)->nullable();
-            $table->string('notes',255);
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

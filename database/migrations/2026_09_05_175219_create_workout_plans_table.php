@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('workout_plans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id') ->constrained('student_profiles') ->restrictOnDelete();
+            $table->foreignId('teacher_id') ->constrained('users') ->restrictOnDelete();
+            $table->string('name', 150);
+            $table->text('description') ->nullable();
+            $table->date('start_date');
+            $table->date('end_date') ->nullable();
+            $table->string('status', 20);
             $table->timestamps();
         });
     }

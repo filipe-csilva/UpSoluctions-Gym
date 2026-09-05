@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string();
-            $table->id();
-            $table->id();
-            $table->id();
+            $table->string('name', 100);
+            $table->text('description')->nullable();
+            $table->unsignedTinyInteger('duration_months');
+            $table->decimal('price', 10, 2);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

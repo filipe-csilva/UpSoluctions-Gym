@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('financial_transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('enrollment_id') ->constrained('enrollments') ->restrictOnDelete();
+            $table->foreignId('student_id') ->constrained('student_profiles') ->restrictOnDelete();
+            $table->foreignId('unit_id') ->constrained('units') ->restrictOnDelete();
+            $table->string('description', 255);
+            $table->decimal('amount', 10, 2);
+            $table->date('due_date');
+            $table->dateTime('paid_at')->nullable();
+            $table->string('status', 20);
+            $table->string('payment_method', 30)->nullable();
+            $table->string('transaction_type', 20);
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

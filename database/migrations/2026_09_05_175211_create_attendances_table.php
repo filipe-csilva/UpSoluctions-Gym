@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id') ->constrained('student_profiles') ->restrictOnDelete();
+            $table->foreignId('unit_id') ->constrained('units') ->restrictOnDelete();
+            $table->foreignId('registered_by') ->constrained('users') ->restrictOnDelete();
+            $table->date('date');
+            $table->time('entry_time');
+            $table->time('exit_time') ->nullable();
+            $table->string('type', 20);
+            $table->text('notes') ->nullable();
             $table->timestamps();
         });
     }

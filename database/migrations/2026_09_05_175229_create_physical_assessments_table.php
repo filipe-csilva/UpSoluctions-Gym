@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('physical_assessments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id') ->constrained('student_profiles') ->restrictOnDelete();
+            $table->foreignId('teacher_id') ->constrained('users') ->restrictOnDelete();
+            $table->date('assessment_date');
+            $table->decimal('height', 5, 2);
+            $table->decimal('weight', 6, 2);
+            $table->decimal('body_fat', 5, 2) ->nullable();
+            $table->decimal('muscle_mass', 6, 2) ->nullable();
+            $table->decimal('bmi', 5, 2) ->nullable();
+            $table->decimal('waist', 6, 2) ->nullable();
+            $table->decimal('abdomen', 6, 2) ->nullable();
+            $table->decimal('hip', 6, 2) ->nullable();
+            $table->decimal('chest', 6, 2) ->nullable();
+            $table->decimal('arm', 6, 2) ->nullable();
+            $table->decimal('thigh', 6, 2) ->nullable();
+            $table->text('notes') ->nullable();
             $table->timestamps();
         });
     }

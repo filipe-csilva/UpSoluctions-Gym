@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('unit_id') ->nullable() ->constrained('units') ->nullOnDelete(); $table->foreignId('created_by') ->constrained('users') ->restrictOnDelete();
+            $table->string('title', 150);
+            $table->text('message');
+            $table->string('target_role', 20) ->nullable();
+            $table->dateTime('start_at') ->nullable();
+            $table->dateTime('end_at') ->nullable();
+            $table->boolean('active') ->default(true);
             $table->timestamps();
         });
     }
