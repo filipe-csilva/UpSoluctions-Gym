@@ -1,538 +1,540 @@
 # 🏋️ UpSoluctions Gym
 
-Sistema completo de **gerenciamento de academias**, desenvolvido para centralizar a administração de alunos, unidades, matrículas, planos, treinos, pagamentos e demais processos relacionados à gestão de uma academia.
+<p align="center">
+  <strong>Sistema completo de gestão para academias e centros de treinamento.</strong>
+</p>
 
-O **UpSoluctions Gym** está sendo desenvolvido com uma arquitetura modular, permitindo sua evolução gradual desde um sistema administrativo básico até uma plataforma completa para gerenciamento de múltiplas unidades.
+<p align="center">
+  <a href="#-sobre-o-projeto">Sobre</a> •
+  <a href="#-funcionalidades">Funcionalidades</a> •
+  <a href="#-roadmap">Roadmap</a> •
+  <a href="#-arquitetura">Arquitetura</a> •
+  <a href="#-instalação">Instalação</a>
+</p>
 
-> 🚧 **Status:** Em desenvolvimento
+<p align="center">
+
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php\&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel\&logoColor=white)
+![Breeze](https://img.shields.io/badge/Laravel%20Breeze-2.x-FF2D20?logo=laravel\&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite\&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind%20CSS-3-06B6D4?logo=tailwindcss\&logoColor=white)
+![Alpine.js](https://img.shields.io/badge/Alpine.js-3-8BC0D0?logo=alpinedotjs\&logoColor=white)
+![Pest](https://img.shields.io/badge/Pest-5-000000?logo=pest\&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+</p>
 
 ---
 
-## 📋 Sobre o Projeto
+## 📌 Sobre o Projeto
 
-O **UpSoluctions Gym** tem como objetivo fornecer uma solução para academias que necessitam controlar suas operações administrativas e oferecer aos alunos acesso às suas próprias informações.
+O **UpSoluctions Gym** é uma plataforma web para **gerenciamento completo de academias**, desenvolvida com foco em organização, escalabilidade, segurança e facilidade de utilização.
 
-A plataforma será estruturada principalmente em dois grandes perfis:
+O sistema tem como objetivo centralizar os principais processos de uma academia em uma única aplicação:
 
-* 👨‍💼 **Administrador**
-* 🏋️ **Aluno**
-
-O sistema também foi planejado para suportar a expansão para outros perfis, como:
-
-* 👨‍🏫 Professor / Personal Trainer
+* 👥 Gestão de alunos
+* 🏢 Gestão de unidades
+* 📋 Matrículas
+* 💳 Planos
 * 💰 Financeiro
-* 👨‍💻 Administrador do sistema
-* 🏢 Gerente de unidade
+* 🏋️ Fichas de treino
+* 📈 Avaliações e evolução
+* 📊 Dashboards
+* 📑 Relatórios
+* 🔔 Notificações
+* 🔐 Controle de acesso
+
+O projeto está sendo desenvolvido de forma incremental, começando pela fundação da aplicação e evoluindo para uma solução completa de gerenciamento.
 
 ---
 
-# 🎯 Objetivos
+# 🎯 Visão do Produto
 
-O projeto tem como principais objetivos:
+A proposta do UpSoluctions Gym é transformar processos que normalmente são realizados de forma descentralizada em uma plataforma integrada.
 
-* Centralizar a administração da academia.
-* Controlar alunos e matrículas.
-* Gerenciar planos e mensalidades.
-* Controlar pagamentos e inadimplência.
-* Gerenciar múltiplas unidades.
-* Criar e administrar fichas de treino.
-* Permitir que alunos acompanhem seus treinos.
-* Registrar evolução dos alunos.
-* Disponibilizar dashboards administrativos.
-* Gerar relatórios gerenciais.
-* Criar uma estrutura preparada para crescimento.
+```text
+                    ┌──────────────────────┐
+                    │   UpSoluctions Gym   │
+                    └───────────┬──────────┘
+                                │
+          ┌─────────────────────┼─────────────────────┐
+          │                     │                     │
+          ▼                     ▼                     ▼
+    👨‍💼 Administração       🏋️ Aluno             👨‍🏫 Professor
+          │                     │                     │
+          ▼                     ▼                     ▼
+      Dashboard              Treinos              Fichas
+      Alunos                 Plano                Exercícios
+      Matrículas             Financeiro           Evolução
+      Financeiro             Evolução             Alunos
+      Unidades
+      Relatórios
+```
 
 ---
 
-# 👥 Perfis do Sistema
+# 💡 Problema
 
-## 👨‍💼 Administrador
+Academias frequentemente precisam controlar diversas informações simultaneamente:
 
-O administrador terá acesso aos principais recursos administrativos da plataforma.
+```text
+Alunos
+   ↓
+Matrículas
+   ↓
+Planos
+   ↓
+Mensalidades
+   ↓
+Pagamentos
+   ↓
+Treinos
+   ↓
+Avaliações
+   ↓
+Evolução
+```
+
+Quando essas informações estão espalhadas em planilhas, sistemas diferentes ou processos manuais, aumenta a possibilidade de:
+
+* Dados duplicados
+* Informações desatualizadas
+* Falhas de comunicação
+* Perda de histórico
+* Dificuldade para gerar relatórios
+* Falta de controle financeiro
+
+O UpSoluctions Gym busca centralizar esse processo.
+
+---
+
+# 🧩 Principais Módulos
+
+## 👨‍💼 Administração
+
+Painel central para gerenciamento da academia.
 
 ### Dashboard
 
-* Quantidade de alunos ativos.
-* Quantidade de alunos inativos.
-* Novas matrículas.
-* Matrículas próximas do vencimento.
-* Mensalidades pendentes.
-* Receita mensal.
-* Inadimplência.
-* Indicadores por unidade.
-* Indicadores de crescimento.
+Indicadores planejados:
 
-### Gestão de Alunos
-
-* Cadastro de alunos.
-* Edição de dados pessoais.
-* Consulta de alunos.
-* Ativação e inativação.
-* Histórico do aluno.
-* Documentos.
-* Dados de contato.
-* Informações físicas.
-* Histórico de matrículas.
-
-### Matrículas
-
-* Criar matrícula.
-* Renovar matrícula.
-* Cancelar matrícula.
-* Suspender matrícula.
-* Transferir matrícula entre unidades.
-* Histórico de matrículas.
-* Controle de vencimento.
-* Status da matrícula.
-
-### Planos
-
-* Cadastro de planos.
-* Nome do plano.
-* Descrição.
-* Valor.
-* Duração.
-* Periodicidade.
-* Benefícios.
-* Limitações.
-* Status.
-
-Exemplos:
-
-* Plano Mensal
-* Plano Trimestral
-* Plano Semestral
-* Plano Anual
-
-### Financeiro
-
-* Mensalidades.
-* Pagamentos.
-* Pendências.
-* Inadimplência.
-* Vencimentos.
-* Histórico financeiro.
-* Formas de pagamento.
-* Controle de receitas.
-* Relatórios financeiros.
-
-### Relatórios
-
-* Alunos ativos.
-* Alunos inativos.
-* Matrículas.
-* Cancelamentos.
-* Receita.
-* Inadimplência.
-* Pagamentos.
-* Crescimento de alunos.
-* Desempenho das unidades.
-
-### Gestão de Unidades
-
-O sistema será preparado para trabalhar com múltiplas unidades.
-
-Exemplo:
-
-```text
-Academia
-├── Unidade 01
-└── Unidade 02
-```
-
-Cada unidade poderá possuir:
-
-* Alunos.
-* Funcionários.
-* Professores.
-* Matrículas.
-* Planos.
-* Financeiro.
-* Treinos.
-* Indicadores próprios.
+* Total de alunos
+* Alunos ativos
+* Alunos inativos
+* Novos alunos
+* Matrículas
+* Matrículas vencendo
+* Cancelamentos
+* Receita mensal
+* Despesas
+* Inadimplência
 
 ---
 
-# 🏋️ Área do Aluno
+## 👥 Alunos
 
-Cada aluno terá acesso individual ao sistema.
+Gerenciamento completo dos alunos.
 
-### Login
+### Cadastro
 
-* Login.
-* Logout.
-* Recuperação de senha.
-* Verificação de e-mail.
-* Controle de sessão.
+* Nome
+* CPF
+* Data de nascimento
+* Telefone
+* E-mail
+* Endereço
+* Foto
+* Status
+* Unidade
 
-### Perfil
+### Histórico
 
-O aluno poderá visualizar e atualizar:
-
-* Nome.
-* E-mail.
-* Telefone.
-* Endereço.
-* Data de nascimento.
-* Dados pessoais.
-
-### Plano
-
-O aluno poderá consultar:
-
-* Plano atual.
-* Data de início.
-* Data de vencimento.
-* Status.
-* Valor.
-* Unidade vinculada.
-
-### Ficha de Treino
-
-O aluno poderá visualizar sua ficha de treino.
-
-Exemplo:
-
-```text
-Treino A
-├── Supino reto
-│   ├── 4 séries
-│   ├── 10 repetições
-│   └── 30kg
-│
-├── Crucifixo
-│   ├── 3 séries
-│   ├── 12 repetições
-│   └── 15kg
-│
-└── Tríceps pulley
-    ├── 3 séries
-    ├── 12 repetições
-    └── 20kg
-```
-
-### Evolução
-
-Possíveis recursos:
-
-* Peso.
-* Altura.
-* IMC.
-* Medidas corporais.
-* Avaliações físicas.
-* Histórico de evolução.
-* Fotos de evolução.
-* Gráficos.
+* Matrículas
+* Planos
+* Pagamentos
+* Treinos
+* Avaliações
+* Evolução
 
 ---
 
-# 👨‍🏫 Professor / Personal Trainer
+# 🏢 Unidades
 
-Uma futura versão poderá disponibilizar um perfil específico para professores.
-
-### Recursos planejados
-
-* Visualizar alunos.
-* Criar fichas.
-* Editar treinos.
-* Prescrever exercícios.
-* Definir séries.
-* Definir repetições.
-* Definir carga.
-* Definir descanso.
-* Registrar observações.
-* Acompanhar evolução.
-
----
-
-# 🏢 Multiunidades
-
-O sistema foi planejado considerando academias que possuem mais de uma unidade.
-
-### Estrutura planejada
+Suporte a academias com múltiplas unidades.
 
 ```text
 Empresa
 │
 ├── Unidade 01
 │   ├── Alunos
+│   ├── Funcionários
 │   ├── Professores
 │   ├── Matrículas
 │   └── Financeiro
 │
 └── Unidade 02
     ├── Alunos
+    ├── Funcionários
     ├── Professores
     ├── Matrículas
     └── Financeiro
 ```
 
-O administrador poderá visualizar os dados de todas as unidades ou filtrar uma unidade específica.
+### Recursos
+
+* Cadastro de unidade
+* Endereço
+* Telefone
+* Horário de funcionamento
+* Responsável
+* Status
+* Usuários vinculados
 
 ---
 
-# 🗺️ Roadmap
+# 💳 Planos
 
-## 🟢 Fase 01 — Fundação do Projeto
+Gerenciamento dos planos oferecidos pela academia.
 
-* ✅ Criar projeto Laravel
-* ✅ Configurar Git
-* ✅ Criar repositório GitHub
-* ✅ Configurar Laravel Breeze
-* ✅ Configurar autenticação
-* ✅ Configurar Vite
-* ✅ Configurar Tailwind CSS
-* ✅ Criar estrutura inicial do dashboard
-* 🚧 Configurar identidade visual
-* [ ] Configurar layout principal
-* [ ] Criar menu lateral
-* [ ] Criar navegação responsiva
+Exemplos:
 
----
+```text
+Plano Mensal
+Plano Trimestral
+Plano Semestral
+Plano Anual
+```
 
-## 🟡 Fase 02 — Usuários e Autenticação
+Cada plano poderá possuir:
 
-* ✅ Login
-* ✅ Logout
-* ✅ Registro
-* ✅ Recuperação de senha
-* ✅ Verificação de e-mail
-* ✅ Perfil do usuário
-* [ ] Sistema de permissões
-* [ ] Roles
-* [ ] Policies
-* [ ] Controle de acesso por perfil
-
-### Perfis
-
-* [ ] Administrador
-* [ ] Gerente
-* [ ] Professor
-* [ ] Aluno
-* [ ] Funcionário
+* Nome
+* Descrição
+* Valor
+* Duração
+* Periodicidade
+* Benefícios
+* Status
+* Unidades disponíveis
 
 ---
 
-## 🟡 Fase 03 — Gestão de Unidades
+# 📋 Matrículas
 
-* [ ] Cadastro de unidades
-* [ ] Edição de unidades
-* [ ] Inativação de unidades
-* [ ] Endereço
-* [ ] Telefone
-* [ ] Horários de funcionamento
-* [ ] Responsável
-* [ ] Controle de usuários por unidade
+Controle completo do ciclo de matrícula.
 
----
+```text
+Cadastro
+   ↓
+Matrícula
+   ↓
+Ativa
+   ↓
+Renovação
+   ↓
+Encerramento
+```
 
-## 🟡 Fase 04 — Gestão de Alunos
+### Operações
 
-* [ ] CRUD de alunos
-* [ ] Dados pessoais
-* [ ] CPF
-* [ ] Data de nascimento
-* [ ] Telefone
-* [ ] E-mail
-* [ ] Endereço
-* [ ] Foto
-* [ ] Status
-* [ ] Histórico
-* [ ] Busca avançada
-* [ ] Filtros
-* [ ] Paginação
+* Nova matrícula
+* Renovação
+* Cancelamento
+* Suspensão
+* Transferência
+* Alteração de plano
+* Histórico
+* Controle de vencimento
 
 ---
 
-## 🟡 Fase 05 — Planos
+# 💰 Financeiro
 
-* [ ] CRUD de planos
-* [ ] Valor
-* [ ] Duração
-* [ ] Periodicidade
-* [ ] Benefícios
-* [ ] Status
-* [ ] Associação com unidades
-* [ ] Histórico de alterações
+Módulo responsável pelo controle financeiro da academia.
 
----
+### Recursos
 
-## 🟠 Fase 06 — Matrículas
+* Mensalidades
+* Pagamentos
+* Vencimentos
+* Pendências
+* Inadimplência
+* Receitas
+* Despesas
+* Fluxo financeiro
+* Histórico financeiro
 
-* [ ] Nova matrícula
-* [ ] Renovação
-* [ ] Cancelamento
-* [ ] Suspensão
-* [ ] Transferência
-* [ ] Histórico
-* [ ] Controle de vencimento
-* [ ] Status automático
-* [ ] Alertas de vencimento
+### Formas de pagamento
 
----
+Planejado:
 
-## 🟠 Fase 07 — Financeiro
+* Dinheiro
+* PIX
+* Cartão
+* Transferência
+* Outros
 
-* [ ] Mensalidades
-* [ ] Pagamentos
-* [ ] Pendências
-* [ ] Inadimplência
-* [ ] Formas de pagamento
-* [ ] Controle de vencimentos
-* [ ] Histórico financeiro
-* [ ] Receitas
-* [ ] Despesas
-* [ ] Fluxo financeiro
+### Futuras integrações
 
-### Futuramente
-
-* [ ] PIX
-* [ ] Cartão
-* [ ] Integração com gateway de pagamento
-* [ ] Emissão de comprovantes
-* [ ] Notificações automáticas
+* Gateway de pagamento
+* PIX automático
+* Cobrança recorrente
+* Notificações de vencimento
 
 ---
 
-## 🟠 Fase 08 — Fichas de Treino
+# 🏋️ Treinos
 
-* [ ] Cadastro de exercícios
-* [ ] Categorias
-* [ ] Grupos musculares
-* [ ] Equipamentos
-* [ ] Exercícios
-* [ ] Fichas
-* [ ] Treinos A/B/C/D
-* [ ] Séries
-* [ ] Repetições
-* [ ] Carga
-* [ ] Descanso
-* [ ] Observações
+Módulo responsável pelo gerenciamento das fichas de treinamento.
 
----
+## Exercícios
 
-## 🔵 Fase 09 — Área do Aluno
+Cadastro de:
 
-* [ ] Dashboard do aluno
-* [ ] Perfil
-* [ ] Plano atual
-* [ ] Vencimento
-* [ ] Situação financeira
-* [ ] Ficha de treino
-* [ ] Histórico de treinos
-* [ ] Evolução
-* [ ] Avaliação física
+* Exercício
+* Grupo muscular
+* Equipamento
+* Descrição
+* Instruções
+* Vídeo/imagem
 
----
+## Ficha
 
-## 🔵 Fase 10 — Avaliação Física
-
-* [ ] Cadastro de avaliação
-* [ ] Peso
-* [ ] Altura
-* [ ] IMC
-* [ ] Circunferências
-* [ ] Percentual de gordura
-* [ ] Massa muscular
-* [ ] Histórico
-* [ ] Gráficos de evolução
+```text
+Ficha A
+│
+├── Supino reto
+│   ├── 4 séries
+│   ├── 10 repetições
+│   ├── 30 kg
+│   └── 60s descanso
+│
+├── Crucifixo
+│   ├── 3 séries
+│   └── 12 repetições
+│
+└── Tríceps pulley
+    ├── 3 séries
+    └── 12 repetições
+```
 
 ---
 
-## 🔵 Fase 11 — Dashboard Administrativo
+# 👨‍🏫 Professor
 
-### Indicadores
+Perfil destinado aos profissionais responsáveis pelo acompanhamento dos alunos.
 
-* [ ] Total de alunos
-* [ ] Alunos ativos
-* [ ] Alunos inativos
-* [ ] Novas matrículas
-* [ ] Cancelamentos
-* [ ] Matrículas vencendo
-* [ ] Receita mensal
-* [ ] Inadimplência
-* [ ] Comparativo entre unidades
+### Recursos planejados
 
----
-
-## 🟣 Fase 12 — Relatórios
-
-* [ ] Relatório de alunos
-* [ ] Relatório de matrículas
-* [ ] Relatório financeiro
-* [ ] Relatório de inadimplência
-* [ ] Relatório de pagamentos
-* [ ] Relatório de cancelamentos
-* [ ] Relatório de evolução
-* [ ] Relatório por unidade
-* [ ] Exportação PDF
-* [ ] Exportação Excel
+* Visualizar alunos
+* Criar fichas
+* Editar treinos
+* Prescrever exercícios
+* Definir séries
+* Definir repetições
+* Definir carga
+* Definir descanso
+* Registrar observações
+* Acompanhar evolução
 
 ---
 
-## 🟣 Fase 13 — Notificações
+# 🏃 Área do Aluno
 
-* [ ] E-mail de matrícula
-* [ ] Aviso de vencimento
-* [ ] Aviso de pagamento
-* [ ] Aviso de inadimplência
-* [ ] Recuperação de senha
-* [ ] Notificações internas
+O aluno terá acesso à sua própria área dentro da plataforma.
 
-### Futuramente
+### Dashboard
 
-* [ ] WhatsApp
-* [ ] Push Notifications
+```text
+Olá, João! 👋
 
----
+Plano
+━━━━━━━━━━━━━━━━━━
+Plano Anual
 
-## 🔴 Fase 14 — Segurança
+Vencimento
+━━━━━━━━━━━━━━━━━━
+15/12/2026
 
-* [ ] Policies
-* [ ] Gates
-* [ ] Controle de permissões
-* [ ] Proteção CSRF
-* [ ] Validação de dados
-* [ ] Rate limiting
-* [ ] Logs
-* [ ] Auditoria
-* [ ] Controle de sessões
-* [ ] Backup do banco
+Treino de hoje
+━━━━━━━━━━━━━━━━━━
+Treino A
 
----
+Situação
+━━━━━━━━━━━━━━━━━━
+✓ Matrícula ativa
+```
 
-## 🔴 Fase 15 — Testes
+### Recursos
 
-### Testes Unitários
-
-* [ ] Models
-* [ ] Services
-* [ ] Regras de negócio
-
-### Testes de Feature
-
-* [ ] Autenticação
-* [ ] Alunos
-* [ ] Matrículas
-* [ ] Planos
-* [ ] Financeiro
-* [ ] Treinos
-
-### Testes de Interface
-
-* [ ] Login
-* [ ] Dashboard
-* [ ] Cadastro
-* [ ] Área do aluno
+* Perfil
+* Plano
+* Matrícula
+* Vencimento
+* Situação financeira
+* Ficha de treino
+* Exercícios
+* Histórico
+* Avaliações
+* Evolução
 
 ---
 
-# 🧱 Arquitetura
+# 📈 Avaliação Física
 
-O projeto utiliza o padrão arquitetural fornecido pelo Laravel, com separação entre:
+Módulo para acompanhar a evolução física do aluno.
+
+### Dados
+
+* Peso
+* Altura
+* IMC
+* Percentual de gordura
+* Massa muscular
+* Circunferências
+* Avaliação física
+* Observações
+
+### Evolução
+
+Possibilidade de visualizar gráficos:
+
+```text
+Peso
+
+80kg ┤●
+78kg ┤  ●
+76kg ┤    ●
+74kg ┤       ●
+72kg ┤          ●
+     └──────────────
+       Jan Fev Mar Abr
+```
+
+---
+
+# 📊 Relatórios
+
+Relatórios administrativos planejados:
+
+### Alunos
+
+* Alunos ativos
+* Alunos inativos
+* Novos alunos
+* Cancelamentos
+
+### Financeiro
+
+* Receitas
+* Despesas
+* Pagamentos
+* Inadimplência
+* Mensalidades
+
+### Matrículas
+
+* Matrículas ativas
+* Matrículas vencidas
+* Renovações
+* Cancelamentos
+
+### Unidades
+
+* Comparativo entre unidades
+* Quantidade de alunos
+* Receita por unidade
+* Matrículas por unidade
+
+### Exportação
+
+Planejado:
+
+* PDF
+* Excel
+* CSV
+
+---
+
+# 🔔 Notificações
+
+Sistema de notificações para manter os usuários informados.
+
+### Aluno
+
+* Matrícula realizada
+* Pagamento confirmado
+* Mensalidade próxima do vencimento
+* Mensalidade vencida
+* Nova ficha de treino
+
+### Administração
+
+* Matrículas vencendo
+* Pagamentos pendentes
+* Inadimplência
+* Novos alunos
+
+### Futuro
+
+* E-mail
+* WhatsApp
+* Push Notification
+
+---
+
+# 🔐 Segurança
+
+O projeto será desenvolvido considerando boas práticas de segurança.
+
+### Controle de acesso
+
+```text
+Administrador
+      │
+      ├── Todas as unidades
+      ├── Todos os alunos
+      ├── Financeiro
+      └── Relatórios
+
+Gerente
+      │
+      └── Unidade atribuída
+
+Professor
+      │
+      └── Alunos atribuídos
+
+Aluno
+      │
+      └── Próprios dados
+```
+
+### Recursos planejados
+
+* Authentication
+* Authorization
+* Roles
+* Permissions
+* Gates
+* Policies
+* Validação
+* CSRF
+* Rate Limiting
+* Logs
+* Auditoria
+* Controle de sessão
+
+---
+
+# 🏗️ Arquitetura
+
+A aplicação seguirá uma arquitetura organizada por responsabilidades.
 
 ```text
 app/
+│
 ├── Http/
 │   ├── Controllers/
 │   ├── Middleware/
@@ -542,68 +544,133 @@ app/
 │
 ├── Services/
 │
-└── Policies/
-
-database/
-├── factories/
-├── migrations/
-└── seeders/
-
-resources/
-├── css/
-├── js/
-└── views/
-
-routes/
-├── web.php
-└── auth.php
-
-tests/
-├── Feature/
-└── Unit/
+├── Repositories/
+│
+├── Policies/
+│
+└── Providers/
 ```
 
-A estrutura poderá ser expandida conforme os módulos do sistema forem implementados.
+### Camadas
+
+```text
+Request
+   ↓
+Controller
+   ↓
+Service
+   ↓
+Repository / Eloquent
+   ↓
+Database
+```
+
+### Responsabilidades
+
+**Controller**
+
+Responsável pela entrada e saída das requisições.
+
+**Form Request**
+
+Responsável pela validação dos dados.
+
+**Service**
+
+Responsável pelas regras de negócio.
+
+**Repository**
+
+Responsável pelo acesso e abstração dos dados quando necessário.
+
+**Model**
+
+Representação das entidades do sistema.
+
+**Policy**
+
+Controle de autorização.
 
 ---
 
-# 🛠️ Tecnologias
+# 🗃️ Modelo de Domínio
+
+A estrutura inicial do domínio será construída em torno das seguintes entidades:
+
+```text
+                    ┌──────────────┐
+                    │   Unidade    │
+                    └──────┬───────┘
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+              ▼            ▼            ▼
+           Alunos      Funcionários   Planos
+              │                         │
+              └──────────┬──────────────┘
+                         ▼
+                    Matrículas
+                         │
+                         ▼
+                     Financeiro
+
+Alunos
+   │
+   ├──────────► Fichas
+   │              │
+   │              ▼
+   │          Exercícios
+   │
+   └──────────► Avaliações
+                  │
+                  ▼
+               Evolução
+```
+
+---
+
+# 🛠️ Stack Tecnológica
 
 ## Backend
 
-* PHP 8.3+
-* Laravel 13
-* Laravel Breeze
-* Laravel Tinker
+* **PHP 8.3+**
+* **Laravel 13**
+* **Laravel Breeze**
+* **Laravel Tinker**
 
-O projeto atualmente declara PHP `^8.3` e Laravel `^13.17` no `composer.json`.
+O repositório atualmente declara PHP `^8.3`, Laravel `^13.17` e Laravel Breeze `^2.4`.
 
 ## Frontend
 
 * Blade
 * Tailwind CSS
-* Vite
 * Alpine.js
+* Vite
 
-O `package.json` atual utiliza Vite e possui dependências relacionadas ao Tailwind CSS, Alpine.js e Laravel Vite Plugin.
+O projeto atualmente utiliza Vite, Tailwind CSS, Alpine.js e Laravel Vite Plugin.
+
+## Testes
+
+* Pest
+* PHPUnit
+
+O projeto já possui Pest e o plugin Laravel configurados como dependências de desenvolvimento.
 
 ## Banco de Dados
 
-Configurado inicialmente para:
+Planejado inicialmente:
 
 * MySQL
 
-A configuração de exemplo do projeto utiliza MySQL na porta `3306`, com banco `upsoluctions_gym`.
-
-### Futuramente
+Futuramente:
 
 * PostgreSQL
 
 ---
 
-# 💻 Requisitos
+# 📦 Requisitos
 
-Antes de iniciar o projeto, certifique-se de possuir:
+Antes de iniciar o projeto, instale:
 
 * PHP 8.3+
 * Composer
@@ -616,37 +683,43 @@ Antes de iniciar o projeto, certifique-se de possuir:
 
 # 🚀 Instalação
 
-Clone o projeto:
+## 1. Clone o projeto
 
 ```bash
 git clone https://github.com/filipe-csilva/UpSoluctions-Gym.git
 ```
 
-Entre na pasta:
-
 ```bash
 cd UpSoluctions-Gym
 ```
 
-Instale as dependências PHP:
+---
+
+## 2. Instale as dependências PHP
 
 ```bash
 composer install
 ```
 
-Copie o arquivo de ambiente:
+---
 
-```bash
-cp .env.example .env
-```
+## 3. Configure o ambiente
 
-No Windows PowerShell:
+Windows:
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Gere a chave da aplicação:
+Linux/macOS:
+
+```bash
+cp .env.example .env
+```
+
+---
+
+## 4. Gere a chave
 
 ```bash
 php artisan key:generate
@@ -654,9 +727,9 @@ php artisan key:generate
 
 ---
 
-# 🗄️ Configuração do Banco
+## 5. Configure o banco
 
-Configure o `.env`:
+Edite o arquivo `.env`:
 
 ```env
 DB_CONNECTION=mysql
@@ -673,41 +746,39 @@ Crie o banco:
 CREATE DATABASE upsoluctions_gym;
 ```
 
-Execute as migrations:
+---
+
+## 6. Execute as migrations
 
 ```bash
 php artisan migrate
 ```
 
-Se necessário, execute os seeders:
-
-```bash
-php artisan db:seed
-```
-
 ---
 
-# 📦 Instalação do Frontend
-
-Instale as dependências:
+## 7. Instale as dependências frontend
 
 ```bash
 npm install
 ```
 
-Execute o ambiente de desenvolvimento:
+---
 
-```bash
-npm run dev
-```
+## 8. Execute o projeto
 
-Em outro terminal:
+Terminal 1:
 
 ```bash
 php artisan serve
 ```
 
-O projeto poderá ser acessado em:
+Terminal 2:
+
+```bash
+npm run dev
+```
+
+Acesse:
 
 ```text
 http://localhost:8000
@@ -715,33 +786,21 @@ http://localhost:8000
 
 ---
 
-# ⚡ Executando o Projeto
+# ⚡ Ambiente de Desenvolvimento
 
-Para desenvolvimento, execute:
-
-```bash
-php artisan serve
-```
-
-e:
-
-```bash
-npm run dev
-```
-
-O projeto também possui scripts Composer preparados para executar simultaneamente o servidor Laravel, fila e Vite através do comando:
+O projeto possui um script para executar simultaneamente o servidor Laravel, fila e Vite:
 
 ```bash
 composer run dev
 ```
 
-Essa configuração já está presente no `composer.json`.
+Essa configuração já está definida no `composer.json`.
 
 ---
 
 # 🧪 Testes
 
-Execute os testes com:
+Executar os testes:
 
 ```bash
 php artisan test
@@ -753,219 +812,749 @@ Ou:
 composer run test
 ```
 
-O projeto utiliza **Pest** e o plugin Laravel para testes.
+---
+
+# 🧹 Code Style
+
+Para manter o padrão de código:
+
+```bash
+./vendor/bin/pint
+```
+
+No Windows:
+
+```powershell
+vendor\bin\pint
+```
 
 ---
 
-# 📊 Status do Desenvolvimento
+# 🗺️ Roadmap
 
-| Módulo            | Status                |
-| ----------------- | --------------------- |
-| Estrutura Laravel | 🟢 Concluído          |
-| Autenticação      | 🟢 Inicial            |
-| Perfil            | 🟢 Inicial            |
-| Dashboard         | 🟡 Inicial            |
-| Usuários          | 🟡 Em desenvolvimento |
-| Unidades          | ⚪ Planejado           |
-| Alunos            | ⚪ Planejado           |
-| Planos            | ⚪ Planejado           |
-| Matrículas        | ⚪ Planejado           |
-| Financeiro        | ⚪ Planejado           |
-| Treinos           | ⚪ Planejado           |
-| Área do aluno     | ⚪ Planejado           |
-| Avaliação física  | ⚪ Planejado           |
-| Relatórios        | ⚪ Planejado           |
-| Notificações      | ⚪ Planejado           |
-| Multiunidades     | ⚪ Planejado           |
-| Testes            | 🟡 Inicial            |
-| Produção          | ⚪ Futuro              |
+O desenvolvimento será dividido em fases.
+
+---
+
+## 🟢 Fase 01 — Fundação
+
+* [x] Criar projeto Laravel
+* [x] Configurar Git
+* [x] Criar repositório
+* [x] Configurar Laravel Breeze
+* [x] Configurar Vite
+* [x] Configurar Tailwind
+* [x] Configurar Alpine.js
+* [x] Configurar Pest
+* [ ] Definir identidade visual
+* [ ] Criar layout administrativo
+* [ ] Criar sidebar
+* [ ] Criar navbar
+* [ ] Criar componentes reutilizáveis
+
+---
+
+## 🟡 Fase 02 — Autenticação e Usuários
+
+* [x] Login
+* [x] Logout
+* [x] Registro
+* [x] Recuperação de senha
+* [x] Verificação de e-mail
+* [x] Perfil
+* [ ] Roles
+* [ ] Permissions
+* [ ] Policies
+* [ ] Controle por unidade
+* [ ] Controle por perfil
+
+---
+
+## 🟡 Fase 03 — Unidades
+
+* [ ] CRUD de unidades
+* [ ] Endereço
+* [ ] Telefone
+* [ ] Horário
+* [ ] Responsável
+* [ ] Status
+* [ ] Usuários por unidade
+
+---
+
+## 🟡 Fase 04 — Alunos
+
+* [ ] CRUD
+* [ ] Dados pessoais
+* [ ] Endereço
+* [ ] Documentos
+* [ ] Foto
+* [ ] Status
+* [ ] Histórico
+* [ ] Busca
+* [ ] Filtros
+* [ ] Paginação
+
+---
+
+## 🟡 Fase 05 — Planos
+
+* [ ] CRUD
+* [ ] Valores
+* [ ] Duração
+* [ ] Periodicidade
+* [ ] Benefícios
+* [ ] Status
+* [ ] Planos por unidade
+
+---
+
+## 🟠 Fase 06 — Matrículas
+
+* [ ] Criar matrícula
+* [ ] Renovar
+* [ ] Cancelar
+* [ ] Suspender
+* [ ] Transferir
+* [ ] Alterar plano
+* [ ] Histórico
+* [ ] Vencimento automático
+
+---
+
+## 🟠 Fase 07 — Financeiro
+
+* [ ] Mensalidades
+* [ ] Pagamentos
+* [ ] Pendências
+* [ ] Inadimplência
+* [ ] Receitas
+* [ ] Despesas
+* [ ] Fluxo de caixa
+* [ ] Histórico
+* [ ] Comprovantes
+
+---
+
+## 🟠 Fase 08 — Treinos
+
+* [ ] Exercícios
+* [ ] Grupos musculares
+* [ ] Equipamentos
+* [ ] Fichas
+* [ ] Séries
+* [ ] Repetições
+* [ ] Carga
+* [ ] Descanso
+* [ ] Observações
+
+---
+
+## 🔵 Fase 09 — Professor
+
+* [ ] Dashboard
+* [ ] Alunos
+* [ ] Fichas
+* [ ] Exercícios
+* [ ] Prescrição
+* [ ] Histórico
+* [ ] Evolução
+
+---
+
+## 🔵 Fase 10 — Área do Aluno
+
+* [ ] Dashboard
+* [ ] Perfil
+* [ ] Plano
+* [ ] Matrícula
+* [ ] Financeiro
+* [ ] Treinos
+* [ ] Histórico
+* [ ] Avaliações
+
+---
+
+## 🔵 Fase 11 — Avaliação Física
+
+* [ ] Avaliação
+* [ ] Peso
+* [ ] Altura
+* [ ] IMC
+* [ ] Gordura corporal
+* [ ] Massa muscular
+* [ ] Circunferências
+* [ ] Histórico
+* [ ] Gráficos
+
+---
+
+## 🟣 Fase 12 — Dashboard
+
+* [ ] KPIs
+* [ ] Gráficos
+* [ ] Alunos ativos
+* [ ] Novas matrículas
+* [ ] Receita
+* [ ] Inadimplência
+* [ ] Vencimentos
+* [ ] Comparativo de unidades
+
+---
+
+## 🟣 Fase 13 — Relatórios
+
+* [ ] Alunos
+* [ ] Matrículas
+* [ ] Financeiro
+* [ ] Inadimplência
+* [ ] Pagamentos
+* [ ] Cancelamentos
+* [ ] Avaliações
+* [ ] Unidades
+* [ ] PDF
+* [ ] Excel
+* [ ] CSV
+
+---
+
+## 🔴 Fase 14 — Notificações
+
+* [ ] Notificações internas
+* [ ] E-mail
+* [ ] Vencimentos
+* [ ] Pagamentos
+* [ ] Matrículas
+* [ ] Inadimplência
+* [ ] WhatsApp
+* [ ] Push
+
+---
+
+## 🔴 Fase 15 — Segurança
+
+* [ ] Roles
+* [ ] Permissions
+* [ ] Policies
+* [ ] Gates
+* [ ] Auditoria
+* [ ] Logs
+* [ ] Rate limiting
+* [ ] Backup
+* [ ] Controle de sessões
+
+---
+
+## 🔴 Fase 16 — Qualidade
+
+* [ ] Testes Unitários
+* [ ] Testes Feature
+* [ ] Testes de autenticação
+* [ ] Testes de regras de negócio
+* [ ] Testes de autorização
+* [ ] Testes de integração
+* [ ] Testes de interface
+
+---
+
+## 🚀 Fase 17 — Produção
+
+* [ ] Configuração de servidor
+* [ ] HTTPS
+* [ ] Banco de produção
+* [ ] Cache
+* [ ] Queue Worker
+* [ ] Scheduler
+* [ ] Logs
+* [ ] Backup automático
+* [ ] CI/CD
+* [ ] Monitoramento
+
+---
+
+# 📊 Status do Projeto
+
+| Módulo           | Status             |
+| ---------------- | ------------------ |
+| Fundação         | 🟢 Em andamento    |
+| Autenticação     | 🟢 Inicial         |
+| Usuários         | 🟡 Planejamento    |
+| Unidades         | ⚪ Planejado        |
+| Alunos           | ⚪ Planejado        |
+| Planos           | ⚪ Planejado        |
+| Matrículas       | ⚪ Planejado        |
+| Financeiro       | ⚪ Planejado        |
+| Treinos          | ⚪ Planejado        |
+| Professor        | ⚪ Planejado        |
+| Área do Aluno    | ⚪ Planejado        |
+| Avaliação Física | ⚪ Planejado        |
+| Dashboard        | 🟡 Inicial         |
+| Relatórios       | ⚪ Planejado        |
+| Notificações     | ⚪ Planejado        |
+| Segurança        | 🟡 Em planejamento |
+| Testes           | 🟡 Inicial         |
+| Produção         | ⚪ Futuro           |
 
 ### Legenda
 
-* 🟢 Concluído
-* 🟡 Em desenvolvimento
-* ⚪ Planejado
-* 🔴 Bloqueado
+🟢 Concluído / ativo
+🟡 Em desenvolvimento
+⚪ Planejado
+🔴 Bloqueado
 
 ---
 
-# 📁 Estrutura Atual
+# 🧭 Roadmap de Versões
 
-A estrutura atual do repositório já possui os principais diretórios do Laravel:
+Além das fases de desenvolvimento, o projeto será organizado em versões.
+
+## v0.1 — Foundation
+
+```text
+Laravel
++
+Breeze
++
+Vite
++
+Tailwind
++
+Autenticação
+```
+
+---
+
+## v0.2 — Gestão
+
+```text
+Usuários
++
+Unidades
++
+Alunos
++
+Planos
+```
+
+---
+
+## v0.3 — Matrículas
+
+```text
+Matrículas
++
+Renovações
++
+Cancelamentos
++
+Vencimentos
+```
+
+---
+
+## v0.4 — Financeiro
+
+```text
+Mensalidades
++
+Pagamentos
++
+Receitas
++
+Despesas
++
+Inadimplência
+```
+
+---
+
+## v0.5 — Treinos
+
+```text
+Exercícios
++
+Fichas
++
+Treinos
++
+Professores
+```
+
+---
+
+## v0.6 — Área do Aluno
+
+```text
+Dashboard
++
+Treinos
++
+Plano
++
+Financeiro
++
+Evolução
+```
+
+---
+
+## v0.7 — Multiunidades
+
+```text
+Unidade 01
+      +
+Unidade 02
+      +
+Gestão centralizada
+```
+
+---
+
+## v0.8 — Analytics
+
+```text
+Dashboards
++
+Gráficos
++
+Relatórios
++
+Indicadores
+```
+
+---
+
+## v0.9 — Automação
+
+```text
+Notificações
++
+E-mail
++
+WhatsApp
++
+Cobranças
+```
+
+---
+
+## v1.0 — Production Ready
+
+```text
+Segurança
++
+Testes
++
+Performance
++
+Backup
++
+CI/CD
++
+Monitoramento
+```
+
+---
+
+# 📁 Estrutura do Projeto
+
+Estrutura planejada:
 
 ```text
 UpSoluctions-Gym/
 │
 ├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   ├── Middleware/
+│   │   └── Requests/
+│   │
+│   ├── Models/
+│   ├── Services/
+│   ├── Repositories/
+│   ├── Policies/
+│   └── Providers/
+│
 ├── bootstrap/
+│
 ├── config/
+│
 ├── database/
+│   ├── factories/
+│   ├── migrations/
+│   └── seeders/
+│
 ├── public/
+│
 ├── resources/
+│   ├── css/
+│   ├── js/
+│   └── views/
+│
 ├── routes/
+│   ├── web.php
+│   └── auth.php
+│
 ├── storage/
+│
 ├── tests/
+│   ├── Feature/
+│   └── Unit/
 │
 ├── .env.example
 ├── artisan
 ├── composer.json
-├── composer.lock
 ├── package.json
-├── package-lock.json
-├── phpunit.xml
-├── tailwind.config.js
-├── vite.config.js
 └── README.md
 ```
 
-Essa estrutura corresponde ao estado atual do repositório no GitHub.
+A estrutura atual do repositório já segue a organização base do Laravel, contendo `app`, `bootstrap`, `config`, `database`, `public`, `resources`, `routes`, `storage` e `tests`.
 
 ---
 
-# 🔐 Autenticação
-
-O projeto utiliza **Laravel Breeze** para fornecer a estrutura inicial de autenticação.
-
-Atualmente estão disponíveis as rotas relacionadas a:
-
-* Login
-* Registro
-* Logout
-* Recuperação de senha
-* Verificação de e-mail
-* Perfil
-
-A rota `/` atualmente direciona para a tela de login e o `/dashboard` está protegido pelos middlewares `auth` e `verified`.
-
----
-
-# 🧩 Funcionalidades Futuras
-
-A longo prazo, o UpSoluctions Gym poderá evoluir para uma plataforma completa contendo:
+# 🔄 Fluxo Principal do Sistema
 
 ```text
-                    ┌──────────────────────┐
-                    │   UpSoluctions Gym   │
-                    └──────────┬───────────┘
-                               │
-          ┌────────────────────┼────────────────────┐
-          │                    │                    │
-          ▼                    ▼                    ▼
-     Administrador           Aluno              Professor
-          │                    │                    │
-          ▼                    ▼                    ▼
-      Dashboard             Treinos             Alunos
-      Unidades              Plano               Fichas
-      Alunos                Financeiro          Evolução
-      Matrículas            Evolução
-      Financeiro
-      Relatórios
+                    ADMINISTRADOR
+                          │
+                          ▼
+                    Cadastra Unidade
+                          │
+                          ▼
+                    Cadastra Plano
+                          │
+                          ▼
+                    Cadastra Aluno
+                          │
+                          ▼
+                    Cria Matrícula
+                          │
+                          ▼
+                   Gera Mensalidade
+                          │
+                          ▼
+                       PAGAMENTO
+                          │
+                          ▼
+                    Matrícula Ativa
+                          │
+             ┌────────────┴────────────┐
+             │                         │
+             ▼                         ▼
+        Professor                   Aluno
+             │                         │
+             ▼                         ▼
+       Cria Ficha                 Visualiza Treino
+             │                         │
+             ▼                         ▼
+       Prescreve Treino           Realiza Treino
+             │                         │
+             └────────────┬────────────┘
+                          ▼
+                    AVALIAÇÃO
+                          │
+                          ▼
+                      EVOLUÇÃO
 ```
 
 ---
 
-# 📈 Evolução do Projeto
+# 🧪 Estratégia de Testes
 
-O desenvolvimento será realizado de maneira incremental.
-
-### MVP
-
-Primeiro objetivo:
+O projeto seguirá uma estratégia baseada em diferentes níveis.
 
 ```text
-Autenticação
-      ↓
-Usuários
-      ↓
-Alunos
-      ↓
-Planos
-      ↓
-Matrículas
-      ↓
-Financeiro
+                 Testes
+                   │
+       ┌───────────┼───────────┐
+       │           │           │
+       ▼           ▼           ▼
+    Unitários   Feature    Integração
+       │           │           │
+       ▼           ▼           ▼
+   Services     HTTP/API     Banco
+   Models       Auth         Fluxos
+   Regras       Policies     completos
 ```
 
-### Versão 2
+### Objetivos
 
-Posteriormente:
+Garantir:
 
-```text
-Treinos
-      ↓
-Professor
-      ↓
-Área do Aluno
-      ↓
-Avaliação Física
-      ↓
-Evolução
-```
-
-### Versão 3
-
-Evolução para:
-
-```text
-Multiunidades
-      ↓
-Relatórios
-      ↓
-Notificações
-      ↓
-Integrações
-      ↓
-Automação
-```
+* Regras de negócio corretas
+* Segurança
+* Integridade dos dados
+* Funcionamento dos fluxos
+* Prevenção de regressões
 
 ---
 
-# 🤝 Contribuição
+# 📐 Padrões de Desenvolvimento
 
-Contribuições são bem-vindas.
+O projeto seguirá boas práticas de desenvolvimento.
 
-Para contribuir:
+### Código
 
-```bash
-git clone https://github.com/filipe-csilva/UpSoluctions-Gym.git
+* PSR-12
+* Laravel Coding Standards
+* SOLID
+* DRY
+* KISS
+* Clean Code
+
+### Commits
+
+Será utilizada a convenção:
+
+```text
+feat:
+fix:
+refactor:
+docs:
+test:
+chore:
+perf:
 ```
-
-Crie uma branch:
-
-```bash
-git checkout -b feature/nova-funcionalidade
-```
-
-Faça suas alterações:
-
-```bash
-git add .
-git commit -m "feat: adiciona nova funcionalidade"
-```
-
-Envie para o GitHub:
-
-```bash
-git push origin feature/nova-funcionalidade
-```
-
-Depois, abra um Pull Request.
-
----
-
-# 📝 Convenção de Commits
-
-O projeto recomenda o uso de **Conventional Commits**.
 
 Exemplos:
 
-```text
+```bash
 feat: adiciona cadastro de alunos
-fix: corrige validação da matrícula
-refactor: reorganiza serviço financeiro
-docs: atualiza README
+```
+
+```bash
+fix: corrige cálculo da mensalidade
+```
+
+```bash
+refactor: reorganiza serviço de matrículas
+```
+
+```bash
 test: adiciona testes para alunos
-chore: atualiza dependências
+```
+
+---
+
+# 🌿 Estratégia de Branches
+
+Estrutura sugerida:
+
+```text
+main
+ │
+ ├── develop
+ │
+ ├── feature/*
+ │
+ ├── fix/*
+ │
+ └── hotfix/*
+```
+
+Exemplo:
+
+```bash
+git checkout -b feature/cadastro-alunos
+```
+
+---
+
+# 📌 Princípios do Projeto
+
+O desenvolvimento do UpSoluctions Gym seguirá alguns princípios:
+
+### 1. Modularidade
+
+Cada módulo deve possuir responsabilidades bem definidas.
+
+### 2. Escalabilidade
+
+A arquitetura deve permitir crescimento sem necessidade de grandes refatorações.
+
+### 3. Segurança
+
+Dados dos usuários devem ser protegidos desde a primeira versão.
+
+### 4. Testabilidade
+
+As regras de negócio devem ser facilmente testáveis.
+
+### 5. Manutenibilidade
+
+O código deve ser simples de entender e modificar.
+
+### 6. Experiência do usuário
+
+A interface deve ser objetiva, responsiva e intuitiva.
+
+---
+
+# 🔮 Futuro do Projeto
+
+O UpSoluctions Gym poderá evoluir para uma plataforma SaaS.
+
+```text
+                    UpSoluctions Gym
+                           │
+             ┌─────────────┼─────────────┐
+             │             │             │
+             ▼             ▼             ▼
+          Academia      Professor       Aluno
+             │
+             ▼
+        Multiunidades
+             │
+             ▼
+          Financeiro
+             │
+             ▼
+         Analytics
+             │
+             ▼
+          Automação
+             │
+             ▼
+            SaaS
+```
+
+Possíveis funcionalidades futuras:
+
+* Aplicativo mobile
+* API REST
+* Integração com aplicativos
+* Controle de acesso físico
+* QR Code
+* Catraça
+* Biometria
+* Pagamentos recorrentes
+* WhatsApp
+* Inteligência artificial
+* Analytics avançado
+
+---
+
+# 🤝 Contribuindo
+
+Contribuições são bem-vindas.
+
+1. Faça um fork do projeto.
+2. Crie uma branch.
+3. Desenvolva sua funcionalidade.
+4. Crie testes.
+5. Faça commit.
+6. Envie um Pull Request.
+
+Exemplo:
+
+```bash
+git checkout -b feature/minha-feature
+
+git add .
+
+git commit -m "feat: adiciona minha feature"
+
+git push origin feature/minha-feature
 ```
 
 ---
@@ -980,16 +1569,29 @@ Consulte o arquivo `LICENSE` para mais informações.
 
 # 👨‍💻 Desenvolvedor
 
-**Filipe Silva**
+## Filipe Silva
 
-Projeto desenvolvido como parte da evolução profissional e prática em desenvolvimento **Backend**, **PHP**, **Laravel**, bancos de dados e arquitetura de aplicações web.
+Desenvolvedor focado em **Backend**, com experiência e estudos em:
+
+* PHP
+* Laravel
+* C#
+* .NET
+* SQL
+* APIs
+* Arquitetura de software
+* Desenvolvimento Web
 
 ---
 
 # ⭐ UpSoluctions Gym
 
-Sistema de gerenciamento de academia desenvolvido para transformar processos administrativos em uma plataforma integrada, organizada e escalável.
+> **Gestão inteligente para academias.**
 
-> **Do cadastro do aluno ao controle financeiro, do treino à evolução.**
+Um projeto construído com foco em **organização, escalabilidade, segurança e evolução contínua**.
 
-🚀 **UpSoluctions Gym — Gestão inteligente para academias.**
+---
+
+<p align="center">
+  Desenvolvido com ❤️ e ☕ por <strong>Filipe Silva</strong>
+</p>
