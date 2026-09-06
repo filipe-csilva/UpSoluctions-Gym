@@ -5,8 +5,17 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+Route::get('/', function () {
+    return view('auth.login');
+})->name('home');
+
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// })->name('home');
+
+
+// Route::get('/', [AuthenticatedSessionController::class, 'create'])
+//         ->name('login');
 
 
 Route::get('/dashboard', function () {
