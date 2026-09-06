@@ -275,15 +275,15 @@ O administrador poderá visualizar os dados de todas as unidades ou filtrar uma 
 
 ## 🟢 Fase 01 — Fundação do Projeto
 
-* [x] Criar projeto Laravel
-* [x] Configurar Git
-* [x] Criar repositório GitHub
-* [x] Configurar Laravel Breeze
-* [x] Configurar autenticação
-* [x] Configurar Vite
-* [x] Configurar Tailwind CSS
-* [x] Criar estrutura inicial do dashboard
-* [ ] Configurar identidade visual
+* ✅ Criar projeto Laravel
+* ✅ Configurar Git
+* ✅ Criar repositório GitHub
+* ✅ Configurar Laravel Breeze
+* ✅ Configurar autenticação
+* ✅ Configurar Vite
+* ✅ Configurar Tailwind CSS
+* ✅ Criar estrutura inicial do dashboard
+* 🚧 Configurar identidade visual
 * [ ] Configurar layout principal
 * [ ] Criar menu lateral
 * [ ] Criar navegação responsiva
@@ -292,12 +292,12 @@ O administrador poderá visualizar os dados de todas as unidades ou filtrar uma 
 
 ## 🟡 Fase 02 — Usuários e Autenticação
 
-* [x] Login
-* [x] Logout
-* [x] Registro
-* [x] Recuperação de senha
-* [x] Verificação de e-mail
-* [x] Perfil do usuário
+* ✅ Login
+* ✅ Logout
+* ✅ Registro
+* ✅ Recuperação de senha
+* ✅ Verificação de e-mail
+* ✅ Perfil do usuário
 * [ ] Sistema de permissões
 * [ ] Roles
 * [ ] Policies
