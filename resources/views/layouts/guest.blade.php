@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         
-                        <div style="margin-left: 6rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <div style="margin-left: 6.5rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
                             <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
                                 <span style="color: #94a3b8; font-size: 0.75rem;">Desenvolvido por</span>
                                 <span style="color: #ef4444; font-size: 0.875rem; font-weight: 600;">UpSoluctions</span>
