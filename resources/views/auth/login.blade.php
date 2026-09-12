@@ -6,15 +6,32 @@
         </div>
     @endif
 
-    @if ($errors->any())
-        <div style="margin-bottom: 1.5rem; padding: 0.75rem 1rem; background: #fee2e2; color: #991b1b; border-radius: 0.5rem; font-size: 0.875rem; border: 1px solid #fca5a5;">
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
+    @if ($errors->has('email'))
+        <div id="login-error-alert" role="alert" style="position: fixed; top: 1.25rem; right: 1.25rem; z-index: 50; display: flex; align-items: center; gap: 0.625rem; max-width: min(24rem, calc(100vw - 2.5rem)); padding: 0.875rem 1rem; background: #e5e7eb; color: #dc2626; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);">
+            <span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; border: 2px solid #dc2626; border-radius: 9999px; font-size: 0.8rem; line-height: 1;">!</span>
+            <span>Usuário ou senha inválidos.</span>
         </div>
     @endif
 
-    <form method="POST" action="{{ route('login') }}">
+    @if ($errors->has('email'))
+        <script>
+            window.setTimeout(() => {
+                const alert = document.getElementById('login-error-alert');
+
+                if (! alert) {
+                    return;
+                }
+
+                alert.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-0.5rem)';
+
+                window.setTimeout(() => alert.remove(), 300);
+            }, 5000);
+        </script>
+    @endif
+
+    <form method="POST" action="{{ route('login') }}" style="margin: 0; padding: 0;">
         @csrf
 
         <!-- E-mail -->
@@ -31,7 +48,7 @@
                 required 
                 autofocus 
                 autocomplete="username"
-                style="width: 100%; padding: 0.75rem 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem; transition: all 0.2s; outline: none; background: #f8fafc;"
+                style="width: 100%; padding: 0.75rem 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem; transition: all 0.2s; outline: none; background: #f8fafc; box-sizing: border-box;"
                 onfocus="this.style.borderColor='#ef4444'; this.style.background='#ffffff'; this.style.boxShadow='0 0 0 4px rgba(239, 68, 68, 0.1)';"
                 onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none';"
             >
@@ -59,7 +76,7 @@
                 placeholder="Digite sua senha"
                 required 
                 autocomplete="current-password"
-                style="width: 100%; padding: 0.75rem 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem; transition: all 0.2s; outline: none; background: #f8fafc;"
+                style="width: 100%; padding: 0.75rem 1rem; border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem; transition: all 0.2s; outline: none; background: #f8fafc; box-sizing: border-box;"
                 onfocus="this.style.borderColor='#ef4444'; this.style.background='#ffffff'; this.style.boxShadow='0 0 0 4px rgba(239, 68, 68, 0.1)';"
                 onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none';"
             >
@@ -84,7 +101,7 @@
         <div style="margin-bottom: 1.5rem;">
             <button 
                 type="submit"
-                style="width: 100%; padding: 0.875rem 1rem; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; border-radius: 0.5rem; font-weight: 700; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);"
+                style="width: 100%; padding: 0.875rem 1rem; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; border-radius: 0.5rem; font-weight: 700; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); box-sizing: border-box;"
                 onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(239, 68, 68, 0.4)';"
                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(239, 68, 68, 0.3)';"
             >

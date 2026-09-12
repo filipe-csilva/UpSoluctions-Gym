@@ -1,26 +1,22 @@
 <?php
 
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('auth.login');
-})->name('home');
-
 // Route::get('/', function () {
-//     return redirect()->route('login');
-// })->name('home');
+//     return view('auth.login');
+// })->name('auth.login'); // Não efetuar dessa forma
 
+Route::get('/', function () {
+    return redirect()->route('login');
+    })->name('home');
 
-// Route::get('/', [AuthenticatedSessionController::class, 'create'])
-//         ->name('login');
+Route::middleware([ 'auth', 'verified', 'role:admin', ])->group(function () { require __DIR__.'/admin.php'; });
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/panel', function () {
+    return view('panel');
+})->middleware(['auth', 'verified'])->name('panel');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
