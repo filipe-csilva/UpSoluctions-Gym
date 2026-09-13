@@ -2,6 +2,21 @@
 
 use App\Models\User;
 
+test('login screen is available at the root URL', function () {
+    $response = $this->get('/');
+
+    $response->assertStatus(200);
+});
+
+test('authenticated users see the panel at the root URL', function () {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->get('/');
+
+    $response->assertOk();
+    $response->assertViewIs('panel');
+});
+
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
 
@@ -23,12 +38,13 @@ test('users can authenticate using the login screen', function () {
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post('/login', [
+    $response = $this->post('/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
 
     $this->assertGuest();
+    $response->assertSessionHasErrors(['email' => 'Usuário ou senha inválidos.']);
 });
 
 test('users can logout', function () {
