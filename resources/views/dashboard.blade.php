@@ -13,11 +13,11 @@
         <div class="col-sm-6">
             <h3 class="mb-0">Dashboard</h3>
         </div>
-        <div class="col-sm-6">
+        {{-- <div class="col-sm-6">
             <ol class="breadcrumb float-sm-end">
                 <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
             </ol>
-        </div>
+        </div> --}}
     </div>
 @stop
 
@@ -41,13 +41,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon text-bg-warning shadow-sm"><i class="bi bi-person-plus-fill"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Alunos cadastrados hoje</span>
+                    <span class="info-box-number">{{ $todayStudentsCount }}</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Alunos cadastrados recentemente</h3>
+                    <h3 class="card-title">Alunos cadastrados hoje</h3>
                     <div class="card-tools">
                         <a href="{{ route('students.index') }}" class="btn btn-tool" title="Ver todos os alunos">
                             <i class="bi bi-arrow-up-right-square"></i>
@@ -61,14 +70,14 @@
                                 <tr><th>Nome</th><th>E-mail</th><th>Cadastro</th></tr>
                             </thead>
                             <tbody>
-                                @forelse ($recentStudents as $student)
+                                @forelse ($todayStudents as $student)
                                     <tr>
                                         <td>{{ $student->user->name }}</td>
                                         <td>{{ $student->user->email }}</td>
                                         <td>{{ $student->created_at?->format('d/m/Y') }}</td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="3" class="text-center text-muted">Nenhum aluno cadastrado.</td></tr>
+                                    <tr><td colspan="3" class="text-center text-muted">Nenhum aluno cadastrado hoje.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>

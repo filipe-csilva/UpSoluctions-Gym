@@ -30,6 +30,16 @@ function whenReady(fn) {
   }
 }
 
+function setGymControlFavicon() {
+  if (document.querySelector('link[rel="icon"]')) return
+
+  const favicon = document.createElement('link')
+  favicon.rel = 'icon'
+  favicon.type = 'image/svg+xml'
+  favicon.href = '/favicon.svg'
+  document.head.appendChild(favicon)
+}
+
 function parseConfig(el, attr) {
   const raw = el.getAttribute(attr)
   if (!raw) return {}
@@ -203,6 +213,7 @@ function initTreeviewA11y() {
 }
 
 whenReady(() => {
+  setGymControlFavicon()
   // Wire OverlayScrollbars to the sidebar (matches the AdminLTE demo behaviour)
   const sidebar = document.querySelector('.sidebar-wrapper')
   if (sidebar && window.innerWidth > 992) {
