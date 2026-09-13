@@ -1,4 +1,3 @@
-```php
 <?php
 
 namespace App\Http\Controllers;
@@ -10,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class StudentController extends Controller
@@ -40,6 +40,55 @@ class StudentController extends Controller
         return view('students.create', compact('units'));
     }
 
+    public function show(StudentProfile $student): View
+    {
+        $student->load('user.unit');
+
+        return view('students.show', compact('student'));
+    }
+
+    public function edit(StudentProfile $student): View
+    {
+        $student->load('user.unit');
+        $units = Unit::query()->where('active', true)->orderBy('name')->get();
+
+        return view('students.edit', compact('student', 'units'));
+    }
+
+    public function update(Request $request, StudentProfile $student): RedirectResponse
+    {
+        $student->load('user');
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($student->user_id)],
+            'unit_id' => ['required', 'exists:units,id'],
+            'cpf' => ['required', 'string', 'max:14', Rule::unique('student_profiles', 'cpf')->ignore($student->id)],
+            'birth_date' => ['required', 'date', 'before:today'],
+            'phone' => ['required', 'string', 'max:20'],
+            'gender' => ['nullable', 'string', 'max:20'],
+            'andress' => ['nullable', 'string', 'max:255'],
+            'number' => ['nullable', 'string', 'max:20'],
+            'neighborhood' => ['nullable', 'string', 'max:100'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'state' => ['nullable', 'string', 'size:2'],
+            'zip_code' => ['nullable', 'string', 'max:8'],
+            'emergency_contact' => ['nullable', 'string', 'max:150'],
+            'emergency_phone' => ['nullable', 'string', 'max:20'],
+            'notes' => ['nullable', 'string'],
+        ]);
+
+        DB::transaction(function () use ($student, $validated): void {
+            $student->user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'unit_id' => $validated['unit_id'],
+            ]);
+            $student->update(collect($validated)->except(['name', 'email', 'unit_id'])->all());
+        });
+
+        return redirect()->route('students.show', $student)->with('success', 'Aluno atualizado com sucesso.');
+    }
+
     /**
      * Salva o aluno.
      */
@@ -57,7 +106,7 @@ class StudentController extends Controller
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20'],
             'gender' => ['nullable', 'string', 'max:20'],
-            'address' => ['nullable', 'string', 'max:255'],
+            'andress' => ['nullable', 'string', 'max:255'],
             'number' => ['nullable', 'string', 'max:20'],
             'neighborhood' => ['nullable', 'string', 'max:100'],
             'city' => ['nullable', 'string', 'max:100'],
@@ -84,7 +133,7 @@ class StudentController extends Controller
                 'birth_date' => $validated['birth_date'],
                 'phone' => $validated['phone'],
                 'gender' => $validated['gender'] ?? null,
-                'address' => $validated['address'] ?? null,
+                'andress' => $validated['andress'] ?? null,
                 'number' => $validated['number'] ?? null,
                 'neighborhood' => $validated['neighborhood'] ?? null,
                 'city' => $validated['city'] ?? null,
@@ -103,4 +152,3 @@ class StudentController extends Controller
             ->with('success', 'Aluno cadastrado com sucesso.');
     }
 }
-```

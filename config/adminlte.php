@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'logo' => '<b><span style="color: #ffffff;">Gym</span><span style="color: #ef4444;">Control</span></b>',
+    'logo' => '<b><span style="color: #ffffff; font-size: 24px;">Gym</span><span style="color: #ef4444;">Control</span></b>',
     'logo_img' => 'vendor/adminlte/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image opacity-75 shadow',
     'logo_img_alt' => '',
@@ -133,7 +133,7 @@ return [
     // Documentation URL used by the navbar "Documentation" link and the sidebar
     // "View documentation" CTA (false to hide the CTA). Defaults to the in-app
     // docs viewer served at /docs (see the `docs` keys below).
-    'sidebar_docs_url' => '/docs',
+    'sidebar_docs_url' => false,
 
     // Bundled demo/showcase pages (Dashboard v2/v3, Widgets, UI, Forms, Tables,
     // Layout Options, Theme Generate, auth variants, error pages). Set false to
@@ -235,7 +235,8 @@ return [
         // ---- Sidebar: mirrors the AdminLTE 4 demo sidebar ----
         [
             'text' => 'Dashboard',
-            'url' => 'demo/dashboard-v2',
+            //'url' => 'demo/dashboard-v2',
+            'route' => 'dashboard',
             'icon' => 'bi bi-speedometer',
             // 'submenu' => [
             //     //['text' => 'Dashboard v1', 'url' => '/', 'icon' => 'bi bi-circle'],
@@ -279,6 +280,11 @@ return [
         //         ['text' => 'Compose', 'url' => 'admin/mailbox/compose', 'icon' => 'bi bi-circle'],
         //     ],
         // ],
+        [
+            'text' => 'Alunos',
+            'route' => 'students.index',
+            'icon' => 'bi bi-people',
+        ],
         [
             'text' => 'Cadastros',
             'icon' => 'bi bi-pencil-square',

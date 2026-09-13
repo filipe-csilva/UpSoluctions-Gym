@@ -7,27 +7,41 @@
     @endif
 
     @if ($errors->has('email'))
-        <div id="login-error-alert" role="alert" style="position: fixed; top: 1.25rem; right: 1.25rem; z-index: 50; display: flex; align-items: center; gap: 0.625rem; max-width: min(24rem, calc(100vw - 2.5rem)); padding: 0.875rem 1rem; background: #e5e7eb; color: #dc2626; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);">
-            <span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; border: 2px solid #dc2626; border-radius: 9999px; font-size: 0.8rem; line-height: 1;">!</span>
-            <span>Usuário ou senha inválidos.</span>
+        <div id="login-error-alert" class="alert alert-danger position-fixed top-0 end-0 m-3 login-error-alert" role="alert" style="z-index: 1050; min-width: min(24rem, calc(100vw - 2rem));">
+            O E-mail ou a senha está inválido!
         </div>
     @endif
 
     @if ($errors->has('email'))
+        <style>
+            .login-error-alert {
+                animation: login-alert-slide 5.3s ease-in-out forwards;
+            }
+
+            @keyframes login-alert-slide {
+                0% {
+                    opacity: 0;
+                    transform: translateX(120%);
+                }
+                6% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                94% {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateX(120%);
+                }
+            }
+        </style>
+
         <script>
             window.setTimeout(() => {
-                const alert = document.getElementById('login-error-alert');
-
-                if (! alert) {
-                    return;
-                }
-
-                alert.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                alert.style.opacity = '0';
-                alert.style.transform = 'translateY(-0.5rem)';
-
-                window.setTimeout(() => alert.remove(), 300);
-            }, 5000);
+                document.getElementById('login-error-alert')?.remove();
+            }, 5300);
         </script>
     @endif
 

@@ -12,7 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/adminlte.css', 'resources/js/app.js'])
     </head>
     <body>
         <div style="display: flex; width: 100vw; height: 100vh; overflow: hidden;">

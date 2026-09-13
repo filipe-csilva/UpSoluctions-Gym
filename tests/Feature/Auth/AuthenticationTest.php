@@ -2,6 +2,21 @@
 
 use App\Models\User;
 
+test('login screen is available at the root URL', function () {
+    $response = $this->get('/');
+
+    $response->assertStatus(200);
+});
+
+test('authenticated users see the panel at the root URL', function () {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->get('/');
+
+    $response->assertOk();
+    $response->assertViewIs('panel');
+});
+
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
 
