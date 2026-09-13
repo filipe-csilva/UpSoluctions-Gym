@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StudentProfile;
 use App\Models\Unit;
 use App\Models\User;
+use App\Rules\ValidCpf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -62,7 +63,7 @@ class StudentController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($student->user_id)],
             'unit_id' => ['required', 'exists:units,id'],
-            'cpf' => ['required', 'string', 'max:14', Rule::unique('student_profiles', 'cpf')->ignore($student->id)],
+            'cpf' => ['required', 'string', 'max:14', new ValidCpf, Rule::unique('student_profiles', 'cpf')->ignore($student->id)],
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20'],
             'gender' => ['nullable', 'string', 'max:20'],
@@ -102,7 +103,7 @@ class StudentController extends Controller
             'unit_id' => ['required', 'exists:units,id'],
 
             // StudentProfile
-            'cpf' => ['required', 'string', 'max:14', 'unique:student_profiles,cpf'],
+            'cpf' => ['required', 'string', 'max:14', new ValidCpf, 'unique:student_profiles,cpf'],
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20'],
             'gender' => ['nullable', 'string', 'max:20'],

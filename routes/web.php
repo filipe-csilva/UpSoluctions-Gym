@@ -12,6 +12,10 @@ Route::get('/', function () {
         : app(AuthenticatedSessionController::class)->create();
 })->name('login');
 
+Route::get('/dashboard', DashboardController::class)
+    ->middleware(['auth', 'verified', 'role:admin'])
+    ->name('dashboard');
+
 Route::middleware([ 'auth', 'verified', 'role:admin', ])->group(function () { require __DIR__.'/admin.php'; });
 
 Route::get('/panel', function () {

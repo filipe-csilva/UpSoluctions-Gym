@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'logo' => '<b><span style="color: #ffffff; font-size: 24px;">Gym</span><span style="color: #ef4444;">Control</span></b>',
+    'logo' => '<b><span style="color: #ffffff; font-size: 24px;">Gym</span><span style="color: #ef4444; font-size: 24px;">Control</span></b>',
     'logo_img' => 'vendor/adminlte/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image opacity-75 shadow',
     'logo_img_alt' => '',
@@ -125,7 +125,7 @@ return [
     */
 
     'footer_left' => 'Copyright &copy; 2024-'.date('Y').' <a href="" class="text-decoration-none">Logic Sharp</a>. All rights reserved.',
-    'footer_right' => 'Anything you want',
+    'footer_right' => '',
     'preloader' => false,
     'control_sidebar' => false,
     'control_sidebar_theme' => 'dark',
@@ -238,6 +238,7 @@ return [
             //'url' => 'demo/dashboard-v2',
             'route' => 'dashboard',
             'icon' => 'bi bi-speedometer',
+            'can' => 'view-dashboard',
             // 'submenu' => [
             //     //['text' => 'Dashboard v1', 'url' => '/', 'icon' => 'bi bi-circle'],
             //     ['text' => 'Dashboard v2', 'url' => 'demo/dashboard-v2', 'icon' => 'bi bi-circle'],
@@ -284,6 +285,7 @@ return [
             'text' => 'Alunos',
             'route' => 'students.index',
             'icon' => 'bi bi-people',
+            'can' => 'students-dashboard',
         ],
         [
             'text' => 'Cadastros',
@@ -395,6 +397,12 @@ return [
         // ['text' => 'Important', 'url' => '#', 'icon' => 'bi bi-circle', 'icon_color' => 'danger'],
         // ['text' => 'Warning', 'url' => '#', 'icon' => 'bi bi-circle', 'icon_color' => 'warning'],
         // ['text' => 'Informational', 'url' => '#', 'icon' => 'bi bi-circle', 'icon_color' => 'info'],
+        [
+            'text' => 'Meus Dados',
+            //'route' => '',
+            'icon' => 'bi bi-pencil-square',
+            //'can' => 'students-show',
+        ],
     ],
 
     /*

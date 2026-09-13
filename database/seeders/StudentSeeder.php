@@ -15,23 +15,13 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         DB::transaction(function (): void {
-            $unitIds = collect([
-                ['name' => 'Unidade Centro', 'code' => 'UNIT-01'],
-                ['name' => 'Unidade Norte', 'code' => 'UNIT-02'],
-            ])->map(function (array $unit): int {
-                $existingId = DB::table('units')
-                    ->where('code', $unit['code'])
-                    ->value('id');
+            $unitIds = DB::table('units')->pluck('id');
 
-                return $existingId ?? DB::table('units')->insertGetId([
-                    ...$unit,
-                    'phone' => '85999999999',
-                    'email' => strtolower(str_replace(' ', '.', $unit['name'])).'@example.com',
-                    'active' => true,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            })->values();
+            if ($unitIds->isEmpty()) {
+                throw new \RuntimeException(
+                    'Nenhuma unidade encontrada. Execute o DatabaseSeeder antes do StudentSeeder.'
+                );
+            }
 
             foreach (range(1, 10) as $number) {
                 $user = User::factory()->create([
