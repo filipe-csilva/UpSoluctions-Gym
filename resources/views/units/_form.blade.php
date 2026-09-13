@@ -4,7 +4,7 @@
 @endif
 
 <div class="row g-3">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <label for="name" class="form-label">Nome</label>
         <input id="name" name="name" value="{{ old('name', $unit->name) }}" class="form-control" required>
     </div>
