@@ -40,6 +40,37 @@ function setGymControlFavicon() {
   document.head.appendChild(favicon)
 }
 
+// Keep the user's fullscreen preference while navigating through the app.
+// The browser still controls when fullscreen can be entered again (usually
+// it requires a user gesture after a full page reload).
+function initFullscreenPersistence() {
+  const storageKey = 'gymcontrol.adminlte.fullscreen'
+  const toggle = document.querySelector('[data-lte-toggle="fullscreen"]')
+  if (!toggle) return
+
+  const setPreference = (enabled) => {
+    try {
+      if (enabled) {
+        localStorage.setItem(storageKey, 'true')
+      } else {
+        localStorage.removeItem(storageKey)
+      }
+    } catch (e) {
+      console.warn('AdminLTE: fullscreen preference could not be saved', e)
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    window.setTimeout(() => {
+      setPreference(Boolean(document.fullscreenElement))
+    }, 0)
+  })
+
+  document.addEventListener('fullscreenchange', () => {
+    setPreference(Boolean(document.fullscreenElement))
+  })
+}
+
 function parseConfig(el, attr) {
   const raw = el.getAttribute(attr)
   if (!raw) return {}
@@ -214,6 +245,7 @@ function initTreeviewA11y() {
 
 whenReady(() => {
   setGymControlFavicon()
+  initFullscreenPersistence()
   // Wire OverlayScrollbars to the sidebar (matches the AdminLTE demo behaviour)
   const sidebar = document.querySelector('.sidebar-wrapper')
   if (sidebar && window.innerWidth > 992) {

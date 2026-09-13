@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +23,9 @@ Route::get('/meus-dados', [StudentController::class, 'myData'])
 
 Route::resource('students', StudentController::class)
     ->middleware(['auth', 'verified', 'can:view-students']);
+
+Route::resource('teachers', TeacherController::class)
+    ->middleware(['auth', 'verified', 'can:view-teachers']);
 
 Route::resource('units', UnitController::class)
     ->middleware(['auth', 'verified', 'can:view-units']);

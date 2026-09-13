@@ -237,7 +237,7 @@ return [
             'text' => 'Dashboard',
             // 'url' => 'demo/dashboard-v2',
             'route' => 'dashboard',
-            'icon' => 'bi bi-speedometer',
+            'icon' => 'bi bi-speedometer2',
             'can' => 'view-dashboard',
             // 'submenu' => [
             //     //['text' => 'Dashboard v1', 'url' => '/', 'icon' => 'bi bi-circle'],
@@ -248,19 +248,25 @@ return [
         [
             'text' => 'Alunos',
             'route' => 'students.index',
-            'icon' => 'bi bi-people',
+            'icon' => 'bi bi-person-vcard',
             'can' => 'view-students',
+        ],
+        [
+            'text' => 'Instrutores',
+            'route' => 'teachers.index',
+            'icon' => 'bi bi-person-workspace',
+            'can' => 'view-teachers',
         ],
         [
             'text' => 'Unidades',
             'route' => 'units.index',
-            'icon' => 'bi bi-people',
+            'icon' => 'bi bi-building',
             'can' => 'view-units',
         ],
         [
             'text' => 'Meus Dados',
             'route' => 'students.me',
-            'icon' => 'bi bi-pencil-square',
+            'icon' => 'bi bi-person-gear',
             'can' => 'students-show',
         ],
     ],

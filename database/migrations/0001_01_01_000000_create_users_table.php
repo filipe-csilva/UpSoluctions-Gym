@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->boolean('is_deleted')->default(false)->index();
+            $table->boolean('active')->default(true)->index();
             $table->timestamps();
         });
 

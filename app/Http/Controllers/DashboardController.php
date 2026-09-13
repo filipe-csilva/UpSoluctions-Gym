@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudentProfile;
-use App\Models\Unit;
+use App\Models\TeacherProfile;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -41,12 +41,26 @@ class DashboardController extends Controller
                 ->latest()
                 ->limit(6)
                 ->get(),
-            'totalUnits' => Unit::query()
-                ->where('active', true)
+            'totalTeachers' => TeacherProfile::query()
+                ->whereHas('user', function ($query): void {
+                    $query->where('active', true);
+                })
                 ->when($isManager, function ($query) use ($unitIds): void {
-                    $query->whereIn('id', $unitIds);
+                    $query->whereHas('user', function ($userQuery) use ($unitIds): void {
+                        $userQuery->whereIn('unit_id', $unitIds);
+                    });
                 })
                 ->count(),
+            'latestTeachers' => TeacherProfile::query()
+                ->with('user.unit')
+                ->when($isManager, function ($query) use ($unitIds): void {
+                    $query->whereHas('user', function ($userQuery) use ($unitIds): void {
+                        $userQuery->whereIn('unit_id', $unitIds);
+                    });
+                })
+                ->latest()
+                ->limit(6)
+                ->get(),
         ]);
     }
 }

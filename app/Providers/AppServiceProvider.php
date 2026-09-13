@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
             return $user->role?->value === 'admin' || $user->role?->value === 'manager';
         });
 
+        Gate::define('view-teachers', function ($user): bool {
+            return $user->role?->value === 'admin' || $user->role?->value === 'manager';
+        });
+
         Gate::define('view-units', function ($user): bool {
             return $user->role?->value === 'admin';
         });

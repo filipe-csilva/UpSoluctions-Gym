@@ -208,12 +208,11 @@ class StudentController extends Controller
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
                 'unit_id' => $validated['unit_id'],
-                'role' => 'student',
+                'role' => UserRole::STUDENT,
             ]);
 
             return StudentProfile::create([
                 'user_id' => $user->id,
-                'active' => true,
                 'cpf' => $validated['cpf'],
                 'birth_date' => $validated['birth_date'],
                 'phone' => $validated['phone'],

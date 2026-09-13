@@ -316,11 +316,12 @@ Aluno
 * 🟩 Model
 * 🟩 Migration
 * 🟨 Relacionamentos
-* ⬜ Controller
+* 🟨 Controller (listagem implementada)
 * ⬜ Requests
-* ⬜ CRUD
+* 🟨 Listagem paginada com filtros
 * ⬜ Alunos vinculados
-* ⬜ Interface
+* 🟨 Interface inicial
+* 🟩 Seeder com 5 instrutores distribuídos em 2 unidades
 
 ---
 
@@ -453,8 +454,9 @@ Aluno
 ### Administrador
 
 * 🟩 Dashboard inicial baseado no `demo/dashboard-v2` do AdminLTE
-* 🟩 Total de alunos e unidades ativas
+* 🟩 Total de alunos e instrutores
 * 🟩 Lista dos 6 alunos mais recentes cadastrados no dia
+* 🟩 Lista de até 6 instrutores presentes
 * ⬜ Alunos ativos/inativos
 * ⬜ Matrículas
 * ⬜ Receita
