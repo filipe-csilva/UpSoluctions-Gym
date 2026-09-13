@@ -267,7 +267,7 @@ php artisan migrate:fresh --seed
 * ⬜ Policies
 * ⬜ Gates
 * ⬜ Permissões por módulo
-* ⬜ Permissões por unidade
+* 🟩 Permissões por unidade
 * ⬜ CRUD de usuários
 
 **Perfis:**
@@ -286,12 +286,12 @@ Aluno
 * 🟩 Model
 * 🟩 Migration
 * 🟨 Relacionamentos
-* ⬜ Controller
-* ⬜ Requests
-* ⬜ Rotas
-* ⬜ CRUD
-* ⬜ Ativação/Inativação
-* ⬜ Interface
+* 🟩 Controller
+* 🟨 Requests
+* 🟩 Rotas
+* 🟩 CRUD
+* 🟩 Ativação/Inativação
+* 🟩 Interface
 
 ---
 
@@ -454,7 +454,7 @@ Aluno
 
 * 🟩 Dashboard inicial baseado no `demo/dashboard-v2` do AdminLTE
 * 🟩 Total de alunos e unidades ativas
-* 🟩 Lista de alunos recentes
+* 🟩 Lista dos 6 alunos mais recentes cadastrados no dia
 * ⬜ Alunos ativos/inativos
 * ⬜ Matrículas
 * ⬜ Receita
