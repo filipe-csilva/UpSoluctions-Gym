@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\StudentProfile;
 use App\Models\Unit;
 use App\Models\User;
@@ -125,6 +126,7 @@ class StudentController extends Controller
             ]);
             $student->update(collect($validated)->except(['name', 'email', 'unit_id'])->all());
         });
+        ActivityLog::record('updated', $student, 'Aluno atualizado.', ['attributes' => $student->only(['user_id', 'cpf', 'phone'])]);
 
         return redirect()->route('students.show', $student)->with('success', 'Aluno atualizado com sucesso.');
     }
@@ -163,7 +165,7 @@ class StudentController extends Controller
             403
         );
 
-        DB::transaction(function () use ($validated) {
+        $student = DB::transaction(function () use ($validated): StudentProfile {
 
             $user = User::create([
                 'name' => $validated['name'],
@@ -173,7 +175,7 @@ class StudentController extends Controller
                 'role' => 'student',
             ]);
 
-            StudentProfile::create([
+            return StudentProfile::create([
                 'user_id' => $user->id,
                 'cpf' => $validated['cpf'],
                 'birth_date' => $validated['birth_date'],
@@ -192,6 +194,7 @@ class StudentController extends Controller
                 'notes' => $validated['notes'] ?? null,
             ]);
         });
+        ActivityLog::record('created', $student, 'Aluno cadastrado.', ['attributes' => $student->only(['user_id', 'cpf'])]);
 
         return redirect()
             ->route('students.index')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Unit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class UnitController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $this->validatedData($request);
-        Unit::create($validated);
+        $unit = Unit::create($validated);
+        ActivityLog::record('created', $unit, 'Unidade criada.', ['attributes' => $unit->only(['name', 'code'])]);
 
         return redirect()->route('units.index')->with('success', 'Unidade cadastrada com sucesso.');
     }
@@ -47,7 +49,9 @@ class UnitController extends Controller
 
     public function update(Request $request, Unit $unit): RedirectResponse
     {
+        $before = $unit->only(['name', 'code', 'active']);
         $unit->update($this->validatedData($request, $unit));
+        ActivityLog::record('updated', $unit, 'Unidade atualizada.', ['before' => $before, 'after' => $unit->only(['name', 'code', 'active'])]);
 
         return redirect()->route('units.show', $unit)->with('success', 'Unidade atualizada com sucesso.');
     }
@@ -58,7 +62,9 @@ class UnitController extends Controller
             return redirect()->route('units.index')->with('error', 'Não é possível excluir uma unidade vinculada a usuários ou managers.');
         }
 
+        $attributes = $unit->only(['name', 'code']);
         $unit->delete();
+        ActivityLog::record('deleted', $unit, 'Unidade excluída.', ['attributes' => $attributes]);
 
         return redirect()->route('units.index')->with('success', 'Unidade excluída com sucesso.');
     }
