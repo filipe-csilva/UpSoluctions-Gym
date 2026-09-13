@@ -24,7 +24,7 @@
                 <dt class="col-sm-3">Telefone</dt><dd class="col-sm-9">{{ $student?->phone ?? '-' }}</dd>
                 <dt class="col-sm-3">Status</dt><dd class="col-sm-9"><span class="badge text-bg-{{ $student?->user?->active ? 'success' : 'secondary' }}">{{ $student?->user?->active ? 'Ativo' : 'Inativo' }}</span></dd>
                 <dt class="col-sm-3">Gênero</dt><dd class="col-sm-9">{{ $student?->gender ?: '-' }}</dd>
-                <dt class="col-sm-3">Endereço</dt><dd class="col-sm-9">{{ $student?->andress ?: '-' }}, {{ $student?->number ?: 's/n' }}</dd>
+                <dt class="col-sm-3">Endereço</dt><dd class="col-sm-9">{{ $student?->address ?: '-' }}, {{ $student?->number ?: 's/n' }}</dd>
                 <dt class="col-sm-3">Cidade/UF</dt><dd class="col-sm-9">{{ $student?->city ?: '-' }}/{{ $student?->state ?: '-' }}</dd>
                 <dt class="col-sm-3">Contato de emergência</dt><dd class="col-sm-9">{{ $student?->emergency_contact ?: '-' }} {{ $student?->emergency_phone ? '(' . $student->emergency_phone . ')' : '' }}</dd>
                 <dt class="col-sm-3">Observações</dt><dd class="col-sm-9">{{ $student?->notes ?: '-' }}</dd>

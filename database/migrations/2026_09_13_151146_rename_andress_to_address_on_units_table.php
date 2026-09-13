@@ -8,18 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (Schema::hasColumn('units', 'address') && ! Schema::hasColumn('units', 'address')) {
+        if (Schema::hasColumn('units', 'andress') && ! Schema::hasColumn('units', 'address')) {
             Schema::table('units', function (Blueprint $table): void {
-                $table->renameColumn('address', 'address');
+                $table->renameColumn('andress', 'address');
             });
         }
     }
 
     public function down(): void
     {
-        if (Schema::hasColumn('units', 'address') && ! Schema::hasColumn('units', 'address')) {
+        if (Schema::hasColumn('units', 'address') && ! Schema::hasColumn('units', 'andress')) {
             Schema::table('units', function (Blueprint $table): void {
-                $table->renameColumn('address', 'address');
+                $table->renameColumn('address', 'andress');
             });
         }
     }
