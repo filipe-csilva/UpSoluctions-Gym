@@ -11,12 +11,24 @@ use Illuminate\View\View;
 
 class UnitController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $units = Unit::query()
             ->withCount('users')
+            ->when($request->filled('search'), function ($query) use ($request): void {
+                $search = $request->string('search')->toString();
+                $query->where(function ($unitQuery) use ($search): void {
+                    $unitQuery->where('name', 'like', "%{$search}%")
+                        ->orWhere('code', 'like', "%{$search}%")
+                        ->orWhere('city', 'like', "%{$search}%");
+                });
+            })
+            ->when($request->filled('active'), function ($query) use ($request): void {
+                $query->where('active', $request->boolean('active'));
+            })
             ->orderBy('name')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
         return view('units.index', compact('units'));
     }

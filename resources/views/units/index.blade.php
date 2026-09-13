@@ -72,6 +72,17 @@
 
 @section('content')
     <x-alerts />
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="GET" action="{{ route('units.index') }}" class="row g-2 align-items-end">
+                <div class="col-12 col-md-7"><label for="search" class="form-label">Buscar</label><input id="search" name="search" value="{{ request('search') }}" class="form-control" placeholder="Nome, código ou cidade"></div>
+                <div class="col-12 col-md-3"><label for="active" class="form-label">Status</label><select id="active" name="active" class="form-select"><option value="">Todos</option><option value="1" @selected(request('active') === '1')>Ativas</option><option value="0" @selected(request('active') === '0')>Inativas</option></select></div>
+                <div class="col-12 col-md-2 d-flex gap-2"><button class="btn btn-primary flex-grow-1">Filtrar</button><a href="{{ route('units.index') }}" class="btn btn-outline-secondary">Limpar</a></div>
+            </form>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body table-responsive">
             <table class="units-table table table-hover align-middle mb-0">

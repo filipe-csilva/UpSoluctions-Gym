@@ -20,21 +20,51 @@ class StudentController extends Controller
     /**
      * Lista os alunos.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $user = request()->user();
+        $user = $request->user();
 
         $students = StudentProfile::query()
             ->with(['user.unit'])
+            ->when($request->filled('search'), function ($query) use ($request): void {
+                $search = $request->string('search')->toString();
+                $query->where(function ($studentQuery) use ($search): void {
+                    $studentQuery
+                        ->where('cpf', 'like', "%{$search}%")
+                        ->orWhereHas('user', function ($userQuery) use ($search): void {
+                            $userQuery->where(function ($userSearch) use ($search): void {
+                                $userSearch->where('name', 'like', "%{$search}%")
+                                    ->orWhere('email', 'like', "%{$search}%");
+                            });
+                        });
+                });
+            })
+            ->when($request->filled('unit_id'), function ($query) use ($request): void {
+                $query->whereHas('user', function ($userQuery) use ($request): void {
+                    $userQuery->where('unit_id', $request->integer('unit_id'));
+                });
+            })
+            ->when($request->filled('active'), function ($query) use ($request): void {
+                $query->where('active', $request->boolean('active'));
+            })
             ->when($user->role?->value === 'manager', function ($query) use ($user): void {
                 $query->whereHas('user', function ($userQuery) use ($user): void {
                     $userQuery->whereIn('unit_id', $user->accessibleUnitIds());
                 });
             })
             ->latest()
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
-        return view('students.index', compact('students'));
+        $units = Unit::query()
+            ->where('active', true)
+            ->when($user->role?->value === 'manager', function ($query) use ($user): void {
+                $query->whereIn('id', $user->accessibleUnitIds());
+            })
+            ->orderBy('name')
+            ->get();
+
+        return view('students.index', compact('students', 'units'));
     }
 
     /**
@@ -97,6 +127,7 @@ class StudentController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email:rfc', 'max:255', Rule::unique('users', 'email')->ignore($student->user_id)],
             'unit_id' => ['required', 'exists:units,id'],
+            'active' => ['boolean'],
             'cpf' => ['required', 'string', 'max:14', new ValidCpf, Rule::unique('student_profiles', 'cpf')->ignore($student->id)],
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20', new ValidPhone],
@@ -124,7 +155,7 @@ class StudentController extends Controller
                 'email' => $validated['email'],
                 'unit_id' => $validated['unit_id'],
             ]);
-            $student->update(collect($validated)->except(['name', 'email', 'unit_id'])->all());
+            $student->update(collect($validated)->except(['name', 'email', 'unit_id'])->all() + ['active' => (bool) ($validated['active'] ?? false)]);
         });
         ActivityLog::record('updated', $student, 'Aluno atualizado.', ['attributes' => $student->only(['user_id', 'cpf', 'phone'])]);
 
@@ -142,6 +173,7 @@ class StudentController extends Controller
             'email' => ['required', 'email:rfc', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'unit_id' => ['required', 'exists:units,id'],
+            'active' => ['boolean'],
 
             // StudentProfile
             'cpf' => ['required', 'string', 'max:14', new ValidCpf, 'unique:student_profiles,cpf'],
@@ -177,6 +209,7 @@ class StudentController extends Controller
 
             return StudentProfile::create([
                 'user_id' => $user->id,
+                'active' => true,
                 'cpf' => $validated['cpf'],
                 'birth_date' => $validated['birth_date'],
                 'phone' => $validated['phone'],
@@ -199,6 +232,15 @@ class StudentController extends Controller
         return redirect()
             ->route('students.index')
             ->with('success', 'Aluno cadastrado com sucesso.');
+    }
+
+    public function destroy(StudentProfile $student): RedirectResponse
+    {
+        $this->authorizeStudentAccess($student);
+        $student->update(['is_deleted' => true]);
+        ActivityLog::record('deleted', $student, 'Aluno excluído logicamente.', ['is_deleted' => true]);
+
+        return redirect()->route('students.index')->with('success', 'Aluno excluído com sucesso.');
     }
 
     private function authorizeStudentAccess(StudentProfile $student): void

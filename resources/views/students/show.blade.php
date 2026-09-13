@@ -22,6 +22,7 @@
                 <dt class="col-sm-3">CPF</dt><dd class="col-sm-9">{{ $student?->cpf ?? '-' }}</dd>
                 <dt class="col-sm-3">Nascimento</dt><dd class="col-sm-9">{{ $student?->birth_date?->format('d/m/Y') ?? '-' }}</dd>
                 <dt class="col-sm-3">Telefone</dt><dd class="col-sm-9">{{ $student?->phone ?? '-' }}</dd>
+                <dt class="col-sm-3">Status</dt><dd class="col-sm-9"><span class="badge text-bg-{{ $student?->active ? 'success' : 'secondary' }}">{{ $student?->active ? 'Ativo' : 'Inativo' }}</span></dd>
                 <dt class="col-sm-3">Gênero</dt><dd class="col-sm-9">{{ $student?->gender ?: '-' }}</dd>
                 <dt class="col-sm-3">Endereço</dt><dd class="col-sm-9">{{ $student?->andress ?: '-' }}, {{ $student?->number ?: 's/n' }}</dd>
                 <dt class="col-sm-3">Cidade/UF</dt><dd class="col-sm-9">{{ $student?->city ?: '-' }}/{{ $student?->state ?: '-' }}</dd>
