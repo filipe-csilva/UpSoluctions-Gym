@@ -100,7 +100,7 @@
 
     <div class="card">
 
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive">
 
             <table class="students-table table table-hover mb-0">
 

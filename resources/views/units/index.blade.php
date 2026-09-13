@@ -79,7 +79,7 @@
     @endif
 
     <div class="card">
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive">
             <table class="units-table table table-hover align-middle mb-0">
                 <thead>
                     <tr>
