@@ -36,7 +36,7 @@ class StudentSeeder extends Seeder
                     'birth_date' => fake()->dateTimeBetween('-45 years', '-18 years')->format('Y-m-d'),
                     'phone' => fake()->numerify('859########'),
                     'gender' => fake()->randomElement(['M', 'F']),
-                    'andress' => fake()->streetAddress(),
+                    'address' => fake()->streetAddress(),
                     'number' => (string) fake()->numberBetween(1, 9999),
                     'neighborhood' => fake()->citySuffix(),
                     'city' => fake()->city(),

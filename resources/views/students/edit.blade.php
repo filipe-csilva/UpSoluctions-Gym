@@ -17,7 +17,7 @@
             <div class="form-group col-md-4"><label for="birth_date">Nascimento</label><input id="birth_date" name="birth_date" type="date" class="form-control" value="{{ old('birth_date', $student->birth_date?->format('Y-m-d')) }}" required></div>
             <div class="form-group col-md-4"><label for="phone">Telefone</label><input id="phone" name="phone" class="form-control" value="{{ old('phone', $student->phone) }}" required></div>
             <div class="form-group col-md-4"><label for="gender">Gênero</label><input id="gender" name="gender" class="form-control" value="{{ old('gender', $student->gender) }}"></div>
-            <div class="form-group col-md-8"><label for="andress">Endereço</label><input id="andress" name="andress" class="form-control" value="{{ old('andress', $student->andress) }}"></div>
+            <div class="form-group col-md-8"><label for="address">Endereço</label><input id="address" name="address" class="form-control" value="{{ old('address', $student->address) }}"></div>
             <div class="form-group col-md-4"><label for="number">Número</label><input id="number" name="number" class="form-control" value="{{ old('number', $student->number) }}"></div>
             <div class="form-group col-md-4"><label for="neighborhood">Bairro</label><input id="neighborhood" name="neighborhood" class="form-control" value="{{ old('neighborhood', $student->neighborhood) }}"></div>
             <div class="form-group col-md-4"><label for="city">Cidade</label><input id="city" name="city" class="form-control" value="{{ old('city', $student->city) }}"></div>

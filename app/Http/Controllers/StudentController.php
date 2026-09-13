@@ -132,7 +132,7 @@ class StudentController extends Controller
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20', new ValidPhone],
             'gender' => ['nullable', 'string', 'max:20'],
-            'andress' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string', 'max:255'],
             'number' => ['nullable', 'string', 'max:20'],
             'neighborhood' => ['nullable', 'string', 'max:100'],
             'city' => ['nullable', 'string', 'max:100'],
@@ -154,6 +154,7 @@ class StudentController extends Controller
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'unit_id' => $validated['unit_id'],
+                'active' => (bool) ($validated['active'] ?? false),
             ]);
             $student->update(collect($validated)->except(['name', 'email', 'unit_id'])->all() + ['active' => (bool) ($validated['active'] ?? false)]);
         });
@@ -180,7 +181,7 @@ class StudentController extends Controller
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20', new ValidPhone],
             'gender' => ['nullable', 'string', 'max:20'],
-            'andress' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string', 'max:255'],
             'number' => ['nullable', 'string', 'max:20'],
             'neighborhood' => ['nullable', 'string', 'max:100'],
             'city' => ['nullable', 'string', 'max:100'],
@@ -214,7 +215,7 @@ class StudentController extends Controller
                 'birth_date' => $validated['birth_date'],
                 'phone' => $validated['phone'],
                 'gender' => $validated['gender'] ?? null,
-                'andress' => $validated['andress'] ?? null,
+                'address' => $validated['address'] ?? null,
                 'number' => $validated['number'] ?? null,
                 'neighborhood' => $validated['neighborhood'] ?? null,
                 'city' => $validated['city'] ?? null,
@@ -237,7 +238,13 @@ class StudentController extends Controller
     public function destroy(StudentProfile $student): RedirectResponse
     {
         $this->authorizeStudentAccess($student);
-        $student->update(['is_deleted' => true]);
+
+        DB::transaction(function () use ($student): void {
+            $student->load('user');
+            $student->update(['is_deleted' => true]);
+            $student->user?->update(['is_deleted' => true, 'active' => false]);
+        });
+
         ActivityLog::record('deleted', $student, 'Aluno excluído logicamente.', ['is_deleted' => true]);
 
         return redirect()->route('students.index')->with('success', 'Aluno excluído com sucesso.');

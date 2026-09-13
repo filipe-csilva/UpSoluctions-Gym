@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StudentProfile extends Model
 {
-    protected $fillable = ['user_id', 'active', 'is_deleted', 'cpf', 'birth_date', 'phone', 'gender', 'andress', 'number', 'neighborhood', 'city', 'state', 'zip_code', 'emergency_contact', 'emergency_phone', 'notes'];
+    protected $fillable = ['user_id', 'active', 'is_deleted', 'cpf', 'birth_date', 'phone', 'gender', 'address', 'number', 'neighborhood', 'city', 'state', 'zip_code', 'emergency_contact', 'emergency_phone', 'notes'];
 
     protected function casts(): array
     {
