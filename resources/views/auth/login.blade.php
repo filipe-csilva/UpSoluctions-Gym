@@ -22,9 +22,6 @@
                 onfocus="this.style.borderColor='#ef4444'; this.style.background='#ffffff'; this.style.boxShadow='0 0 0 4px rgba(239, 68, 68, 0.1)';"
                 onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none';"
             >
-            @error('email')
-                <p style="margin-top: 0.375rem; font-size: 0.8rem; color: #dc2626;">{{ $message }}</p>
-            @enderror
         </div>
 
         <!-- Senha -->
@@ -33,11 +30,6 @@
                 <label for="password" style="display: block; font-size: 0.875rem; font-weight: 600; color: #0f172a;">
                     Senha
                 </label>
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" style="font-size: 0.8rem; color: #ef4444; text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='#ef4444'">
-                        Esqueceu a senha?
-                    </a>
-                @endif
             </div>
             <input 
                 id="password" 
@@ -50,9 +42,13 @@
                 onfocus="this.style.borderColor='#ef4444'; this.style.background='#ffffff'; this.style.boxShadow='0 0 0 4px rgba(239, 68, 68, 0.1)';"
                 onblur="this.style.borderColor='#e2e8f0'; this.style.background='#f8fafc'; this.style.boxShadow='none';"
             >
-            @error('password')
-                <p style="margin-top: 0.375rem; font-size: 0.8rem; color: #dc2626;">{{ $message }}</p>
-            @enderror
+            @if (Route::has('password.request'))
+                <div style="margin-top: 0.375rem; text-align: right;">
+                    <a href="{{ route('password.request') }}" style="font-size: 0.8rem; color: #ef4444; text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='#ef4444'">
+                        Esqueceu a senha?
+                    </a>
+                </div>
+            @endif
         </div>
 
         <!-- Lembrar-me -->

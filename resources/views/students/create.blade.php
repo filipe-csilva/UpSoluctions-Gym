@@ -260,9 +260,9 @@
 
                             <input
                                 type="text"
-                                name="address"
+                                name="andress"
                                 class="form-control"
-                                value="{{ old('address') }}"
+                                value="{{ old('andress') }}"
                             >
                         </div>
                     </div>

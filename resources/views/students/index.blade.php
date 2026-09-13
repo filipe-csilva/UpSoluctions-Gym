@@ -148,8 +148,8 @@
                                 </td>
 
                                 <td data-label="Status">
-                                    <span class="badge text-bg-{{ $student->active ? 'success' : 'secondary' }}">
-                                        {{ $student->active ? 'Ativo' : 'Inativo' }}
+                                    <span class="badge text-bg-{{ $student->user->active ? 'success' : 'secondary' }}">
+                                        {{ $student->user->active ? 'Ativo' : 'Inativo' }}
                                     </span>
                                 </td>
 

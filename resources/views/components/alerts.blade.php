@@ -8,6 +8,7 @@
         'info' => session('status'),
     ];
     $isLoginError = request()->routeIs('login') && $errors->has('email');
+    $isInactiveLogin = $isLoginError && $errors->first('email') === 'Usuário inativo. Entre em contato com o administrador.';
     if ($message) {
         $flashAlerts[$type ?: 'info'] = $message;
     }
@@ -27,6 +28,24 @@
         transition: opacity .3s ease, transform .3s ease;
     }
 
+    .app-alert-login {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        font-size: .85rem;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 575.98px) {
+        .app-alert-login {
+            width: calc(100vw - 2rem);
+            font-size: .72rem;
+        }
+    }
+
     .app-alert.is-leaving {
         opacity: 0;
         transform: translateX(120%);
@@ -39,16 +58,15 @@
             <div class="alert alert-{{ $type }} alert-dismissible fade show app-alert" role="alert" data-auto-dismiss>
                 <i class="bi bi-{{ $type === 'success' ? 'check-circle' : ($type === 'danger' ? 'exclamation-circle' : 'info-circle') }} me-2"></i>
                 {{ $message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
             </div>
         @endif
     @endforeach
 
     @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show app-alert" role="alert" data-auto-dismiss>
-            <i class="bi bi-exclamation-circle me-2"></i>
+        <div class="alert alert-{{ $isInactiveLogin ? 'warning' : 'danger' }} alert-dismissible fade show app-alert{{ $isLoginError ? ' app-alert-login' : '' }}" role="alert" data-auto-dismiss>
+            <i class="bi bi-{{ $isInactiveLogin ? 'exclamation-triangle' : 'exclamation-circle' }} me-2"></i>
             @if ($isLoginError)
-                O E-mail ou a senha está inválido!
+                {{ $isInactiveLogin ? $errors->first('email') : 'O E-mail ou a senha está inválido!' }}
             @else
                 <strong>Verifique os campos informados.</strong>
                 <ul class="mb-0 mt-2">
@@ -57,7 +75,6 @@
                     @endforeach
                 </ul>
             @endif
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
         </div>
     @endif
 </div>
@@ -67,6 +84,6 @@
         window.setTimeout(() => {
             alert.classList.add('is-leaving');
             window.setTimeout(() => alert.remove(), 300);
-        }, 5000);
+        }, 7000);
     });
 </script>

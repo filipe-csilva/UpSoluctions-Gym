@@ -26,6 +26,7 @@ class StudentController extends Controller
 
         $students = StudentProfile::query()
             ->with(['user.unit'])
+            ->whereHas('user')
             ->when($request->filled('search'), function ($query) use ($request): void {
                 $search = $request->string('search')->toString();
                 $query->where(function ($studentQuery) use ($search): void {
@@ -45,7 +46,9 @@ class StudentController extends Controller
                 });
             })
             ->when($request->filled('active'), function ($query) use ($request): void {
-                $query->where('active', $request->boolean('active'));
+                $query->whereHas('user', function ($userQuery) use ($request): void {
+                    $userQuery->where('active', $request->boolean('active'));
+                });
             })
             ->when($user->role?->value === 'manager', function ($query) use ($user): void {
                 $query->whereHas('user', function ($userQuery) use ($user): void {
@@ -132,7 +135,7 @@ class StudentController extends Controller
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20', new ValidPhone],
             'gender' => ['nullable', 'string', 'max:20'],
-            'address' => ['nullable', 'string', 'max:255'],
+            'andress' => ['nullable', 'string', 'max:255'],
             'number' => ['nullable', 'string', 'max:20'],
             'neighborhood' => ['nullable', 'string', 'max:100'],
             'city' => ['nullable', 'string', 'max:100'],
@@ -156,7 +159,7 @@ class StudentController extends Controller
                 'unit_id' => $validated['unit_id'],
                 'active' => (bool) ($validated['active'] ?? false),
             ]);
-            $student->update(collect($validated)->except(['name', 'email', 'unit_id'])->all() + ['active' => (bool) ($validated['active'] ?? false)]);
+            $student->update(collect($validated)->except(['name', 'email', 'unit_id', 'active'])->all());
         });
         ActivityLog::record('updated', $student, 'Aluno atualizado.', ['attributes' => $student->only(['user_id', 'cpf', 'phone'])]);
 
@@ -181,7 +184,7 @@ class StudentController extends Controller
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20', new ValidPhone],
             'gender' => ['nullable', 'string', 'max:20'],
-            'address' => ['nullable', 'string', 'max:255'],
+            'andress' => ['nullable', 'string', 'max:255'],
             'number' => ['nullable', 'string', 'max:20'],
             'neighborhood' => ['nullable', 'string', 'max:100'],
             'city' => ['nullable', 'string', 'max:100'],
@@ -215,7 +218,7 @@ class StudentController extends Controller
                 'birth_date' => $validated['birth_date'],
                 'phone' => $validated['phone'],
                 'gender' => $validated['gender'] ?? null,
-                'address' => $validated['address'] ?? null,
+                'andress' => $validated['andress'] ?? null,
                 'number' => $validated['number'] ?? null,
                 'neighborhood' => $validated['neighborhood'] ?? null,
                 'city' => $validated['city'] ?? null,
@@ -241,11 +244,10 @@ class StudentController extends Controller
 
         DB::transaction(function () use ($student): void {
             $student->load('user');
-            $student->update(['is_deleted' => true]);
             $student->user?->update(['is_deleted' => true, 'active' => false]);
         });
 
-        ActivityLog::record('deleted', $student, 'Aluno excluído logicamente.', ['is_deleted' => true]);
+        ActivityLog::record('deleted', $student, 'Aluno excluído logicamente.', ['user_is_deleted' => true]);
 
         return redirect()->route('students.index')->with('success', 'Aluno excluído com sucesso.');
     }

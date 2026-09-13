@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\ActivityLog;
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -42,6 +43,23 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+
+        $user = User::query()
+            ->where('email', $this->string('email')->toString())
+            ->first();
+
+        if ($user !== null && ! $user->active) {
+            ActivityLog::record(
+                'login_inactive',
+                $user,
+                'Tentativa de login de usuário inativo.',
+                ['email' => $this->string('email')->toString()],
+            );
+
+            throw ValidationException::withMessages([
+                'email' => 'Usuário inativo. Entre em contato com o administrador.',
+            ]);
+        }
 
         if (! Auth::attempt([
             'email' => $this->string('email')->toString(),
