@@ -20,18 +20,7 @@
 @stop
 
 @section('content')
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Verifique os campos abaixo:</strong>
-
-            <ul class="mb-0 mt-2">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <x-alerts />
 
     <form method="POST"
           action="{{ route('students.store') }}">

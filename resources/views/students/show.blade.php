@@ -12,9 +12,7 @@
 @stop
 
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    <x-alerts />
     <div class="card">
         <div class="card-header"><h3 class="card-title">{{ $student?->user?->name ?? auth()->user()?->name }}</h3></div>
         <div class="card-body">
@@ -31,7 +29,7 @@
                 <dt class="col-sm-3">Observações</dt><dd class="col-sm-9">{{ $student?->notes ?: '-' }}</dd>
             </dl>
             @if (!$student)
-                <div class="alert alert-warning mt-3 mb-0">Seu perfil de aluno ainda não possui dados complementares cadastrados.</div>
+                <x-alerts type="warning" message="Seu perfil de aluno ainda não possui dados complementares cadastrados." />
             @endif
         </div>
     </div>

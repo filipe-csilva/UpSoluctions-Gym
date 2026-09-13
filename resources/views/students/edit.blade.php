@@ -5,9 +5,7 @@
 @section('content_header')<h1>Editar aluno</h1>@stop
 
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger"><ul class="mb-0">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
-    @endif
+    <x-alerts />
     <form method="POST" action="{{ route('students.update', $student) }}">
         @csrf @method('PUT')
         <div class="card"><div class="card-body"><div class="row">

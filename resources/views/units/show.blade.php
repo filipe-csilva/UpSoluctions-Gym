@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between align-items-center"><h1>Detalhes da unidade</h1><a href="{{ route('units.edit', $unit) }}" class="btn btn-primary">Editar</a></div>
 @stop
 @section('content')
-    @if (session('success'))<div class="alert alert-success">{{ session('success') }}</div>@endif
+    <x-alerts />
     <div class="card"><div class="card-body"><dl class="row mb-0">
         <dt class="col-sm-3">Nome</dt><dd class="col-sm-9">{{ $unit->name }}</dd>
         <dt class="col-sm-3">Código</dt><dd class="col-sm-9">{{ $unit->code }}</dd>

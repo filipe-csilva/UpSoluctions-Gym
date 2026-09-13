@@ -263,9 +263,9 @@ php artisan migrate:fresh --seed
 ## Fase 02 — Usuários e Acesso
 
 * 🟨 Roles
-* ⬜ Middleware de autorização
+* 🟩 Middleware de autorização
 * ⬜ Policies
-* ⬜ Gates
+* 🟩 Gates
 * ⬜ Permissões por módulo
 * 🟩 Permissões por unidade
 * ⬜ CRUD de usuários
@@ -576,7 +576,7 @@ Aluno
 | Modelagem         | 🟩     |
 | Migrations        | 🟩     |
 | Usuários / Roles  | 🟨     |
-| Unidades          | 🟨     |
+| Unidades          | 🟩     |
 | Alunos            | 🟩     |
 | Professores       | 🟨     |
 | Planos            | 🟨     |
@@ -587,7 +587,7 @@ Aluno
 | Treinos           | 🟨     |
 | Avaliações        | 🟨     |
 | Comunicados       | 🟨     |
-| CRUDs de domínio  | ⬜      |
+| CRUDs de domínio  | 🟨      |
 | Dashboards        | 🟩     |
 | Área do aluno     | ⬜      |
 | Relatórios        | ⬜      |

@@ -71,13 +71,7 @@
 @stop
 
 @section('content')
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
-
+    <x-alerts />
     <div class="card">
         <div class="card-body table-responsive">
             <table class="units-table table table-hover align-middle mb-0">

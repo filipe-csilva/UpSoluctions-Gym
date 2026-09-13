@@ -52,12 +52,6 @@
     </div>
 </div>
 
-@if ($errors->any())
-    <div class="alert alert-danger mt-3">
-        <ul class="mb-0">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
-    </div>
-@endif
-
 <div class="form-actions d-flex flex-wrap gap-2 mt-4">
     <button class="btn btn-success"><i class="bi bi-check-lg"></i> Salvar</button>
     <a href="{{ route('units.index') }}" class="btn btn-secondary">Cancelar</a>

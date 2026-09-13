@@ -1,49 +1,5 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    @if (session('status'))
-        <div style="margin-bottom: 1.5rem; padding: 0.75rem 1rem; background: #dcfce7; color: #166534; border-radius: 0.5rem; font-size: 0.875rem; border: 1px solid #86efac;">
-            {{ session('status') }}
-        </div>
-    @endif
-
-    @if ($errors->has('email'))
-        <div id="login-error-alert" class="alert alert-danger position-fixed top-0 end-0 m-3 login-error-alert" role="alert" style="z-index: 1050; min-width: min(24rem, calc(100vw - 2rem));">
-            O E-mail ou a senha está inválido!
-        </div>
-    @endif
-
-    @if ($errors->has('email'))
-        <style>
-            .login-error-alert {
-                animation: login-alert-slide 5.3s ease-in-out forwards;
-            }
-
-            @keyframes login-alert-slide {
-                0% {
-                    opacity: 0;
-                    transform: translateX(120%);
-                }
-                6% {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-                94% {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-                100% {
-                    opacity: 0;
-                    transform: translateX(120%);
-                }
-            }
-        </style>
-
-        <script>
-            window.setTimeout(() => {
-                document.getElementById('login-error-alert')?.remove();
-            }, 5300);
-        </script>
-    @endif
+    <x-alerts />
 
     <form method="POST" action="{{ route('login') }}" style="margin: 0; padding: 0;">
         @csrf
