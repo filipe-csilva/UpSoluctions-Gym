@@ -14,12 +14,38 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'unit_id', 'role', 'is_deleted', 'active'])]
+#[Fillable(['name', 'email', 'password', 'unit_id', 'role', 'is_deleted', 'active', 'avatar_path'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    public function getProfilePhotoUrlAttribute(): string
+    {
+        return $this->avatar_path ? asset('storage/'.$this->avatar_path) : '';
+    }
+
+    public function profileAvatarInitials(): string
+    {
+        $names = preg_split('/\s+/', trim($this->name)) ?: [];
+        $initials = collect(array_slice($names, 0, 2))
+            ->map(static fn (string $name): string => mb_substr($name, 0, 1))
+            ->implode('');
+
+        return mb_strtoupper($initials ?: mb_substr($this->name, 0, 2));
+    }
+
+    public function profileAvatarGenderClass(): string
+    {
+        $gender = mb_strtolower((string) $this->studentProfile?->gender);
+
+        return match (true) {
+            in_array($gender, ['m', 'masculino', 'male'], true) => 'profile-avatar-male',
+            in_array($gender, ['f', 'feminino', 'female'], true) => 'profile-avatar-female',
+            default => 'profile-avatar-other',
+        };
+    }
 
     /**
      * Get the attributes that should be cast.

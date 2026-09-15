@@ -10,6 +10,230 @@
 @import 'overlayscrollbars/overlayscrollbars.css';
 @import 'admin-lte/dist/css/adminlte.css';
 
+.gym-dashboard-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.profile-avatar { display: grid; place-items: center; width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, #1d80ed, #79b8ff); color: #fff; font-size: 2rem; font-weight: 700; }
+.profile-avatar-male { background: #1677e8; }
+.profile-avatar-female { background: #e64980; }
+.profile-avatar-other { background: #111827; }
+.gym-user-avatar { display: inline-grid !important; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: #fff; font-size: .7rem; font-weight: 700; line-height: 1; }
+.profile-session-list .border-bottom { padding-top: .6rem !important; padding-bottom: .6rem !important; }
+.profile-session-list .fw-semibold { font-size: .95rem; }
+.profile-session-list small { font-size: .78rem; }
+
+.gym-dashboard-heading h1 {
+  margin: 0;
+  color: #10213c;
+  font-size: clamp(1.55rem, 2.6vw, 2.15rem);
+  font-weight: 700;
+}
+
+.gym-dashboard-meta { display: flex; flex-direction: column; align-items: flex-end; gap: .35rem; }
+
+.gym-dashboard-heading p {
+  margin: .25rem 0 0;
+  color: #687892;
+}
+
+.gym-dashboard-heading .gym-dashboard-eyebrow {
+  margin: 0;
+  color: #2478ed;
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.gym-dashboard-motto {
+  color: #50627c;
+  font-size: .85rem;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.gym-dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.gym-metric {
+  min-height: 145px;
+  padding: 1rem;
+  border: 1px solid var(--gym-metric-border, #8fc0ff);
+  border-radius: .55rem;
+  background: var(--gym-metric-bg, #e7f1ff);
+  color: #14233d;
+}
+
+.gym-metric i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.45rem;
+  height: 2.45rem;
+  margin-bottom: .65rem;
+  border-radius: .55rem;
+  background: var(--gym-metric-icon-bg, #c5e0ff);
+  color: var(--gym-metric-icon, #1477ee);
+  font-size: 1.35rem;
+}
+
+.gym-metric span,
+.gym-metric strong,
+.gym-metric small {
+  display: block;
+}
+
+.gym-metric span { font-size: .82rem; }
+.gym-metric strong { margin-top: .2rem; font-size: 1.65rem; line-height: 1.1; }
+.gym-metric strong.gym-metric-development { font-size: 1rem; line-height: 1.35; }
+.gym-metric small { margin-top: .35rem; color: #687892; font-size: .7rem; }
+.gym-metric-success { --gym-metric-bg: #e6faed; --gym-metric-border: #8de0ad; --gym-metric-icon-bg: #c2f3d3; --gym-metric-icon: #079447; }
+.gym-metric-warning { --gym-metric-bg: #fff4ce; --gym-metric-border: #f0ca54; --gym-metric-icon-bg: #ffe59a; --gym-metric-icon: #c77d00; }
+.gym-metric-purple { --gym-metric-bg: #f0e5ff; --gym-metric-border: #c29aff; --gym-metric-icon-bg: #dfc8ff; --gym-metric-icon: #6631c7; }
+.gym-metric-orange { --gym-metric-bg: #fff0c4; --gym-metric-border: #f2c14d; --gym-metric-icon-bg: #ffdf83; --gym-metric-icon: #c47a00; }
+
+.gym-dashboard-lists .card {
+  border: 1px solid #e1e9f2;
+  border-radius: .55rem;
+  box-shadow: 0 .25rem 1rem rgba(35, 67, 105, .06);
+}
+
+.gym-dashboard-lists .card-header { display: flex; align-items: center; gap: .75rem; }
+.gym-dashboard-lists .gym-panel-heading { flex: 1; min-width: 0; }
+
+.gym-dashboard-overview { row-gap: 1rem; margin-bottom: 1rem; }
+.gym-dashboard-panel { border: 1px solid #e1e9f2; border-radius: .55rem; box-shadow: 0 .25rem 1rem rgba(35, 67, 105, .06); }
+.gym-dashboard-panel .card-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: transparent; border-bottom: 1px solid #edf1f6; }
+.gym-dashboard-panel .card-header:has(.gym-panel-icon) { justify-content: flex-start; }
+.gym-panel-heading { flex: 1; min-width: 0; }
+.gym-dashboard-panel .card-title { display: block; float: none !important; margin: 0 0 .15rem; color: #152640; font-size: 1rem; font-weight: 700; }
+.gym-dashboard-panel .card-header small { display: block; margin-top: .15rem; color: #74829a; }
+.gym-panel-icon { font-size: 1.25rem; }
+.gym-view-all { color: #1477ee; font-size: .76rem; text-decoration: none; white-space: nowrap; }
+.gym-view-all:hover { color: #0b5fc7; }
+.gym-period-filter select { padding: .35rem 1.8rem .35rem .6rem; border: 1px solid #dce5ef; border-radius: .35rem; background: transparent; color: #4f617b; font-size: .75rem; }
+.gym-evolution-chart { height: 210px; border-bottom: 1px solid #dce5ef; }
+.gym-evolution-chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.gym-chart-grid-line { stroke: #dce5ef; stroke-width: 1; stroke-dasharray: 3 4; }
+.gym-chart-line { fill: none; stroke: #1477ee; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.gym-chart-point { fill: #fff; stroke: #1477ee; stroke-width: 3; }
+.gym-chart-value { fill: #1477ee; font-size: 12px; font-weight: 700; }
+.gym-chart-label { fill: #63748e; font-size: 11px; }
+.gym-chart-scale { fill: #63748e; font-size: 10px; }
+.gym-unit-row { display: flex; align-items: center; gap: .65rem; padding: .72rem 0; border-bottom: 1px solid #edf1f6; color: #263650; }
+.gym-unit-row:last-child { border-bottom: 0; }
+.gym-unit-dot { width: .7rem; height: .7rem; border-radius: 50%; background: #2385f5; box-shadow: 0 0 0 .25rem #e0efff; }
+.gym-unit-row:nth-child(2) .gym-unit-dot { background: #28b979; box-shadow: 0 0 0 .25rem #ddf8e9; }
+.gym-unit-row:nth-child(3) .gym-unit-dot { background: #8751e7; box-shadow: 0 0 0 .25rem #eee5ff; }
+.gym-unit-chart { display: grid; place-items: center; width: 118px; height: 118px; margin: 0 auto 1rem; border-radius: 50%; background: conic-gradient(#2385f5 0 var(--gym-unit-first), #28b979 var(--gym-unit-first) 100%); position: relative; }
+.gym-unit-chart::after { content: ''; position: absolute; inset: 23px; border-radius: 50%; background: var(--bs-body-bg, #fff); }
+.gym-unit-chart span { position: relative; z-index: 1; color: #152640; font-size: 1.15rem; font-weight: 700; }
+.gym-due-list { padding: .35rem 1rem; }
+.gym-due-list > div { display: flex; justify-content: space-between; gap: .5rem; padding: .72rem 0; border-bottom: 1px solid #edf1f6; font-size: .78rem; }
+.gym-due-list > div:last-child { border-bottom: 0; }
+.gym-due-list strong { color: #6e7d93; font-weight: 500; text-align: right; }
+.gym-activities-panel { margin-bottom: 1rem; }
+.gym-activities-panel .card-body { max-height: 315px; overflow-y: auto; }
+.gym-activities-list { display: grid; grid-template-columns: 1fr; }
+.gym-activity-item { display: flex; align-items: center; gap: .65rem; padding: .62rem 1rem; border-bottom: 1px solid #edf1f6; }
+.gym-activity-icon { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 50%; background: #e9f6ee; color: #14a35a; }
+.gym-activity-success { background: #e9f6ee; color: #14a35a; }
+.gym-activity-danger { background: #ffe9e9; color: #df3030; }
+.gym-activity-primary { background: #e8f1ff; color: #1976e8; }
+.gym-activity-warning { background: #fff3d1; color: #d89100; }
+.gym-activity-item strong, .gym-activity-item small { display: block; }
+.gym-activity-item strong { color: #23344f; font-size: .82rem; }
+.gym-activity-item small { margin-top: .15rem; color: #75839a; font-size: .72rem; }
+.gym-quick-actions { margin-top: 1rem; margin-bottom: 1rem; }
+.gym-actions-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
+.gym-action { display: flex; align-items: center; gap: .7rem; padding: .85rem 1rem; border: 1px solid #dce7f4; border-radius: .45rem; color: #21334e; text-decoration: none; }
+.gym-action > i:first-child { font-size: 1.35rem; }
+.gym-action span { flex: 1; }
+.gym-action strong, .gym-action small { display: block; }
+.gym-action strong { font-size: .76rem; white-space: nowrap; }
+.gym-action small { margin-top: .15rem; color: #73829a; font-size: .68rem; white-space: nowrap; }
+.gym-action > i:last-child { font-size: .9rem; }
+.gym-action-green { background: #effcf4; color: #0d9b53; }
+.gym-action-blue { background: #eff6ff; color: #1779e9; }
+.gym-action-purple { background: #f7f1ff; color: #7540d6; }
+.gym-action-orange { background: #fff9e9; color: #d79000; }
+.gym-action-slate { background: #f1f5f9; color: #53657d; }
+
+@media (max-width: 1199.98px) {
+  .gym-dashboard-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767.98px) {
+  .gym-dashboard-heading { align-items: flex-start; flex-direction: column; }
+  .gym-dashboard-meta { align-items: flex-start; }
+  .gym-dashboard-motto { white-space: normal; }
+  .gym-dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gym-actions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gym-action strong, .gym-action small { white-space: normal; }
+}
+
+@media (max-width: 479.98px) {
+  .gym-dashboard-metrics { grid-template-columns: 1fr; }
+  .gym-actions-grid { grid-template-columns: 1fr; }
+}
+
+[data-bs-theme="dark"] .gym-dashboard-heading h1,
+[data-bs-theme="dark"] .gym-dashboard-panel .card-title,
+[data-bs-theme="dark"] .gym-activity-item strong,
+[data-bs-theme="dark"] .gym-unit-row,
+[data-bs-theme="dark"] .gym-action {
+  color: #edf4ff;
+}
+
+[data-bs-theme="dark"] .gym-metric { color: #14233d; }
+
+[data-bs-theme="dark"] .gym-dashboard-heading p,
+[data-bs-theme="dark"] .gym-dashboard-heading .gym-dashboard-motto,
+[data-bs-theme="dark"] .gym-dashboard-panel .card-header small,
+[data-bs-theme="dark"] .gym-metric small,
+[data-bs-theme="dark"] .gym-activity-item small,
+[data-bs-theme="dark"] .gym-due-list strong,
+[data-bs-theme="dark"] .gym-action small {
+  color: #aabbd2;
+}
+
+[data-bs-theme="dark"] .gym-dashboard-panel,
+[data-bs-theme="dark"] .gym-dashboard-lists .card {
+  border-color: #526174;
+  background: #20262c;
+  box-shadow: none;
+}
+
+[data-bs-theme="dark"] .gym-dashboard-panel .card-header,
+[data-bs-theme="dark"] .gym-dashboard-panel .card-footer,
+[data-bs-theme="dark"] .gym-unit-row,
+[data-bs-theme="dark"] .gym-due-list > div,
+[data-bs-theme="dark"] .gym-activity-item,
+[data-bs-theme="dark"] .gym-dashboard-panel .table > :not(caption) > * > * {
+  border-color: #3f4b59;
+}
+
+[data-bs-theme="dark"] .gym-dashboard-panel .table,
+[data-bs-theme="dark"] .gym-dashboard-panel .table > :not(caption) > * > * {
+  color: #edf4ff;
+  background-color: transparent;
+}
+
+[data-bs-theme="dark"] .gym-action-green { background: #087f47; color: #ffffff; }
+[data-bs-theme="dark"] .gym-action-blue { background: #1266c4; color: #ffffff; }
+[data-bs-theme="dark"] .gym-action-purple { background: #6835b8; color: #ffffff; }
+[data-bs-theme="dark"] .gym-action-orange { background: #b87500; color: #ffffff; }
+[data-bs-theme="dark"] .gym-action-slate { background: #265ca8; color: #ffffff; }
+
 /*
  * Option B: compile from source to customise SCSS variables. Comment out
  * the admin-lte CSS import above and use this instead (requires `sass`):

@@ -453,6 +453,15 @@ Aluno
 
 ### Administrador
 
+#### Tasks concluídas nesta atualização
+
+* Dashboard baseado no layout adotado do AdminLTE.
+* Evolução de alunos com gráfico em linha e filtros de período.
+* Distribuição de alunos por unidade com gráfico pizza.
+* Atividades recentes no dashboard.
+* Perfil com avatar, iniciais e abas de senha e sessões.
+* Registro de login e logout com informações de dispositivo, navegador e IP.
+
 * 🟩 Dashboard inicial baseado no `demo/dashboard-v2` do AdminLTE
 * 🟩 Total de alunos e instrutores
 * 🟩 Lista dos 6 alunos mais recentes cadastrados no dia
