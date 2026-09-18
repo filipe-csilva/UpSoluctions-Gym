@@ -71,6 +71,12 @@ function initFullscreenPersistence() {
   })
 }
 
+function initRootUrl() {
+  if (window.location.pathname !== '/') {
+    window.history.replaceState({}, document.title, '/')
+  }
+}
+
 function parseConfig(el, attr) {
   const raw = el.getAttribute(attr)
   if (!raw) return {}
@@ -243,8 +249,54 @@ function initTreeviewA11y() {
   })
 }
 
+// --- ViaCEP ---------------------------------------------------------------
+function initViaCep() {
+  document.querySelectorAll('form[data-viacep]').forEach((form) => {
+    const zip = form.elements.namedItem('zip_code')
+    if (!zip || zip.dataset.viacepReady) return
+
+    const fields = ['address', 'neighborhood', 'city', 'state']
+    const status = document.createElement('small')
+    status.className = 'form-text'
+    zip.closest('.form-group, .col-md-2, .col-md-3, .col-md-4, .mb-3')?.append(status)
+
+    const lookup = async () => {
+      const cep = zip.value.replace(/\D/g, '')
+      if (cep.length !== 8) return
+
+      status.textContent = 'Consultando CEP...'
+      status.className = 'form-text text-muted'
+
+      try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        const data = await response.json()
+        if (data.erro) throw new Error('CEP não encontrado')
+
+        fields.forEach((field) => {
+          const input = form.elements.namedItem(field)
+          if (input && data[field === 'address' ? 'logradouro' : field === 'neighborhood' ? 'bairro' : field === 'city' ? 'localidade' : 'uf']) {
+            input.value = data[field === 'address' ? 'logradouro' : field === 'neighborhood' ? 'bairro' : field === 'city' ? 'localidade' : 'uf']
+          }
+        })
+        status.textContent = 'Endereço preenchido automaticamente.'
+        status.className = 'form-text text-success'
+      } catch (error) {
+        status.textContent = 'CEP não encontrado.'
+        status.className = 'form-text text-danger'
+      }
+    }
+
+    zip.addEventListener('blur', lookup)
+    zip.addEventListener('input', () => {
+      zip.value = zip.value.replace(/\D/g, '').slice(0, 8)
+    })
+    zip.dataset.viacepReady = 'true'
+  })
+}
+
 whenReady(() => {
   setGymControlFavicon()
+  initRootUrl()
   initFullscreenPersistence()
   // Wire OverlayScrollbars to the sidebar (matches the AdminLTE demo behaviour)
   const sidebar = document.querySelector('.sidebar-wrapper')
@@ -263,4 +315,5 @@ whenReady(() => {
   initDatatables()
   initEditors()
   initTreeviewA11y()
+  initViaCep()
 })

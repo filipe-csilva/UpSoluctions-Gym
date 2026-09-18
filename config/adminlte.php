@@ -258,6 +258,12 @@ return [
             'can' => 'view-teachers',
         ],
         [
+            'text' => 'Funcionários',
+            'route' => 'employees.index',
+            'icon' => 'bi bi-person-badge',
+            'can' => 'view-employees',
+        ],
+        [
             'text' => 'Unidades',
             'route' => 'units.index',
             'icon' => 'bi bi-building',

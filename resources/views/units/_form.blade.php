@@ -20,7 +20,11 @@
         <label for="email" class="form-label">E-mail</label>
         <input id="email" type="email" name="email" value="{{ old('email', $unit->email) }}" class="form-control">
     </div>
-    <div class="col-md-9">
+    <div class="col-md-3">
+        <label for="zip_code" class="form-label">CEP</label>
+        <input id="zip_code" name="zip_code" value="{{ old('zip_code', $unit->zip_code) }}" class="form-control">
+    </div>
+    <div class="col-md-6">
         <label for="address" class="form-label">Endereço</label>
         <input id="address" name="address" value="{{ old('address', $unit->address) }}" class="form-control">
     </div>
@@ -36,13 +40,9 @@
         <label for="city" class="form-label">Cidade</label>
         <input id="city" name="city" value="{{ old('city', $unit->city) }}" class="form-control">
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         <label for="state" class="form-label">UF</label>
         <input id="state" name="state" value="{{ old('state', $unit->state) }}" maxlength="2" class="form-control">
-    </div>
-    <div class="col-md-2">
-        <label for="zip_code" class="form-label">CEP</label>
-        <input id="zip_code" name="zip_code" value="{{ old('zip_code', $unit->zip_code) }}" class="form-control">
     </div>
     <div class="col-12">
         <div class="form-check">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -30,6 +31,9 @@ Route::resource('teachers', TeacherController::class)
 
 Route::resource('units', UnitController::class)
     ->middleware(['auth', 'verified', 'can:view-units']);
+
+Route::resource('employees', EmployeeController::class)
+    ->middleware(['auth', 'verified', 'can:view-employees']);
 
 // Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 //     require __DIR__.'/admin.php';

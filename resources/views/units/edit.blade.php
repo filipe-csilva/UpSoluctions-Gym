@@ -4,7 +4,7 @@
 @section('content')
     <x-alerts />
     <div class="card"><div class="card-body">
-        <form method="POST" action="{{ route('units.update', $unit) }}">
+        <form method="POST" action="{{ route('units.update', $unit) }}" data-viacep>
             @include('units._form')
         </form>
     </div></div>

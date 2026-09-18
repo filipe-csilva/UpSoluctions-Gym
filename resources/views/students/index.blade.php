@@ -66,12 +66,6 @@
         }
     </style>
 @endpush
-@push('js')
-    <script>
-        window.history.replaceState({}, document.title, '/');
-    </script>
-@endpush
-
 @section('content_header')
 
     <div class="students-header d-flex justify-content-between align-items-center">
@@ -158,11 +152,6 @@
                                         <i class="bi bi-eye"></i>
                                         Visualizar
                                     </a>
-                                    <form method="POST" action="{{ route('students.destroy', $student) }}" class="d-inline" onsubmit="return confirm('Deseja excluir este aluno?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir aluno"><i class="bi bi-trash"></i></button>
-                                    </form>
                                 </td>
 
                             </tr>

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\UserRole;
+use App\Models\EmployeeProfile;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -30,7 +31,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        User::firstOrCreate(
+        $admin = User::firstOrCreate(
             ['email' => 'admin@upsoluctions.com.br'],
             [
                 'name' => 'UpSoluctions',
@@ -40,6 +41,8 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ],
         );
+
+        EmployeeProfile::firstOrCreate(['user_id' => $admin->id]);
 
         $this->call(StudentSeeder::class);
         $this->call(TeacherSeeder::class);

@@ -30,7 +30,8 @@ O objetivo é centralizar o gerenciamento de **unidades, usuários, alunos, prof
 ### Frontend
 
 * Blade
-* Tailwind CSS
+* Bootstrap / AdminLTE
+* Tailwind CSS (dependência disponível)
 * Alpine.js
 * Vite
 
@@ -287,7 +288,7 @@ Aluno
 * 🟩 Migration
 * 🟨 Relacionamentos
 * 🟩 Controller
-* 🟨 Requests
+* 🟩 Requests
 * 🟩 Rotas
 * 🟩 CRUD
 * 🟩 Ativação/Inativação
@@ -301,7 +302,7 @@ Aluno
 * 🟩 Migration
 * 🟨 Relacionamentos
 * 🟩 Controller
-* 🟨 Requests/validações
+* 🟩 Requests/validações
 * 🟩 Listagem paginada
 * 🟩 Cadastro
 * 🟩 Tela de detalhes
@@ -316,11 +317,15 @@ Aluno
 * 🟩 Model
 * 🟩 Migration
 * 🟨 Relacionamentos
-* 🟨 Controller (listagem implementada)
-* ⬜ Requests
-* 🟨 Listagem paginada com filtros
+* 🟩 Controller
+* 🟩 Requests e validações
+* 🟩 Listagem paginada com filtros
+* 🟩 Cadastro
+* 🟩 Tela de detalhes
+* 🟩 Edição do cadastro
+* 🟩 Exclusão lógica com registro no log
 * ⬜ Alunos vinculados
-* 🟨 Interface inicial
+* 🟩 Interface
 * 🟩 Seeder com 5 instrutores distribuídos em 2 unidades
 
 ---
@@ -472,8 +477,8 @@ Aluno
 * ⬜ Despesas
 * ⬜ Inadimplência
 * ⬜ Presença
-* ⬜ Indicadores por unidade
-* ⬜ Gráficos
+* 🟩 Indicadores por unidade
+* 🟩 Gráficos
 
 ### Professor
 
@@ -617,33 +622,27 @@ A próxima sequência recomendada é:
 ```text
 1. Roles e autorização
         ↓
-2. CRUD de Unidades
+2. CRUD de Professores
         ↓
-3. CRUD de Alunos (implementado)
+3. CRUD de Planos
         ↓
-4. CRUD de Professores
+4. Matrículas
         ↓
-5. CRUD de Planos
+5. Financeiro
         ↓
-6. Matrículas
+6. Presença
         ↓
-7. Financeiro
+7. Exercícios e Treinos
         ↓
-8. Presença
+8. Avaliações
         ↓
-9. Exercícios e Treinos
+9. Área do Aluno
         ↓
-10. Avaliações
+10. Relatórios
         ↓
-11. Dashboards (dashboard administrativo inicial implementado)
+11. Testes
         ↓
-12. Área do Aluno
-        ↓
-13. Relatórios
-        ↓
-14. Testes
-        ↓
-15. API / Produção
+12. API / Produção
 ```
 
 ---

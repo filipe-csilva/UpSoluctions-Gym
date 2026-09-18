@@ -2,12 +2,6 @@
 
 @section('title', 'Dashboard')
 
-@push('js')
-    <script>
-        window.history.replaceState({}, document.title, '/');
-    </script>
-@endpush
-
 @section('content_header')
     <div class="gym-dashboard-heading">
         <div>

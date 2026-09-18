@@ -6,7 +6,14 @@
     <div class="d-flex justify-content-between align-items-center">
         <h1>Detalhes do aluno</h1>
         @if (auth()->user()?->role?->value === 'admin' && $student)
-            <a href="{{ route('students.edit', $student) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
+            <div class="d-flex gap-2">
+                <a href="{{ route('students.edit', $student) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
+                <form method="POST" action="{{ route('students.destroy', $student) }}" onsubmit="return confirm('Deseja excluir este aluno?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" title="Excluir aluno"><i class="bi bi-trash"></i> Excluir</button>
+                </form>
+            </div>
         @endif
     </div>
 @stop

@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Models\ActivityLog;
 use App\Models\StudentProfile;
 use App\Models\Unit;
 use App\Models\User;
-use App\Rules\ValidCpf;
-use App\Rules\ValidPhone;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class StudentController extends Controller
@@ -122,30 +123,11 @@ class StudentController extends Controller
         return view('students.edit', compact('student', 'units'));
     }
 
-    public function update(Request $request, StudentProfile $student): RedirectResponse
+    public function update(UpdateStudentRequest $request, StudentProfile $student): RedirectResponse
     {
         $this->authorizeStudentAccess($student);
         $student->load('user');
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email:rfc', 'max:255', Rule::unique('users', 'email')->ignore($student->user_id)],
-            'unit_id' => ['required', 'exists:units,id'],
-            'active' => ['boolean'],
-            'cpf' => ['required', 'string', 'max:14', new ValidCpf, Rule::unique('student_profiles', 'cpf')->ignore($student->id)],
-            'birth_date' => ['required', 'date', 'before:today'],
-            'phone' => ['required', 'string', 'max:20', new ValidPhone],
-            'gender' => ['nullable', 'string', 'max:20'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'number' => ['nullable', 'string', 'max:20'],
-            'neighborhood' => ['nullable', 'string', 'max:100'],
-            'city' => ['nullable', 'string', 'max:100'],
-            'state' => ['nullable', 'string', 'size:2'],
-            'zip_code' => ['nullable', 'string', 'max:8'],
-            'emergency_contact' => ['nullable', 'string', 'max:150'],
-            'emergency_phone' => ['nullable', 'string', 'max:20', new ValidPhone],
-            'notes' => ['nullable', 'string'],
-        ]);
-
+        $validated = $request->validated();
         abort_unless(
             $request->user()->role?->value === 'admin'
                 || in_array((int) $validated['unit_id'], $request->user()->accessibleUnitIds(), true),
@@ -169,32 +151,9 @@ class StudentController extends Controller
     /**
      * Salva o aluno.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreStudentRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            // User
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email:rfc', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'unit_id' => ['required', 'exists:units,id'],
-            'active' => ['boolean'],
-
-            // StudentProfile
-            'cpf' => ['required', 'string', 'max:14', new ValidCpf, 'unique:student_profiles,cpf'],
-            'birth_date' => ['required', 'date', 'before:today'],
-            'phone' => ['required', 'string', 'max:20', new ValidPhone],
-            'gender' => ['nullable', 'string', 'max:20'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'number' => ['nullable', 'string', 'max:20'],
-            'neighborhood' => ['nullable', 'string', 'max:100'],
-            'city' => ['nullable', 'string', 'max:100'],
-            'state' => ['nullable', 'string', 'size:2'],
-            'zip_code' => ['nullable', 'string', 'max:10'],
-            'emergency_contact' => ['nullable', 'string', 'max:150'],
-            'emergency_phone' => ['nullable', 'string', 'max:20', new ValidPhone],
-            'notes' => ['nullable', 'string'],
-        ]);
-
+        $validated = $request->validated();
         abort_unless(
             $request->user()->role?->value === 'admin'
                 || in_array((int) $validated['unit_id'], $request->user()->accessibleUnitIds(), true),
@@ -206,7 +165,7 @@ class StudentController extends Controller
             $user = User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
-                'password' => Hash::make($validated['password']),
+                'password' => Str::random(64),
                 'unit_id' => $validated['unit_id'],
                 'role' => UserRole::STUDENT,
             ]);
@@ -232,9 +191,17 @@ class StudentController extends Controller
         });
         ActivityLog::record('created', $student, 'Aluno cadastrado.', ['attributes' => $student->only(['user_id', 'cpf'])]);
 
+        $resetStatus = Password::sendResetLink(['email' => $validated['email']]);
+
+        if ($resetStatus !== Password::RESET_LINK_SENT) {
+            return redirect()
+                ->route('students.index')
+                ->with('warning', 'Aluno cadastrado, mas não foi possível enviar o e-mail para definição da senha.');
+        }
+
         return redirect()
             ->route('students.index')
-            ->with('success', 'Aluno cadastrado com sucesso.');
+            ->with('success', 'Aluno cadastrado. Um e-mail foi enviado para definição da senha.');
     }
 
     public function destroy(StudentProfile $student): RedirectResponse
@@ -243,10 +210,11 @@ class StudentController extends Controller
 
         DB::transaction(function () use ($student): void {
             $student->load('user');
-            $student->user?->update(['is_deleted' => true, 'active' => false]);
+            $student->user?->update(['active' => false]);
+            $student->user?->delete();
         });
 
-        ActivityLog::record('deleted', $student, 'Aluno excluído logicamente.', ['user_is_deleted' => true]);
+        ActivityLog::record('deleted', $student, 'Aluno excluído logicamente.', ['deleted_at' => now()->toDateTimeString()]);
 
         return redirect()->route('students.index')->with('success', 'Aluno excluído com sucesso.');
     }

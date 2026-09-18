@@ -6,7 +6,7 @@
 
 @section('content')
     <x-alerts />
-    <form method="POST" action="{{ route('students.update', $student) }}">
+    <form method="POST" action="{{ route('students.update', $student) }}" data-viacep>
         @csrf @method('PUT')
         <div class="card"><div class="card-body"><div class="row">
             <div class="form-group col-md-6"><label for="name">Nome</label><input id="name" name="name" class="form-control" value="{{ old('name', $student->user->name) }}" required></div>

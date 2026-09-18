@@ -2,12 +2,6 @@
 
 @section('title', 'Cadastrar Aluno')
 
-@push('js')
-    <script>
-        window.history.replaceState({}, document.title, '/');
-    </script>
-@endpush
-
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1>Cadastrar Aluno</h1>
@@ -22,7 +16,7 @@
 @section('content')
     <x-alerts />
 
-    <form method="POST"
+    <form method="POST" data-viacep
           action="{{ route('students.store') }}">
 
         @csrf
@@ -96,30 +90,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Senha *</label>
-
-                            <input
-                                type="password"
-                                name="password"
-                                class="form-control"
-                                required
-                            >
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Confirmar senha *</label>
-
-                            <input
-                                type="password"
-                                name="password_confirmation"
-                                class="form-control"
-                                required
-                            >
-                        </div>
+                    <div class="col-md-6">
+                        <div class="form-text mt-2">A senha será definida pelo aluno através de um link enviado para este e-mail.</div>
                     </div>
 
                 </div>

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUnitRequest;
+use App\Http\Requests\UpdateUnitRequest;
 use App\Models\ActivityLog;
 use App\Models\Unit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class UnitController extends Controller
@@ -38,9 +39,9 @@ class UnitController extends Controller
         return view('units.create', ['unit' => new Unit]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUnitRequest $request): RedirectResponse
     {
-        $validated = $this->validatedData($request);
+        $validated = $request->validated();
         $unit = Unit::create($validated);
         ActivityLog::record('created', $unit, 'Unidade criada.', ['attributes' => $unit->only(['name', 'code'])]);
 
@@ -59,10 +60,10 @@ class UnitController extends Controller
         return view('units.edit', compact('unit'));
     }
 
-    public function update(Request $request, Unit $unit): RedirectResponse
+    public function update(UpdateUnitRequest $request, Unit $unit): RedirectResponse
     {
         $before = $unit->only(['name', 'code', 'active']);
-        $unit->update($this->validatedData($request, $unit));
+        $unit->update($request->validated());
         ActivityLog::record('updated', $unit, 'Unidade atualizada.', ['before' => $before, 'after' => $unit->only(['name', 'code', 'active'])]);
 
         return redirect()->route('units.show', $unit)->with('success', 'Unidade atualizada com sucesso.');
@@ -79,25 +80,5 @@ class UnitController extends Controller
         ActivityLog::record('deleted', $unit, 'Unidade excluída.', ['attributes' => $attributes]);
 
         return redirect()->route('units.index')->with('success', 'Unidade excluída com sucesso.');
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function validatedData(Request $request, ?Unit $unit = null): array
-    {
-        return $request->validate([
-            'name' => ['required', 'string', 'max:150'],
-            'code' => ['required', 'string', 'max:20', Rule::unique('units', 'code')->ignore($unit)],
-            'phone' => ['nullable', 'string', 'max:11'],
-            'email' => ['nullable', 'email:rfc', 'max:255'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'number' => ['nullable', 'string', 'max:10'],
-            'neighborhood' => ['nullable', 'string', 'max:100'],
-            'city' => ['nullable', 'string', 'max:100'],
-            'state' => ['nullable', 'string', 'size:2'],
-            'zip_code' => ['nullable', 'string', 'max:8'],
-            'active' => ['boolean'],
-        ]) + ['active' => $request->boolean('active')];
     }
 }
