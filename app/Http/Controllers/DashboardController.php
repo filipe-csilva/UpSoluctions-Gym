@@ -56,7 +56,20 @@ class DashboardController extends Controller
             ->get();
 
         return view('dashboard', [
-            'totalStudents' => StudentProfile::query()
+            'activeStudents' => StudentProfile::query()
+                ->whereHas('user', function ($query): void {
+                    $query->where('active', true);
+                })
+                ->when($isManager, function ($query) use ($unitIds): void {
+                    $query->whereHas('user', function ($userQuery) use ($unitIds): void {
+                        $userQuery->whereIn('unit_id', $unitIds);
+                    });
+                })
+                ->count(),
+            'inactiveStudents' => StudentProfile::query()
+                ->whereHas('user', function ($query): void {
+                    $query->where('active', false);
+                })
                 ->when($isManager, function ($query) use ($unitIds): void {
                     $query->whereHas('user', function ($userQuery) use ($unitIds): void {
                         $userQuery->whereIn('unit_id', $unitIds);

@@ -96,7 +96,9 @@
 .gym-metric strong { margin-top: .2rem; font-size: 1.65rem; line-height: 1.1; }
 .gym-metric strong.gym-metric-development { font-size: 1rem; line-height: 1.35; }
 .gym-metric small { margin-top: .35rem; color: #687892; font-size: .7rem; }
+.gym-metric-primary { --gym-metric-bg: #e7f1ff; --gym-metric-border: #8fc0ff; --gym-metric-icon-bg: #c5e0ff; --gym-metric-icon: #1477ee; }
 .gym-metric-success { --gym-metric-bg: #e6faed; --gym-metric-border: #8de0ad; --gym-metric-icon-bg: #c2f3d3; --gym-metric-icon: #079447; }
+.gym-metric-danger { --gym-metric-bg: #ffe8e8; --gym-metric-border: #f19a9a; --gym-metric-icon-bg: #ffcaca; --gym-metric-icon: #d92d20; }
 .gym-metric-warning { --gym-metric-bg: #fff4ce; --gym-metric-border: #f0ca54; --gym-metric-icon-bg: #ffe59a; --gym-metric-icon: #c77d00; }
 .gym-metric-purple { --gym-metric-bg: #f0e5ff; --gym-metric-border: #c29aff; --gym-metric-icon-bg: #dfc8ff; --gym-metric-icon: #6631c7; }
 .gym-metric-orange { --gym-metric-bg: #fff0c4; --gym-metric-border: #f2c14d; --gym-metric-icon-bg: #ffdf83; --gym-metric-icon: #c47a00; }
@@ -194,7 +196,17 @@
   color: #edf4ff;
 }
 
-[data-bs-theme="dark"] .gym-metric { color: #14233d; }
+[data-bs-theme="dark"] .gym-metric,
+[data-bs-theme="dark"] .gym-metric span,
+[data-bs-theme="dark"] .gym-metric strong { color: #ffffff; }
+
+[data-bs-theme="dark"] .gym-metric-primary { --gym-metric-bg: #17385f; --gym-metric-border: #3f9aff; --gym-metric-icon-bg: #245f9f; --gym-metric-icon: #8ec5ff; }
+[data-bs-theme="dark"] .gym-metric-danger { --gym-metric-bg: #5b252d; --gym-metric-border: #ff7180; --gym-metric-icon-bg: #8d3744; --gym-metric-icon: #ffb0b8; }
+[data-bs-theme="dark"] .gym-metric-success { --gym-metric-bg: #123f31; --gym-metric-border: #43d58b; --gym-metric-icon-bg: #1b7857; --gym-metric-icon: #8af0bd; }
+[data-bs-theme="dark"] .gym-metric-purple { --gym-metric-bg: #352052; --gym-metric-border: #a66bff; --gym-metric-icon-bg: #60359a; --gym-metric-icon: #d2b0ff; }
+[data-bs-theme="dark"] .gym-metric-orange { --gym-metric-bg: #513b13; --gym-metric-border: #f5c34f; --gym-metric-icon-bg: #89651b; --gym-metric-icon: #ffe09a; }
+
+[data-bs-theme="dark"] .gym-metric small { color: #e4edf8; }
 
 [data-bs-theme="dark"] .gym-dashboard-heading p,
 [data-bs-theme="dark"] .gym-dashboard-heading .gym-dashboard-motto,

@@ -471,7 +471,7 @@ Aluno
 * 🟩 Total de alunos e instrutores
 * 🟩 Lista dos 6 alunos mais recentes cadastrados no dia
 * 🟩 Lista de até 6 instrutores presentes
-* ⬜ Alunos ativos/inativos
+* 🟩 Alunos ativos/inativos no dashboard
 * ⬜ Matrículas
 * ⬜ Receita
 * ⬜ Despesas
@@ -479,6 +479,7 @@ Aluno
 * ⬜ Presença
 * 🟩 Indicadores por unidade
 * 🟩 Gráficos
+* 🟩 Cores dos cards nos modos claro e dark
 
 ### Professor
 
