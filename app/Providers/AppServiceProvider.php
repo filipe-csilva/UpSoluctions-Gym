@@ -47,6 +47,9 @@ class AppServiceProvider extends ServiceProvider
             return in_array($user->role?->value, ['admin', 'manager'], true);
         });
 
+        Gate::define('view-enrollments', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager'], true));
+        Gate::define('view-financial', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager'], true));
+
         // Gates Students
         Gate::define('students-show', function ($user): bool {
             return $user->role?->value === 'student';

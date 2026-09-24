@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\FinancialTransactionController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -38,6 +40,13 @@ Route::resource('employees', EmployeeController::class)
 
 Route::resource('plans', PlanController::class)
     ->middleware(['auth', 'verified', 'can:view-plans']);
+
+Route::resource('enrollments', EnrollmentController::class)
+    ->middleware(['auth', 'verified', 'can:view-enrollments']);
+
+Route::resource('financial', FinancialTransactionController::class)
+    ->parameters(['financial' => 'financial'])
+    ->middleware(['auth', 'verified', 'can:view-financial']);
 
 // Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 //     require __DIR__.'/admin.php';

@@ -276,6 +276,18 @@ return [
             'can' => 'view-plans',
         ],
         [
+            'text' => 'Matrículas',
+            'route' => 'enrollments.index',
+            'icon' => 'bi bi-journal-check',
+            'can' => 'view-enrollments',
+        ],
+        [
+            'text' => 'Financeiro',
+            'route' => 'financial.index',
+            'icon' => 'bi bi-cash-coin',
+            'can' => 'view-financial',
+        ],
+        [
             'text' => 'Meus Dados',
             'route' => 'students.me',
             'icon' => 'bi bi-person-gear',
