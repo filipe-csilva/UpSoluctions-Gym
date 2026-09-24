@@ -170,6 +170,58 @@
 .gym-action-orange { background: #fff9e9; color: #d79000; }
 .gym-action-slate { background: #f1f5f9; color: #53657d; }
 
+/* Padrão compacto dos indicadores em todos os temas. */
+.gym-metric {
+  position: relative;
+  min-height: 108px;
+  padding: .85rem 1rem;
+  border: 1px solid var(--gym-metric-border, #8fc0ff);
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-radius: .35rem;
+}
+
+.gym-metric i {
+  position: absolute;
+  top: .7rem;
+  right: .75rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  margin: 0;
+  border-radius: .3rem;
+  font-size: .78rem;
+}
+
+.gym-metric span {
+  max-width: 75%;
+  margin-bottom: .45rem;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.gym-metric strong {
+  margin-top: 0;
+  font-size: 1.15rem;
+  line-height: 1.15;
+}
+
+.gym-metric strong.gym-metric-development { font-size: .92rem; }
+.gym-metric small { font-size: .58rem; }
+.gym-metric-primary { border-left-color: #2e8cff; }
+.gym-metric-danger { border-left-color: #ef5364; }
+.gym-metric-success { border-left-color: #28c984; }
+.gym-metric-purple { border-left-color: #925cff; }
+.gym-metric-orange { border-left-color: #f0b72f; }
+
+.gym-dashboard-panel,
+.gym-dashboard-lists .card {
+  border-radius: .35rem;
+  box-shadow: none;
+}
+
 @media (max-width: 1199.98px) {
   .gym-dashboard-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -200,6 +252,60 @@
 [data-bs-theme="dark"] .gym-metric span,
 [data-bs-theme="dark"] .gym-metric strong { color: #ffffff; }
 
+[data-bs-theme="dark"] .gym-metric {
+  position: relative;
+  min-height: 108px;
+  padding: .85rem 1rem;
+  border: 1px solid #263752;
+  border-left: 3px solid #263752;
+  border-radius: .35rem;
+  background: #111c30;
+}
+
+[data-bs-theme="dark"] .gym-metric i {
+  position: absolute;
+  top: .7rem;
+  right: .75rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  margin: 0;
+  border-radius: .3rem;
+  font-size: .78rem;
+}
+
+[data-bs-theme="dark"] .gym-metric span {
+  max-width: 75%;
+  margin-bottom: .45rem;
+  color: #9eabc0;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+[data-bs-theme="dark"] .gym-metric strong {
+  margin-top: 0;
+  font-size: 1.15rem;
+  line-height: 1.15;
+}
+
+[data-bs-theme="dark"] .gym-metric strong.gym-metric-development {
+  font-size: .92rem;
+}
+
+[data-bs-theme="dark"] .gym-metric small {
+  margin-top: .35rem;
+  color: #8d9bb1;
+  font-size: .58rem;
+}
+
+[data-bs-theme="dark"] .gym-metric-primary { border-left-color: #2e8cff; }
+[data-bs-theme="dark"] .gym-metric-danger { border-left-color: #ef5364; }
+[data-bs-theme="dark"] .gym-metric-success { border-left-color: #28c984; }
+[data-bs-theme="dark"] .gym-metric-purple { border-left-color: #925cff; }
+[data-bs-theme="dark"] .gym-metric-orange { border-left-color: #f0b72f; }
+
 [data-bs-theme="dark"] .gym-metric-primary { --gym-metric-bg: #17385f; --gym-metric-border: #3f9aff; --gym-metric-icon-bg: #245f9f; --gym-metric-icon: #8ec5ff; }
 [data-bs-theme="dark"] .gym-metric-danger { --gym-metric-bg: #5b252d; --gym-metric-border: #ff7180; --gym-metric-icon-bg: #8d3744; --gym-metric-icon: #ffb0b8; }
 [data-bs-theme="dark"] .gym-metric-success { --gym-metric-bg: #123f31; --gym-metric-border: #43d58b; --gym-metric-icon-bg: #1b7857; --gym-metric-icon: #8af0bd; }
@@ -207,6 +313,69 @@
 [data-bs-theme="dark"] .gym-metric-orange { --gym-metric-bg: #513b13; --gym-metric-border: #f5c34f; --gym-metric-icon-bg: #89651b; --gym-metric-icon: #ffe09a; }
 
 [data-bs-theme="dark"] .gym-metric small { color: #e4edf8; }
+
+[data-bs-theme="dark"] .gym-dashboard-panel,
+[data-bs-theme="dark"] .gym-dashboard-lists .card {
+  border-color: #263752;
+  border-radius: .35rem;
+  background: #111c30;
+  box-shadow: none;
+}
+
+[data-bs-theme="dark"] .gym-dashboard-panel .card-header,
+[data-bs-theme="dark"] .gym-dashboard-panel .card-footer {
+  border-color: #263752;
+}
+
+[data-bs-theme="dark"] .gym-dashboard-panel .card-header small,
+[data-bs-theme="dark"] .gym-dashboard-panel .gym-chart-label,
+[data-bs-theme="dark"] .gym-dashboard-panel .gym-chart-scale {
+  color: #9eabc0;
+}
+
+[data-bs-theme="dark"] .gym-period-filter select {
+  border-color: #3a4b68;
+  color: #dce8f7;
+}
+
+[data-bs-theme="dark"] .gym-chart-grid-line,
+[data-bs-theme="dark"] .gym-evolution-chart,
+[data-bs-theme="dark"] .gym-unit-row,
+[data-bs-theme="dark"] .gym-due-list > div,
+[data-bs-theme="dark"] .gym-activity-item,
+[data-bs-theme="dark"] .gym-dashboard-panel .table > :not(caption) > * > * {
+  border-color: #263752;
+}
+
+[data-bs-theme="dark"] .gym-unit-row,
+[data-bs-theme="dark"] .gym-due-list > div,
+[data-bs-theme="dark"] .gym-dashboard-panel .table > :not(caption) > * > * {
+  color: #e8f0fb;
+}
+
+[data-bs-theme="dark"] .gym-unit-chart::after {
+  background: #111c30;
+}
+
+[data-bs-theme="dark"] .gym-unit-chart span,
+[data-bs-theme="dark"] .gym-due-list strong {
+  color: #ffffff;
+}
+
+[data-bs-theme="dark"] .gym-activity-item small,
+[data-bs-theme="dark"] .gym-action small {
+  color: #9eabc0;
+}
+
+[data-bs-theme="dark"] .gym-activity-success { background: #123f31; color: #65e5a4; }
+[data-bs-theme="dark"] .gym-activity-danger { background: #5b252d; color: #ff9da8; }
+[data-bs-theme="dark"] .gym-activity-primary { background: #17385f; color: #8ec5ff; }
+[data-bs-theme="dark"] .gym-activity-warning { background: #513b13; color: #ffe09a; }
+
+[data-bs-theme="dark"] .gym-action {
+  border-color: #263752;
+  border-radius: .35rem;
+}
 
 [data-bs-theme="dark"] .gym-dashboard-heading p,
 [data-bs-theme="dark"] .gym-dashboard-heading .gym-dashboard-motto,
@@ -220,8 +389,9 @@
 
 [data-bs-theme="dark"] .gym-dashboard-panel,
 [data-bs-theme="dark"] .gym-dashboard-lists .card {
-  border-color: #526174;
-  background: #20262c;
+  border-color: #263752;
+  border-radius: .35rem;
+  background: #111c30;
   box-shadow: none;
 }
 
@@ -231,7 +401,7 @@
 [data-bs-theme="dark"] .gym-due-list > div,
 [data-bs-theme="dark"] .gym-activity-item,
 [data-bs-theme="dark"] .gym-dashboard-panel .table > :not(caption) > * > * {
-  border-color: #3f4b59;
+  border-color: #263752;
 }
 
 [data-bs-theme="dark"] .gym-dashboard-panel .table,
@@ -245,6 +415,46 @@
 [data-bs-theme="dark"] .gym-action-purple { background: #6835b8; color: #ffffff; }
 [data-bs-theme="dark"] .gym-action-orange { background: #b87500; color: #ffffff; }
 [data-bs-theme="dark"] .gym-action-slate { background: #265ca8; color: #ffffff; }
+
+[data-bs-theme="dark"] .gym-quick-actions {
+  border: 1px solid #263752;
+  border-left: 3px solid #f0b72f;
+}
+
+/* Faixa lateral colorida padronizada para todos os cards do dashboard. */
+.gym-dashboard-overview > [class*="col-"] .gym-dashboard-panel,
+.gym-dashboard-lists > [class*="col-"] .card,
+.gym-quick-actions {
+  border-left-width: 2px;
+}
+
+.gym-dashboard-overview > [class*="col-"]:nth-child(1) .gym-dashboard-panel,
+.gym-dashboard-lists > [class*="col-"]:nth-child(2) .card {
+  border-left-color: #2e8cff;
+}
+
+.gym-dashboard-overview > [class*="col-"]:nth-child(2) .gym-dashboard-panel,
+.gym-dashboard-lists > [class*="col-"]:nth-child(1) .card {
+  border-left-color: #28c984;
+}
+
+.gym-dashboard-overview > [class*="col-"]:nth-child(3) .gym-dashboard-panel,
+.gym-dashboard-lists > [class*="col-"]:nth-child(3) .card {
+  border-left-color: #f0b72f;
+}
+
+.gym-quick-actions { border-left-color: #f0b72f; }
+
+/* Fundo branco aplicado somente ao modo light. */
+[data-bs-theme="light"] .gym-metric,
+[data-bs-theme="light"] .gym-dashboard-panel,
+[data-bs-theme="light"] .gym-dashboard-lists .card {
+  background: #ffffff;
+  color: #14233d;
+}
+
+[data-bs-theme="light"] .gym-unit-chart::after { background: #ffffff; }
+[data-bs-theme="light"] .gym-unit-chart span { color: #152640; }
 
 /*
  * Option B: compile from source to customise SCSS variables. Comment out

@@ -335,11 +335,11 @@ Aluno
 * 🟩 Model
 * 🟩 Migration
 * 🟨 Relacionamentos
-* ⬜ Controller
-* ⬜ Requests
-* ⬜ CRUD
-* ⬜ Valores e periodicidade
-* ⬜ Interface
+* 🟩 Controller
+* 🟩 Requests e validações
+* 🟩 CRUD
+* 🟩 Valores e periodicidade
+* 🟩 Interface
 
 ---
 
@@ -347,14 +347,14 @@ Aluno
 
 * 🟩 Model
 * 🟩 Migration
-* 🟨 Relacionamentos
-* ⬜ Controller
-* ⬜ Requests
-* ⬜ Criar matrícula
-* ⬜ Renovar
-* ⬜ Suspender
-* ⬜ Cancelar
-* ⬜ Alterar plano
+* 🟩 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 Criar matrícula
+* 🟨 Renovar
+* 🟩 Suspender
+* 🟩 Cancelar
+* 🟩 Alterar plano
 * ⬜ Histórico
 
 ---
@@ -363,12 +363,12 @@ Aluno
 
 * 🟩 Model
 * 🟩 Migration
-* 🟨 Relacionamentos
-* ⬜ Controller
-* ⬜ Requests
-* ⬜ Receitas
-* ⬜ Despesas
-* ⬜ Pagamentos
+* 🟩 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 Receitas
+* 🟩 Despesas
+* 🟩 Pagamentos
 * ⬜ Inadimplência
 * ⬜ Histórico
 * ⬜ Dashboard financeiro
