@@ -335,11 +335,11 @@ Aluno
 * 🟩 Model
 * 🟩 Migration
 * 🟨 Relacionamentos
-* ⬜ Controller
-* ⬜ Requests
-* ⬜ CRUD
-* ⬜ Valores e periodicidade
-* ⬜ Interface
+* 🟩 Controller
+* 🟩 Requests e validações
+* 🟩 CRUD
+* 🟩 Valores e periodicidade
+* 🟩 Interface
 
 ---
 

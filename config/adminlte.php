@@ -270,6 +270,12 @@ return [
             'can' => 'view-units',
         ],
         [
+            'text' => 'Planos',
+            'route' => 'plans.index',
+            'icon' => 'bi bi-card-checklist',
+            'can' => 'view-plans',
+        ],
+        [
             'text' => 'Meus Dados',
             'route' => 'students.me',
             'icon' => 'bi bi-person-gear',
