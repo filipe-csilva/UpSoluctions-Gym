@@ -21,8 +21,8 @@
         <div class="gym-metric gym-metric-primary"><i class="bi bi-people-fill"></i><span>Alunos ativos</span><strong>{{ $activeStudents }}</strong><small>Alunos com acesso ativo</small></div>
         <div class="gym-metric gym-metric-danger"><i class="bi bi-person-x-fill"></i><span>Alunos inativos</span><strong>{{ $inactiveStudents }}</strong><small>Alunos sem acesso ativo</small></div>
         <div class="gym-metric gym-metric-success"><i class="bi bi-person-workspace"></i><span>Professores ativos</span><strong>{{ $totalTeachers }}</strong><small>Dados atuais da academia</small></div>
-        <div class="gym-metric gym-metric-purple"><i class="bi bi-journal-text"></i><span>Matrículas ativas</span><strong class="gym-metric-development">Em desenvolvimento</strong><small>Módulo de matrículas</small></div>
-        <div class="gym-metric gym-metric-orange"><i class="bi bi-cash-stack"></i><span>Receita do mês</span><strong class="gym-metric-development">Em desenvolvimento</strong><small>Módulo financeiro</small></div>
+        <div class="gym-metric gym-metric-purple"><i class="bi bi-journal-text"></i><span>Matrículas ativas</span><strong>{{ $activeEnrollments }}</strong><small>Matrículas vigentes</small></div>
+        <div class="gym-metric gym-metric-orange"><i class="bi bi-cash-stack"></i><span>Receita do mês</span><strong>R$ {{ number_format((float) $monthlyRevenue, 2, ',', '.') }}</strong><small>Pagamentos recebidos</small></div>
     </div>
 
     <div class="row gym-dashboard-overview">

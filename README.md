@@ -472,14 +472,15 @@ Aluno
 * 🟩 Lista dos 6 alunos mais recentes cadastrados no dia
 * 🟩 Lista de até 6 instrutores presentes
 * 🟩 Alunos ativos/inativos no dashboard
-* ⬜ Matrículas
-* ⬜ Receita
+* 🟩 Matrículas ativas no dashboard
+* 🟩 Receita mensal com pagamentos recebidos
 * ⬜ Despesas
 * ⬜ Inadimplência
 * ⬜ Presença
 * 🟩 Indicadores por unidade
 * 🟩 Gráficos
 * 🟩 Cores dos cards nos modos claro e dark
+* 🟩 População de teste com planos, matrículas e lançamentos financeiros
 
 ### Professor
 

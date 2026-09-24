@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
+use App\Models\Enrollment;
+use App\Models\FinancialTransaction;
 use App\Models\StudentProfile;
 use App\Models\TeacherProfile;
 use App\Models\Unit;
@@ -55,6 +57,18 @@ class DashboardController extends Controller
             ->orderByDesc('students_count')
             ->get();
 
+        $activeEnrollments = Enrollment::query()
+            ->where('status', 'active')
+            ->when($isManager, fn ($query) => $query->whereIn('unit_id', $unitIds))
+            ->count();
+
+        $monthlyRevenue = FinancialTransaction::query()
+            ->where('transaction_type', 'income')
+            ->where('status', 'paid')
+            ->whereBetween('paid_at', [now()->startOfMonth(), now()->endOfMonth()])
+            ->when($isManager, fn ($query) => $query->whereIn('unit_id', $unitIds))
+            ->sum('amount');
+
         return view('dashboard', [
             'activeStudents' => StudentProfile::query()
                 ->whereHas('user', function ($query): void {
@@ -76,6 +90,8 @@ class DashboardController extends Controller
                     });
                 })
                 ->count(),
+            'activeEnrollments' => $activeEnrollments,
+            'monthlyRevenue' => $monthlyRevenue,
             'todayStudentsCount' => StudentProfile::query()
                 ->whereDate('created_at', today())
                 ->when($isManager, function ($query) use ($unitIds): void {
