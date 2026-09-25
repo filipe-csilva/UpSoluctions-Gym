@@ -76,7 +76,7 @@
             href="{{ route('teachers.create') }}"
             class="btn btn-primary"
         >
-            <i class="fas fa-plus"></i>
+            <i class="bi bi-plus-lg"></i>
             Novo Instrutor
         </a>
 

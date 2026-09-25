@@ -369,9 +369,9 @@ Aluno
 * 🟩 Receitas
 * 🟩 Despesas
 * 🟩 Pagamentos
-* ⬜ Inadimplência
+* 🟩 Inadimplência
 * ⬜ Histórico
-* ⬜ Dashboard financeiro
+* 🟩 Dashboard financeiro
 
 ---
 
@@ -444,13 +444,13 @@ Aluno
 
 * 🟩 Model
 * 🟩 Migration
-* 🟨 Relacionamentos
-* ⬜ Controller
-* ⬜ Requests
-* ⬜ CRUD
-* ⬜ Publicação
-* ⬜ Destinatários
-* ⬜ Interface
+* 🟩 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 CRUD
+* 🟩 Publicação por período e status
+* 🟩 Destinatários por perfil e unidade
+* 🟩 Interface
 
 ---
 
@@ -474,13 +474,18 @@ Aluno
 * 🟩 Alunos ativos/inativos no dashboard
 * 🟩 Matrículas ativas no dashboard
 * 🟩 Receita mensal com pagamentos recebidos
-* ⬜ Despesas
-* ⬜ Inadimplência
+* 🟩 Despesas
+* 🟩 Saúde financeira com receita versus despesas
+* 🟩 Ponto de equilíbrio financeiro
 * ⬜ Presença
 * 🟩 Indicadores por unidade
 * 🟩 Gráficos
 * 🟩 Cores dos cards nos modos claro e dark
 * 🟩 População de teste com planos, matrículas e lançamentos financeiros
+* 🟩 Próximos vencimentos financeiros
+* 🟩 Próximos vencimentos de contas a pagar e contas a receber
+* 🟩 Atalhos para o financeiro com filtros específicos
+* 🟩 Filtros independentes de período para alunos e finanças
 
 ### Professor
 
@@ -503,16 +508,12 @@ Aluno
 
 ## Fase 15 — Relatórios
 
-* ⬜ Alunos
-* ⬜ Matrículas
-* ⬜ Financeiro
-* ⬜ Inadimplência
-* ⬜ Presença
-* ⬜ Treinos
-* ⬜ Avaliações
-* ⬜ Por unidade
-* ⬜ Exportação PDF
-* ⬜ Exportação Excel/CSV
+* 🟨 Alunos, matrículas e presença
+* 🟨 Financeiro e inadimplência
+* 🟨 Resumo por unidade
+* 🟩 Exportação CSV financeira
+* 🟨 Exportação PDF para visualização e impressão
+* ⬜ Exportação Excel
 
 ---
 
@@ -604,7 +605,7 @@ Aluno
 | Exercícios        | 🟨     |
 | Treinos           | 🟨     |
 | Avaliações        | 🟨     |
-| Comunicados       | 🟨     |
+| Comunicados       | 🟩     |
 | CRUDs de domínio  | 🟨      |
 | Dashboards        | 🟩     |
 | Área do aluno     | ⬜      |
@@ -622,29 +623,18 @@ Aluno
 A próxima sequência recomendada é:
 
 ```text
-1. Roles e autorização
+1. Despesas e inadimplência no dashboard
         ↓
-2. CRUD de Professores
+2. Relatórios operacionais
         ↓
-3. CRUD de Planos
+3. Notificações internas e de vencimento
         ↓
-4. Matrículas
+4. Testes de domínio e autorização
         ↓
-5. Financeiro
+5. API REST
         ↓
-6. Presença
+6. Performance, CI/CD e produção
         ↓
-7. Exercícios e Treinos
-        ↓
-8. Avaliações
-        ↓
-9. Área do Aluno
-        ↓
-10. Relatórios
-        ↓
-11. Testes
-        ↓
-12. API / Produção
 ```
 
 ---

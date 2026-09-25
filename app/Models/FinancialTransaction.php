@@ -14,6 +14,11 @@ class FinancialTransaction extends Model
         return ['amount' => 'decimal:2', 'due_date' => 'date', 'paid_at' => 'datetime'];
     }
 
+    public function isOverdue(): bool
+    {
+        return $this->status === 'overdue' || ($this->status === 'pending' && $this->due_date?->isPast());
+    }
+
     public function enrollment(): BelongsTo
     {
         return $this->belongsTo(Enrollment::class);

@@ -288,6 +288,18 @@ return [
             'can' => 'view-financial',
         ],
         [
+            'text' => 'Comunicados',
+            'url' => 'announcements',
+            'icon' => 'bi bi-megaphone-fill',
+            'can' => 'view-announcements',
+        ],
+        [
+            'text' => 'Relatórios',
+            'route' => 'reports.index',
+            'icon' => 'bi bi-bar-chart-line',
+            'can' => 'view-reports',
+        ],
+        [
             'text' => 'Presença',
             'route' => 'attendances.index',
             'icon' => 'bi bi-calendar-check',

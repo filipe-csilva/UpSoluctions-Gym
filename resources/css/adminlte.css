@@ -126,6 +126,25 @@
 .gym-dashboard-lists table td:nth-child(3) { width: 25%; }
 
 .gym-dashboard-overview { row-gap: 1rem; margin-bottom: 1rem; }
+@media (min-width: 1200px) {
+  .gym-dashboard-lists > .col-xl-3 { width: 33.333333%; }
+}
+.gym-financial-layout { align-items: stretch; row-gap: 1rem; }
+.gym-financial-layout > [class*="col-"] { display: flex; }
+.gym-financial-layout > [class*="col-"] > .card { width: 100%; height: auto !important; align-self: stretch; }
+.gym-financial-layout > [class*="col-"]:nth-child(1) > .card { border-left: 3px solid #20b26b !important; }
+.gym-financial-layout > [class*="col-"]:nth-child(2) > .card { border-left: 3px solid #ef5364 !important; }
+.gym-financial-layout > [class*="col-"]:nth-child(3) > .card { border-left: 3px solid #20b26b !important; }
+.gym-financial-evolution .card-header { flex-wrap: wrap; }
+.gym-financial-evolution { border-left: 3px solid #20b26b; }
+.gym-financial-evolution .gym-panel-heading { flex: 1 1 13rem; }
+.gym-financial-evolution .gym-period-filter { flex: 0 0 auto; }
+.gym-financial-evolution .gym-chart-legend { flex: 0 0 auto; justify-content: flex-end; }
+.gym-financial-evolution .gym-evolution-chart { height: 210px; }
+
+@media (max-width: 767.98px) {
+  .gym-financial-evolution .gym-chart-legend { flex-basis: 100%; }
+}
 .gym-dashboard-panel { border: 1px solid #e1e9f2; border-radius: .55rem; box-shadow: 0 .25rem 1rem rgba(35, 67, 105, .06); }
 .gym-dashboard-panel .card-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: transparent; border-bottom: 1px solid #edf1f6; }
 .gym-dashboard-panel .card-header:has(.gym-panel-icon) { justify-content: flex-start; }
@@ -136,6 +155,7 @@
 .gym-view-all { color: #1477ee; font-size: .76rem; text-decoration: none; white-space: nowrap; }
 .gym-view-all:hover { color: #0b5fc7; }
 .gym-period-filter select { padding: .35rem 1.8rem .35rem .6rem; border: 1px solid #dce5ef; border-radius: .35rem; background: transparent; color: #4f617b; font-size: .75rem; }
+.gym-period-filter select option { background: #fff; color: #263650; }
 .gym-evolution-chart { height: 210px; border-bottom: 1px solid #dce5ef; }
 .gym-evolution-chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .gym-chart-grid-line { stroke: #dce5ef; stroke-width: 1; stroke-dasharray: 3 4; }
@@ -144,18 +164,40 @@
 .gym-chart-value { fill: #1477ee; font-size: 12px; font-weight: 700; }
 .gym-chart-label { fill: #63748e; font-size: 11px; }
 .gym-chart-scale { fill: #63748e; font-size: 10px; }
+.gym-chart-legend { display: flex; align-items: center; gap: 1rem; color: #74829a; font-size: .75rem; }
+.gym-chart-legend span { display: inline-flex; align-items: center; gap: .35rem; }
+.gym-chart-legend i { display: inline-block; width: .65rem; height: .65rem; border-radius: 50%; }
+.gym-legend-revenue { background: #20b26b; }
+.gym-legend-expenses { background: #ef5364; }
+.gym-finance-revenue-line,
+.gym-finance-expenses-line { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.gym-finance-revenue-line { stroke: #20b26b; }
+.gym-finance-expenses-line { stroke: #ef5364; }
+.gym-finance-revenue-point { fill: #20b26b; stroke: #fff; stroke-width: 2; }
+.gym-finance-expenses-point { fill: #ef5364; stroke: #fff; stroke-width: 2; }
+.gym-financial-balance { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .75rem; color: #74829a; font-size: .78rem; }
+.gym-financial-balance strong { color: #152640; }
 .gym-unit-row { display: flex; align-items: center; gap: .65rem; padding: .72rem 0; border-bottom: 1px solid #edf1f6; color: #263650; }
 .gym-unit-row:last-child { border-bottom: 0; }
 .gym-unit-dot { width: .7rem; height: .7rem; border-radius: 50%; background: #2385f5; box-shadow: 0 0 0 .25rem #e0efff; }
 .gym-unit-row:nth-child(2) .gym-unit-dot { background: #28b979; box-shadow: 0 0 0 .25rem #ddf8e9; }
 .gym-unit-row:nth-child(3) .gym-unit-dot { background: #8751e7; box-shadow: 0 0 0 .25rem #eee5ff; }
-.gym-unit-chart { display: grid; place-items: center; width: 118px; height: 118px; margin: 0 auto 1rem; border-radius: 50%; background: conic-gradient(#2385f5 0 var(--gym-unit-first), #28b979 var(--gym-unit-first) 100%); position: relative; }
+.gym-unit-chart { display: grid; place-items: center; width: 132px; height: 132px; margin: 0 auto 1rem; border-radius: 50%; background: conic-gradient(var(--gym-unit-gradient)); position: relative; box-shadow: 0 0 0 .35rem rgba(35, 133, 245, .08); }
 .gym-unit-chart::after { content: ''; position: absolute; inset: 23px; border-radius: 50%; background: var(--bs-body-bg, #fff); }
 .gym-unit-chart span { position: relative; z-index: 1; color: #152640; font-size: 1.15rem; font-weight: 700; }
 .gym-due-list { padding: .35rem 1rem; }
 .gym-due-list > div { display: flex; justify-content: space-between; gap: .5rem; padding: .72rem 0; border-bottom: 1px solid #edf1f6; font-size: .78rem; }
 .gym-due-list > div:last-child { border-bottom: 0; }
 .gym-due-list strong { color: #6e7d93; font-weight: 500; text-align: right; }
+.gym-financial-card { overflow: hidden; }
+.gym-financial-card .card-body { display: flex; flex-direction: column; justify-content: center; min-height: 132px; }
+.gym-financial-card .card-body strong { color: #152640; font-size: 1.5rem; }
+.gym-financial-card .card-body small { margin-top: .25rem; color: #74829a; }
+.gym-financial-side-card .card-header { align-items: flex-start; }
+.gym-financial-side-card .card-title { line-height: 1.15; }
+.gym-financial-side-card .gym-due-list { padding: .25rem .75rem; }
+.gym-financial-expense { border-left: 3px solid #ef5364; }
+.gym-financial-revenue { border-left: 3px solid #20b26b; }
 .gym-activities-panel { margin-bottom: 1rem; }
 .gym-activities-panel .card-body { max-height: 315px; overflow-y: auto; }
 .gym-activities-list { display: grid; grid-template-columns: 1fr; }
@@ -182,6 +224,114 @@
 .gym-action-purple { background: #f7f1ff; color: #7540d6; }
 .gym-action-orange { background: #fff9e9; color: #d79000; }
 .gym-action-slate { background: #f1f5f9; color: #53657d; }
+
+.app-content-header .btn,
+.content-header .btn {
+  height: 38px !important;
+  width: 180px !important;
+  min-width: 180px !important;
+  min-height: 38px;
+  padding: .5rem .9rem;
+  border-radius: .35rem;
+  font-size: .875rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (max-width: 575.98px) {
+  .app-content-header .btn,
+  .content-header .btn {
+    min-width: 0;
+  }
+}
+
+.app-content-header .d-flex > .d-flex,
+.app-content-header .d-flex > form,
+.content-header .d-flex > .d-flex,
+.content-header .d-flex > form {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.content .btn:not(.btn-sm) {
+  min-height: 38px;
+  padding: .5rem .9rem;
+  border-radius: .35rem;
+  font-size: .875rem;
+  line-height: 1.2;
+}
+
+.financial-status {
+  display: inline-block;
+  width: 92px;
+  padding: .2rem .55rem;
+  border-radius: .35rem;
+  color: inherit;
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.financial-status-paid { background: rgba(25, 135, 84, .16); }
+.financial-status-overdue { background: rgba(220, 53, 69, .16); }
+.financial-status-pending { background: rgba(108, 117, 125, .14); }
+
+.status-pill {
+  display: inline-block;
+  width: 92px;
+  padding: .2rem .55rem;
+  border-radius: .35rem;
+  color: inherit;
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.status-pill-success { background: rgba(25, 135, 84, .16); }
+.status-pill-neutral { background: rgba(108, 117, 125, .14); }
+.status-pill-warning { background: rgba(255, 193, 7, .2); }
+.status-pill-danger { background: rgba(220, 53, 69, .16); }
+
+.badge.text-bg-success,
+.badge.text-bg-secondary,
+.badge.text-bg-danger,
+.badge.text-bg-warning {
+  display: inline-block;
+  width: 92px;
+  padding: .2rem .55rem;
+  border: 0;
+  border-radius: .35rem;
+  color: inherit !important;
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.badge.text-bg-success { background: rgba(25, 135, 84, .16) !important; }
+.badge.text-bg-secondary { background: rgba(108, 117, 125, .14) !important; }
+.badge.text-bg-danger { background: rgba(220, 53, 69, .16) !important; }
+.badge.text-bg-warning { background: rgba(255, 193, 7, .2) !important; }
+
+.enrollment-status {
+  display: inline-block;
+  width: 92px;
+  padding: .2rem .55rem;
+  border-radius: .35rem;
+  color: inherit;
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.enrollment-status-active { background: rgba(25, 135, 84, .16); }
+.enrollment-status-suspended { background: rgba(255, 193, 7, .2); }
+.enrollment-status-cancelled,
+.enrollment-status-expired { background: rgba(220, 53, 69, .16); }
 
 /* Padrão compacto dos indicadores em todos os temas. */
 .gym-metric {
@@ -342,12 +492,23 @@
 
 [data-bs-theme="dark"] .gym-dashboard-panel .card-header small,
 [data-bs-theme="dark"] .gym-dashboard-panel .gym-chart-label,
-[data-bs-theme="dark"] .gym-dashboard-panel .gym-chart-scale {
+[data-bs-theme="dark"] .gym-dashboard-panel .gym-chart-scale,
+[data-bs-theme="dark"] .gym-dashboard-panel .gym-chart-legend {
   color: #9eabc0;
+}
+
+[data-bs-theme="dark"] .gym-financial-balance strong {
+  color: #e8f0fb;
 }
 
 [data-bs-theme="dark"] .gym-period-filter select {
   border-color: #3a4b68;
+  background-color: #111c30;
+  color: #dce8f7;
+}
+
+[data-bs-theme="dark"] .gym-period-filter select option {
+  background: #111c30;
   color: #dce8f7;
 }
 
@@ -362,6 +523,7 @@
 
 [data-bs-theme="dark"] .gym-unit-row,
 [data-bs-theme="dark"] .gym-due-list > div,
+[data-bs-theme="dark"] .gym-financial-card .card-body strong,
 [data-bs-theme="dark"] .gym-dashboard-panel .table > :not(caption) > * > * {
   color: #e8f0fb;
 }
@@ -445,6 +607,11 @@
   border-left: 3px solid #f0b72f;
 }
 
+[data-bs-theme="dark"] .gym-dashboard-lists .card-footer,
+[data-bs-theme="dark"] .gym-dashboard-panel .card-footer {
+  background: #111c30;
+}
+
 /* Faixa lateral colorida padronizada para todos os cards do dashboard. */
 .gym-dashboard-overview > [class*="col-"] .gym-dashboard-panel,
 .gym-dashboard-lists > [class*="col-"] .card,
@@ -467,6 +634,15 @@
   border-left-color: #f0b72f;
 }
 
+.gym-dashboard-lists > [class*="col-"]:nth-child(4) .card {
+  border-left-color: #f0b72f;
+}
+
+.gym-dashboard-lists > [class*="col-"]:nth-child(5) .card {
+  border-left-color: #ef5364;
+}
+
+
 .gym-quick-actions { border-left-color: #f0b72f; }
 
 /* Fundo branco aplicado somente ao modo light. */
@@ -477,8 +653,30 @@
   color: #14233d;
 }
 
+[data-bs-theme="light"] .gym-dashboard-lists .card-footer,
+[data-bs-theme="light"] .gym-dashboard-panel .card-footer {
+  background: #ffffff;
+}
+
+[data-bs-theme="light"] .gym-metric {
+  border-color: transparent;
+}
+
+[data-bs-theme="light"] .gym-metric-primary { border-left-color: #2e8cff; }
+[data-bs-theme="light"] .gym-metric-danger { border-left-color: #ef5364; }
+[data-bs-theme="light"] .gym-metric-success { border-left-color: #28c984; }
+[data-bs-theme="light"] .gym-metric-purple { border-left-color: #925cff; }
+[data-bs-theme="light"] .gym-metric-orange { border-left-color: #f0b72f; }
+
 [data-bs-theme="light"] .gym-unit-chart::after { background: #ffffff; }
 [data-bs-theme="light"] .gym-unit-chart span { color: #152640; }
+[data-bs-theme="light"] .gym-chart-grid-line { stroke: #91a4ba; stroke-width: 1.2; }
+[data-bs-theme="light"] .gym-chart-label,
+[data-bs-theme="light"] .gym-chart-scale { fill: #4f617b; }
+[data-bs-theme="light"] .gym-finance-revenue-line { stroke: #159957; }
+[data-bs-theme="light"] .gym-finance-expenses-line { stroke: #dc3545; }
+[data-bs-theme="light"] .gym-finance-revenue-point { fill: #159957; stroke: #ffffff; }
+[data-bs-theme="light"] .gym-finance-expenses-point { fill: #dc3545; stroke: #ffffff; }
 
 /*
  * Option B: compile from source to customise SCSS variables. Comment out
