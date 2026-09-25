@@ -503,6 +503,9 @@
   color: #e8f0fb;
 }
 
+[data-bs-theme="dark"] .gym-finance-revenue-value { fill: #20b26b; }
+[data-bs-theme="dark"] .gym-finance-expenses-value { fill: #ef5364; }
+
 [data-bs-theme="dark"] .gym-period-filter select {
   border-color: #3a4b68;
   background-color: #111c30;
@@ -677,6 +680,8 @@
 [data-bs-theme="light"] .gym-chart-scale { fill: #4f617b; }
 [data-bs-theme="light"] .gym-finance-revenue-line { stroke: #159957; }
 [data-bs-theme="light"] .gym-finance-expenses-line { stroke: #dc3545; }
+[data-bs-theme="light"] .gym-finance-revenue-value { fill: #159957; }
+[data-bs-theme="light"] .gym-finance-expenses-value { fill: #dc3545; }
 [data-bs-theme="light"] .gym-finance-revenue-point { fill: #159957; stroke: #ffffff; }
 [data-bs-theme="light"] .gym-finance-expenses-point { fill: #dc3545; stroke: #ffffff; }
 
