@@ -1,0 +1,4 @@
+@extends('adminlte::page')
+@section('title','Detalhes do exercício')
+@section('content_header')<div class="d-flex justify-content-between"><h1>{{ $exercise->name }}</h1><div><a href="{{ route('exercises.edit',$exercise) }}" class="btn btn-primary">Editar</a><form class="d-inline" method="POST" action="{{ route('exercises.destroy',$exercise) }}">@csrf @method('DELETE')<button class="btn btn-danger">Inativar</button></form></div></div>@stop
+@section('content')<x-alerts /><div class="card"><div class="card-body"><dl class="row"><dt class="col-sm-3">Grupo muscular</dt><dd class="col-sm-9">{{ $exercise->muscle_group }}</dd><dt class="col-sm-3">Equipamento</dt><dd class="col-sm-9">{{ $exercise->equipment ?: '-' }}</dd><dt class="col-sm-3">Descrição</dt><dd class="col-sm-9">{{ $exercise->description ?: '-' }}</dd><dt class="col-sm-3">Instruções</dt><dd class="col-sm-9">{{ $exercise->instructions ?: '-' }}</dd></dl></div></div>@stop

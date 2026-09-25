@@ -288,6 +288,30 @@ return [
             'can' => 'view-financial',
         ],
         [
+            'text' => 'Presença',
+            'route' => 'attendances.index',
+            'icon' => 'bi bi-calendar-check',
+            'can' => 'view-attendances',
+        ],
+        [
+            'text' => 'Exercícios',
+            'route' => 'exercises.index',
+            'icon' => 'bi bi-activity',
+            'can' => 'view-exercises',
+        ],
+        [
+            'text' => 'Fichas de treino',
+            'route' => 'workout-plans.index',
+            'icon' => 'bi bi-clipboard2-pulse',
+            'can' => 'view-workout-plans',
+        ],
+        [
+            'text' => 'Avaliações físicas',
+            'route' => 'assessments.index',
+            'icon' => 'bi bi-clipboard2-data',
+            'can' => 'view-assessments',
+        ],
+        [
             'text' => 'Meus Dados',
             'route' => 'students.me',
             'icon' => 'bi bi-person-gear',

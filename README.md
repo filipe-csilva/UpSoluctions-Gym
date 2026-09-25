@@ -308,7 +308,7 @@ Aluno
 * 🟩 Tela de detalhes
 * 🟩 Edição do cadastro
 * 🟩 Seeder com 10 alunos
-* ⬜ Histórico
+* 🟩 Histórico
 
 ---
 
@@ -380,9 +380,9 @@ Aluno
 * 🟩 Model
 * 🟩 Migration
 * 🟨 Relacionamentos
-* ⬜ Controller
-* ⬜ Registro de entrada/saída
-* ⬜ Histórico
+* 🟩 Controller
+* 🟩 Registro de entrada/saída
+* 🟩 Histórico
 * ⬜ Frequência
 * ⬜ Relatórios
 
@@ -398,12 +398,12 @@ Aluno
 
 * 🟩 Model
 * 🟩 Migration
-* ⬜ Controller
-* ⬜ Requests
-* ⬜ CRUD
-* ⬜ Grupo muscular
-* ⬜ Equipamento
-* ⬜ Instruções
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 CRUD
+* 🟩 Grupo muscular
+* 🟩 Equipamento
+* 🟩 Instruções
 * ⬜ Imagens/vídeos
 
 ---
@@ -413,14 +413,14 @@ Aluno
 * 🟩 Models
 * 🟩 Migrations
 * 🟨 Relacionamentos
-* ⬜ Controllers
-* ⬜ Requests
-* ⬜ Criar ficha
-* ⬜ Adicionar exercícios
-* ⬜ Séries
-* ⬜ Repetições
-* ⬜ Carga
-* ⬜ Descanso
+* 🟩 Controllers
+* 🟩 Requests
+* 🟩 Criar ficha
+* 🟩 Adicionar exercícios
+* 🟩 Séries
+* 🟩 Repetições
+* 🟩 Carga
+* 🟩 Descanso
 * ⬜ Histórico
 
 ---
@@ -430,10 +430,10 @@ Aluno
 * 🟩 Model
 * 🟩 Migration
 * 🟨 Relacionamentos
-* ⬜ Controller
-* ⬜ Requests
-* ⬜ Cadastro
-* ⬜ Histórico
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 Cadastro
+* 🟩 Histórico
 * ⬜ Comparação
 * ⬜ Evolução
 * ⬜ Gráficos
