@@ -129,17 +129,15 @@
                     <div class="table-responsive">
                         <table class="table table-sm m-0 small">
                             <thead>
-                                <tr><th>Nome</th><th>E-mail</th><th>Cadastro</th></tr>
+                                <tr><th>Nome</th></tr>
                             </thead>
                             <tbody>
                                 @forelse ($todayStudents as $student)
                                     <tr>
                                         <td>{{ $student->user->name }}</td>
-                                        <td>{{ $student->user->email }}</td>
-                                        <td>{{ $student->created_at?->format('d/m/Y') }}</td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="3" class="text-center text-muted">Nenhum aluno cadastrado hoje.</td></tr>
+                                    <tr><td class="text-center text-muted">Nenhum aluno cadastrado hoje.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -209,9 +207,9 @@
             <div class="gym-actions-grid">
                 <a href="{{ route('students.create') }}" class="gym-action gym-action-green"><i class="bi bi-person-plus-fill"></i><span><strong>Novo aluno</strong><small>Cadastrar aluno</small></span><i class="bi bi-chevron-right"></i></a>
                 <a href="{{ route('teachers.index') }}" class="gym-action gym-action-blue"><i class="bi bi-person-workspace"></i><span><strong>Novo professor</strong><small>Acessar instrutores</small></span><i class="bi bi-chevron-right"></i></a>
-                <div class="gym-action gym-action-purple"><i class="bi bi-journal-text"></i><span><strong>Nova matrícula</strong><small>Em desenvolvimento</small></span><i class="bi bi-chevron-right"></i></div>
-                <div class="gym-action gym-action-orange"><i class="bi bi-wallet2"></i><span><strong>Registrar pagamento</strong><small>Em desenvolvimento</small></span><i class="bi bi-chevron-right"></i></div>
-                <div class="gym-action gym-action-slate"><i class="bi bi-file-earmark-text"></i><span><strong>Ver relatórios</strong><small>Em desenvolvimento</small></span><i class="bi bi-chevron-right"></i></div>
+                <a href="{{ route('enrollments.create') }}" class="gym-action gym-action-purple"><i class="bi bi-journal-text"></i><span><strong>Nova matrícula</strong><small>Cadastrar matrícula</small></span><i class="bi bi-chevron-right"></i></a>
+                <a href="{{ route('financial.create') }}" class="gym-action gym-action-orange"><i class="bi bi-wallet2"></i><span><strong>Registrar pagamento</strong><small>Lançar receita</small></span><i class="bi bi-chevron-right"></i></a>
+                <a href="{{ route('attendances.create') }}" class="gym-action gym-action-slate"><i class="bi bi-calendar-check"></i><span><strong>Registrar presença</strong><small>Entrada e saída</small></span><i class="bi bi-chevron-right"></i></a>
             </div>
         </div>
     </div>

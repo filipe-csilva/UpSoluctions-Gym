@@ -1,15 +1,19 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\FinancialTransactionController;
+use App\Http\Controllers\PhysicalAssessmentController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\WorkoutPlanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -47,6 +51,21 @@ Route::resource('enrollments', EnrollmentController::class)
 Route::resource('financial', FinancialTransactionController::class)
     ->parameters(['financial' => 'financial'])
     ->middleware(['auth', 'verified', 'can:view-financial']);
+
+Route::resource('attendances', AttendanceController::class)
+    ->only(['index', 'create', 'store'])
+    ->middleware(['auth', 'verified', 'can:view-attendances']);
+
+Route::resource('exercises', ExerciseController::class)
+    ->middleware(['auth', 'verified', 'can:view-exercises']);
+
+Route::resource('workout-plans', WorkoutPlanController::class)
+    ->only(['index', 'create', 'store', 'show', 'destroy'])
+    ->middleware(['auth', 'verified', 'can:view-workout-plans']);
+
+Route::resource('assessments', PhysicalAssessmentController::class)
+    ->only(['index', 'create', 'store'])
+    ->middleware(['auth', 'verified', 'can:view-assessments']);
 
 // Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 //     require __DIR__.'/admin.php';
