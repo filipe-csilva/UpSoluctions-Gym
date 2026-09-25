@@ -120,7 +120,7 @@
         $financialPoints = $financialEvolution->values()->map(function (array $item, int $index) use ($financialEvolution, $financialMax): array {
             $x = $financialEvolution->count() > 1 ? 25 + ($index * (550 / ($financialEvolution->count() - 1))) : 300;
 
-            return ['x' => $x, 'revenueY' => 180 - (($item['revenue'] / $financialMax) * 160), 'expensesY' => 180 - (($item['expenses'] / $financialMax) * 160), 'label' => $item['label']];
+            return ['x' => $x, 'revenueY' => 180 - (($item['revenue'] / $financialMax) * 160), 'expensesY' => 180 - (($item['expenses'] / $financialMax) * 160), 'label' => $item['label'], 'revenue' => $item['revenue'], 'expenses' => $item['expenses']];
         });
     @endphp
 
@@ -157,6 +157,8 @@
                     @foreach ($financialPoints as $point)
                         <circle cx="{{ $point['x'] }}" cy="{{ $point['revenueY'] }}" r="4" class="gym-finance-revenue-point" />
                         <circle cx="{{ $point['x'] }}" cy="{{ $point['expensesY'] }}" r="4" class="gym-finance-expenses-point" />
+                        <text x="{{ $point['x'] }}" y="{{ max(14, $point['revenueY'] - 10) }}" text-anchor="middle" class="gym-finance-revenue-value">R$ {{ number_format((float) $point['revenue'], 2, ',', '.') }}</text>
+                        <text x="{{ $point['x'] }}" y="{{ min(197, $point['expensesY'] + 16) }}" text-anchor="middle" class="gym-finance-expenses-value">R$ {{ number_format((float) $point['expenses'], 2, ',', '.') }}</text>
                         <text x="{{ $point['x'] }}" y="207" text-anchor="middle" class="gym-chart-label">{{ $point['label'] }}</text>
                     @endforeach
                 </svg>
