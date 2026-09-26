@@ -78,6 +78,16 @@ class PanelController extends Controller
             return view('teacher-dashboard', compact('announcements', 'presentStudents', 'teacherStudentCount', 'teacherWorkoutCount', 'teacherAssessmentCount', 'teacherAttendanceCount'));
         }
 
+        if ($role === 'student' && $request->routeIs('dashboard')) {
+            $student = $user->studentProfile;
+            $studentEnrollment = $student?->enrollments()->with('plan')->where('status', 'active')->latest('end_date')->first();
+            $studentPendingTransactions = $student?->financialTransactions()->where('transaction_type', 'income')->whereIn('status', ['pending', 'overdue'])->orderBy('due_date')->get() ?? collect();
+            $studentAttendanceCount = $student?->attendances()->whereBetween('date', [today()->startOfMonth(), today()->endOfMonth()])->count() ?? 0;
+            $studentWorkoutCount = $student?->workoutPlans()->where('status', 'active')->count() ?? 0;
+
+            return view('student-dashboard', compact('announcements', 'workoutPlan', 'studentEnrollment', 'studentPendingTransactions', 'studentAttendanceCount', 'studentWorkoutCount'));
+        }
+
         return view('panel', compact('announcements', 'presentStudents', 'workoutPlan'));
     }
 

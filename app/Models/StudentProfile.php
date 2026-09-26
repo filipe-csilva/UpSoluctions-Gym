@@ -29,4 +29,14 @@ class StudentProfile extends Model
     {
         return $this->hasMany(Attendance::class, 'student_id');
     }
+
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class, 'student_id');
+    }
+
+    public function financialTransactions(): HasMany
+    {
+        return $this->hasMany(FinancialTransaction::class, 'student_id');
+    }
 }

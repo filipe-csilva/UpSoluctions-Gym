@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserRole;
+use App\Models\StudentProfile;
 use App\Models\Unit;
 use App\Models\User;
 
@@ -20,4 +21,14 @@ it('opens the teacher dashboard instead of the news-only panel', function () {
     $response = $this->actingAs($teacher)->get(route('dashboard'));
 
     $response->assertOk()->assertViewIs('teacher-dashboard');
+});
+
+it('opens the student dashboard with the standard dashboard layout', function () {
+    $unit = Unit::create(['name' => 'Unidade Centro', 'code' => 'CENTRO', 'active' => true]);
+    $student = User::factory()->create(['role' => UserRole::STUDENT, 'unit_id' => $unit->id]);
+    StudentProfile::create(['user_id' => $student->id, 'cpf' => '52998224725', 'birth_date' => '1990-01-01', 'phone' => '11999999999', 'number' => '10']);
+
+    $response = $this->actingAs($student)->get(route('dashboard'));
+
+    $response->assertOk()->assertViewIs('student-dashboard');
 });

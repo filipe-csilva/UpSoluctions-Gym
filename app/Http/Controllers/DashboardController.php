@@ -17,7 +17,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request): View
     {
         $user = request()->user();
-        if ($user->role?->value === 'teacher') {
+        if (in_array($user->role?->value, ['teacher', 'student'], true)) {
             return app(PanelController::class)($request);
         }
         $isManager = $user->role?->value === 'manager';
