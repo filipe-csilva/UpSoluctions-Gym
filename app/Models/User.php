@@ -80,6 +80,11 @@ class User extends Authenticatable implements CanResetPasswordContract
         return $this->hasOne(EmployeeProfile::class);
     }
 
+    public function messageReads(): HasMany
+    {
+        return $this->hasMany(MessageRead::class);
+    }
+
     public function workoutPlansAsTeacher(): HasMany
     {
         return $this->hasMany(WorkoutPlan::class, 'teacher_id');

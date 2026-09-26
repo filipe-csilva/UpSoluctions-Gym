@@ -17,7 +17,7 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'audience' => ['required', 'in:all,unit,direct'],
+            'audience' => ['required', 'in:all,unit,reception,direct'],
             'recipient_id' => ['nullable', 'exists:users,id'],
             'unit_id' => ['nullable', 'exists:units,id'],
             'subject' => ['required', 'string', 'max:150'],

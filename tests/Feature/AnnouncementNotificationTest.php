@@ -2,6 +2,7 @@
 
 use App\Enums\UserRole;
 use App\Models\Announcement;
+use App\Models\AnnouncementRead;
 use App\Models\User;
 use App\Notifications\AnnouncementPublished;
 use Illuminate\Support\Facades\Notification;
@@ -81,4 +82,51 @@ it('marks a notification as read when the user verifies it', function () {
         ->assertRedirect(route('panel', absolute: false));
 
     expect($notification->fresh()->read_at)->not->toBeNull();
+});
+
+it('records announcement reading independently for each student', function () {
+    $admin = User::factory()->create(['role' => UserRole::ADMIN]);
+    $firstStudent = User::factory()->create(['role' => UserRole::STUDENT]);
+    $secondStudent = User::factory()->create(['role' => UserRole::STUDENT]);
+    $announcement = Announcement::create([
+        'created_by' => $admin->id,
+        'title' => 'Comunicado para alunos',
+        'message' => 'Mensagem para todos os alunos.',
+        'target_role' => UserRole::STUDENT->value,
+        'active' => true,
+    ]);
+
+    $this->actingAs($firstStudent)->get(route('announcements.show', $announcement))->assertOk();
+
+    expect(AnnouncementRead::query()->where('announcement_id', $announcement->id)->where('user_id', $firstStudent->id)->exists())->toBeTrue()
+        ->and(AnnouncementRead::query()->where('announcement_id', $announcement->id)->where('user_id', $secondStudent->id)->exists())->toBeFalse();
+});
+
+it('keeps the default announcement visible to students created later', function () {
+    $admin = User::factory()->create(['role' => UserRole::ADMIN]);
+    $oldAnnouncement = Announcement::create([
+        'created_by' => $admin->id,
+        'title' => 'Comunicado antigo',
+        'message' => 'Não deve aparecer.',
+        'target_role' => UserRole::STUDENT->value,
+        'active' => true,
+        'is_default' => false,
+    ]);
+    $defaultAnnouncement = Announcement::create([
+        'created_by' => $admin->id,
+        'title' => 'Comunicado inicial padrão',
+        'message' => 'Este comunicado permanece disponível.',
+        'target_role' => UserRole::STUDENT->value,
+        'active' => true,
+        'is_default' => true,
+    ]);
+    $student = User::factory()->create(['role' => UserRole::STUDENT]);
+    $student->forceFill(['created_at' => now()->addMinute()])->save();
+
+    $this->actingAs($student)
+        ->get(route('announcements.index'))
+        ->assertSee('Comunicado inicial padrão')
+        ->assertDontSee('Comunicado antigo');
+
+    expect($oldAnnouncement->id)->not->toBe($defaultAnnouncement->id);
 });

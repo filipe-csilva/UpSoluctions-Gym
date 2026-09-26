@@ -33,6 +33,9 @@ class PanelController extends Controller
             ->where(function ($query) use ($user): void {
                 $query->whereNull('unit_id')->orWhere('unit_id', $user->unit_id);
             })
+            ->when($role === 'student', fn ($query) => $query->where(function ($scope) use ($user): void {
+                $scope->where('is_default', true)->orWhere('announcements.created_at', '>=', $user->created_at);
+            }))
             ->latest()
             ->paginate(9);
 

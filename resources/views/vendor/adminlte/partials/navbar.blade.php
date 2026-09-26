@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li class="nav-item d-none d-md-block">
-                <a href="{{ route('panel') }}" class="nav-link">
+                <a href="{{ route('home') }}" class="nav-link">
                     <i class="bi bi-grid-1x2 me-1" aria-hidden="true"></i> {{ __('adminlte.home') }}
                 </a>
             </li>

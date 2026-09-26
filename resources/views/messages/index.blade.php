@@ -17,11 +17,12 @@
                 <thead><tr><th>Assunto</th><th>De</th><th>Destino</th><th>Status</th><th>Data</th><th></th></tr></thead>
                 <tbody>
                     @forelse ($messages as $message)
+                        @php($isRead = $message->reads->isNotEmpty() || $message->sender_id === auth()->id())
                         <tr>
                             <td>{{ $message->subject }}</td>
                             <td>{{ $message->sender?->name ?? '-' }}</td>
                             <td>{{ $message->recipient?->name ?? ($message->unit?->name ?? ucfirst($message->audience)) }}</td>
-                            <td><span class="status-pill status-pill-{{ $message->read_at ? 'success' : 'warning' }}">{{ $message->read_at ? 'Lida' : 'Não lida' }}</span></td>
+                            <td><span class="status-pill status-pill-{{ $isRead ? 'success' : 'warning' }}">{{ $isRead ? 'Lida' : 'Não lida' }}</span></td>
                             <td>{{ $message->created_at?->format('d/m/Y H:i') }}</td>
                             <td class="text-end"><a href="{{ route('messages.show', $message) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> Visualizar</a></td>
                         </tr>

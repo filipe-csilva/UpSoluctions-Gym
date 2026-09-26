@@ -4,7 +4,7 @@
         ->with(['sender', 'parent'])
         ->visibleTo($currentUser)
         ->where('sender_id', '!=', $currentUser->id)
-        ->whereNull('read_at');
+        ->whereDoesntHave('reads', fn ($query) => $query->where('user_id', $currentUser->id));
     $unreadMessageCount = (clone $unreadMessageQuery)->count();
     $userMessages = $unreadMessageQuery->latest()->limit(5)->get();
 @endphp

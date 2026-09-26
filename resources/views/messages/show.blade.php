@@ -11,8 +11,8 @@
         <p class="text-muted mb-1">De: {{ $message->sender?->name ?? '-' }}</p>
         <p class="text-muted">{{ $message->created_at?->format('d/m/Y H:i') }} · {{ $message->unit?->name ?? ucfirst($message->audience) }}</p>
         <div class="border-top pt-3">{!! nl2br(e($message->body)) !!}</div>
-        @if ($message->read_at)
-            <div class="alert alert-success mt-4 mb-0">Lida por {{ $message->readBy?->name ?? 'usuário' }} em {{ $message->read_at->format('d/m/Y H:i') }}.</div>
+        @if ($message->reads->isNotEmpty())
+            <div class="alert alert-success mt-4 mb-0">Lida por você em {{ $message->reads->first()->read_at->format('d/m/Y H:i') }}.</div>
         @endif
         @if ($message->replies->isNotEmpty())
             <h2 class="h5 border-top mt-4 pt-3">Respostas</h2>
@@ -20,7 +20,7 @@
                 <div class="border-top py-3">
                     <div class="d-flex justify-content-between"><strong>{{ $reply->sender?->name ?? '-' }}</strong><small class="text-muted">{{ $reply->created_at?->format('d/m/Y H:i') }}</small></div>
                     <div class="mt-2">{!! nl2br(e($reply->body)) !!}</div>
-                    @if ($reply->read_at)<small class="text-success">Lida por {{ $reply->readBy?->name ?? 'usuário' }}</small>@endif
+                    @if ($reply->reads->isNotEmpty())<small class="text-success">Lida por você em {{ $reply->reads->first()->read_at->format('d/m/Y H:i') }}</small>@endif
                 </div>
             @endforeach
         @endif

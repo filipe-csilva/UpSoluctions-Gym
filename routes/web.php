@@ -9,6 +9,7 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\FinancialTransactionController;
 use App\Http\Controllers\GeneralSettingsController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PanelController;
@@ -25,9 +26,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return auth()->check()
-        ? redirect()->route('panel')
+        ? redirect()->route('home')
         : app(AuthenticatedSessionController::class)->create();
 })->name('login');
+
+Route::get('/home', HomeController::class)
+    ->middleware(['auth', 'verified'])
+    ->name('home');
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth', 'verified', 'can:view-dashboard'])

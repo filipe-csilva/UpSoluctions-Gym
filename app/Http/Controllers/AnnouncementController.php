@@ -6,6 +6,7 @@ use App\Http\Requests\StoreAnnouncementRequest;
 use App\Http\Requests\UpdateAnnouncementRequest;
 use App\Models\ActivityLog;
 use App\Models\Announcement;
+use App\Models\AnnouncementRead;
 use App\Models\Unit;
 use App\Models\User;
 use App\Notifications\AnnouncementPublished;
@@ -24,6 +25,7 @@ class AnnouncementController extends Controller
         $unitIds = $isManager ? $user->accessibleUnitIds() : [];
         $announcements = Announcement::query()
             ->with(['unit', 'creator'])
+            ->with(['reads' => fn ($query) => $query->where('user_id', $user->id)])
             ->when($request->filled('search'), fn ($query) => $query->where('title', 'like', '%'.$request->string('search')->toString().'%'))
             ->when($canManage && $request->filled('active'), fn ($query) => $query->where('active', $request->boolean('active')))
             ->when(! $canManage, function ($query) use ($user): void {
@@ -43,6 +45,9 @@ class AnnouncementController extends Controller
                         $scope->whereNull('unit_id')->orWhere('unit_id', $user->unit_id);
                     });
             })
+            ->when($user->role?->value === 'student', fn ($query) => $query->where(function ($scope) use ($user): void {
+                $scope->where('is_default', true)->orWhere('announcements.created_at', '>=', $user->created_at);
+            }))
             ->when($isManager, fn ($query) => $query->where(function ($scope) use ($unitIds): void {
                 $scope->whereIn('unit_id', $unitIds)->orWhereNull('unit_id');
             }))
@@ -81,6 +86,11 @@ class AnnouncementController extends Controller
         }
 
         $announcement->load(['unit', 'creator']);
+        AnnouncementRead::updateOrCreate(
+            ['announcement_id' => $announcement->id, 'user_id' => $request->user()->id],
+            ['read_at' => now()],
+        );
+        $announcement->load(['reads' => fn ($query) => $query->where('user_id', $request->user()->id)]);
 
         return view('announcements.show', compact('announcement'));
     }
@@ -149,6 +159,7 @@ class AnnouncementController extends Controller
             && ($announcement->start_at === null || $announcement->start_at->isPast())
             && ($announcement->end_at === null || $announcement->end_at->isFuture())
             && ($announcement->target_role === null || $announcement->target_role === 'all' || $announcement->target_role === $user->role?->value)
-            && ($announcement->unit_id === null || $announcement->unit_id === $user->unit_id);
+            && ($announcement->unit_id === null || $announcement->unit_id === $user->unit_id)
+            && ($user->role?->value !== 'student' || $announcement->is_default || $announcement->created_at?->gte($user->created_at));
     }
 }

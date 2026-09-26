@@ -20,18 +20,21 @@ class AnnouncementSeeder extends Seeder
                 'message' => 'Confira sua ficha de treino e mantenha a rotina de exercícios em dia.',
                 'target_role' => 'all',
                 'unit_id' => null,
+                'is_default' => true,
             ],
             [
                 'title' => 'Manutenção programada da unidade',
                 'message' => 'A unidade terá manutenção preventiva em horário programado. Consulte a recepção para mais informações.',
                 'target_role' => 'all',
                 'unit_id' => $unit?->id,
+                'is_default' => false,
             ],
             [
                 'title' => 'Avaliações físicas disponíveis',
                 'message' => 'As avaliações físicas estão disponíveis para agendamento com a equipe de instrutores.',
                 'target_role' => 'student',
                 'unit_id' => null,
+                'is_default' => false,
             ],
         ];
 

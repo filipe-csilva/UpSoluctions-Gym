@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Message extends Model
 {
-    protected $fillable = ['parent_id', 'sender_id', 'recipient_id', 'unit_id', 'audience', 'subject', 'body', 'read_at', 'read_by'];
+    protected $fillable = ['parent_id', 'sender_id', 'recipient_id', 'unit_id', 'assigned_to', 'assigned_at', 'audience', 'subject', 'body', 'read_at', 'read_by'];
 
     protected function casts(): array
     {
-        return ['read_at' => 'datetime'];
+        return ['read_at' => 'datetime', 'assigned_at' => 'datetime'];
     }
 
     public function scopeVisibleTo(Builder $query, User $user): Builder
@@ -24,14 +24,37 @@ class Message extends Model
             $scope->where('sender_id', $user->id)
                 ->orWhere('recipient_id', $user->id)
                 ->orWhere('audience', 'all')
-                ->when($role === 'student', fn (Builder $builder) => $builder->orWhere(function (Builder $unitScope) use ($user): void {
-                    $unitScope->where('audience', 'unit')->where('unit_id', $user->unit_id);
+                ->when($role === 'student', fn (Builder $builder) => $builder
+                    ->orWhere(function (Builder $unitScope) use ($user): void {
+                        $unitScope->where('audience', 'unit')->where('unit_id', $user->unit_id);
+                    })
+                    ->orWhereHas('parent', fn (Builder $parent) => $parent->where('sender_id', $user->id)))
+                ->when($role === 'admin', fn (Builder $builder) => $builder->orWhere(function (Builder $staffScope) use ($user): void {
+                    $staffScope->whereIn('audience', ['unit', 'reception'])
+                        ->where(function (Builder $assignmentScope) use ($user): void {
+                            $assignmentScope->where('audience', 'unit')
+                                ->orWhere(function (Builder $receptionScope) use ($user): void {
+                                    $receptionScope->where('audience', 'reception')
+                                        ->where(function (Builder $claimScope) use ($user): void {
+                                            $claimScope->whereNull('assigned_to')->orWhere('assigned_to', $user->id);
+                                        });
+                                });
+                        });
                 }))
-                ->when($role === 'admin', fn (Builder $builder) => $builder->orWhere('audience', 'unit'))
                 ->when(in_array($role, ['manager', 'financial'], true), fn (Builder $builder) => $builder->orWhere(function (Builder $unitScope) use ($user, $role): void {
-                    $unitScope->where('audience', 'unit')->whereIn('unit_id', $role === 'manager' ? $user->accessibleUnitIds() : [$user->unit_id]);
+                    $unitScope->whereIn('audience', ['unit', 'reception'])
+                        ->whereIn('unit_id', $role === 'manager' ? $user->accessibleUnitIds() : [$user->unit_id])
+                        ->where(function (Builder $assignmentScope) use ($user): void {
+                            $assignmentScope->where('audience', 'unit')
+                                ->orWhere(function (Builder $receptionScope) use ($user): void {
+                                    $receptionScope->where('audience', 'reception')
+                                        ->where(function (Builder $claimScope) use ($user): void {
+                                            $claimScope->whereNull('assigned_to')->orWhere('assigned_to', $user->id);
+                                        });
+                                });
+                        });
                 }));
-        });
+        })->when($role === 'student', fn (Builder $builder) => $builder->where('messages.created_at', '>=', $user->created_at));
     }
 
     public function sender(): BelongsTo
@@ -62,5 +85,15 @@ class Message extends Model
     public function readBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'read_by');
+    }
+
+    public function reads(): HasMany
+    {
+        return $this->hasMany(MessageRead::class);
+    }
+
+    public function assignedTo(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

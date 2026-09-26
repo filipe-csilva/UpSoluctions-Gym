@@ -1,12 +1,12 @@
 <?php
 
-test('registration route redirects to login', function () {
+test('public registration page is unavailable', function () {
     $response = $this->get('/register');
 
-    $response->assertRedirect('/');
+    $response->assertNotFound();
 });
 
-test('registration post is disabled and redirects to login', function () {
+test('public registration submission is unavailable', function () {
     $response = $this->post('/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
@@ -15,5 +15,5 @@ test('registration post is disabled and redirects to login', function () {
     ]);
 
     $this->assertGuest();
-    $response->assertRedirect('/');
+    $response->assertNotFound();
 });
