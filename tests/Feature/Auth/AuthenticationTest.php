@@ -8,19 +8,18 @@ test('login screen is available at the root URL', function () {
     $response->assertStatus(200);
 });
 
-test('authenticated users see the panel at the root URL', function () {
+test('authenticated users are redirected to the panel from the root URL', function () {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)->get('/');
 
-    $response->assertOk();
-    $response->assertViewIs('panel');
+    $response->assertRedirect(route('panel', absolute: false));
 });
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
 
-    $response->assertStatus(200);
+    $response->assertRedirect('/');
 });
 
 test('users can authenticate using the login screen', function () {
@@ -32,7 +31,7 @@ test('users can authenticate using the login screen', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect(route('panel', absolute: false));
 });
 
 test('users can not authenticate with invalid password', function () {

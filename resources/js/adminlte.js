@@ -69,12 +69,7 @@ function initFullscreenPersistence() {
   document.addEventListener('fullscreenchange', () => {
     setPreference(Boolean(document.fullscreenElement))
   })
-}
 
-function initRootUrl() {
-  if (window.location.pathname !== '/') {
-    window.history.replaceState({}, document.title, '/')
-  }
 }
 
 function parseConfig(el, attr) {
@@ -296,7 +291,6 @@ function initViaCep() {
 
 whenReady(() => {
   setGymControlFavicon()
-  initRootUrl()
   initFullscreenPersistence()
   // Wire OverlayScrollbars to the sidebar (matches the AdminLTE demo behaviour)
   const sidebar = document.querySelector('.sidebar-wrapper')

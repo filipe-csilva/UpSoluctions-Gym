@@ -666,3 +666,16 @@ Consulte o arquivo `LICENSE` para mais informações.
 ---
 
 **UpSoluctions Gym — Gestão inteligente para academias. 🏋️**
+
+## Implementação concluída - autorização, usuários e acompanhamento
+
+Itens implementados nesta etapa:
+
+* Policies formais para alunos, instrutores, matrículas, presenças e usuários.
+* Gates granulares por módulo e configurações exclusivas do administrador.
+* CRUD completo de usuários com perfil, unidade, status e senha.
+* Histórico completo de matrículas por aluno.
+* Listagem de alunos vinculados ao instrutor por fichas de treino.
+* Histórico detalhado de frequência por aluno com filtros de período.
+* Relatório de presença disponível na área de relatórios.
+* Testes de autorização e gerenciamento administrativo.

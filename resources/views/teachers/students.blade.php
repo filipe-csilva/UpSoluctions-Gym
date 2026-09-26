@@ -1,0 +1,4 @@
+@extends('adminlte::page')
+@section('title', 'Alunos do instrutor')
+@section('content_header')<div class="d-flex justify-content-between"><h1>Alunos vinculados</h1><a href="{{ route('teachers.show', $teacher) }}" class="btn btn-secondary">Voltar</a></div>@stop
+@section('content')<div class="card"><div class="card-header">Instrutor: <strong>{{ $teacher->user->name }}</strong></div><div class="card-body table-responsive"><table class="table table-hover"><thead><tr><th>Aluno</th><th>Unidade</th><th>Treino atual</th><th>Período</th></tr></thead><tbody>@forelse($students as $plans)<tr>@php($plan = $plans->first())<td>{{ $plan->student->user->name }}</td><td>{{ $plan->student->user->unit?->name ?? '-' }}</td><td>{{ $plan->name }}</td><td>{{ $plan->start_date?->format('d/m/Y') ?? '-' }} a {{ $plan->end_date?->format('d/m/Y') ?? '-' }}</td></tr>@empty<tr><td colspan="4" class="text-center">Nenhum aluno vinculado.</td></tr>@endforelse</tbody></table></div></div>@stop

@@ -144,8 +144,8 @@
         </div>
         <div class="card-body">
             <div class="gym-financial-balance">
-                <span><i class="bi bi-bullseye"></i> Ponto de equilíbrio: <strong>R$ {{ number_format((float) $financialPeriodExpenses, 2, ',', '.') }}</strong></span>
-                <span class="{{ (float) $financialPeriodRevenue >= (float) $financialPeriodExpenses ? 'text-success' : 'text-danger' }}"><i class="bi {{ (float) $financialPeriodRevenue >= (float) $financialPeriodExpenses ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill' }}"></i> {{ (float) $financialPeriodRevenue >= (float) $financialPeriodExpenses ? 'Acima do equilíbrio' : 'Abaixo do equilíbrio' }}</span>
+                <span title="Despesas fixas ÷ margem de contribuição"><i class="bi bi-bullseye"></i> Ponto de equilíbrio: <strong>R$ {{ number_format((float) $financialBreakEven, 2, ',', '.') }}</strong></span>
+                <span class="{{ (float) $financialPeriodRevenue >= (float) $financialBreakEven ? 'text-success' : 'text-danger' }}"><i class="bi {{ (float) $financialPeriodRevenue >= (float) $financialBreakEven ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill' }}"></i> {{ (float) $financialPeriodRevenue >= (float) $financialBreakEven ? 'Acima do equilíbrio' : 'Abaixo do equilíbrio' }}</span>
             </div>
             <div class="gym-evolution-chart" aria-label="Comparativo de receitas e despesas">
                 <svg viewBox="0 0 600 225" role="img" aria-label="Receita versus despesas">
@@ -157,8 +157,10 @@
                     @foreach ($financialPoints as $point)
                         <circle cx="{{ $point['x'] }}" cy="{{ $point['revenueY'] }}" r="4" class="gym-finance-revenue-point" />
                         <circle cx="{{ $point['x'] }}" cy="{{ $point['expensesY'] }}" r="4" class="gym-finance-expenses-point" />
-                        <text x="{{ $point['x'] }}" y="{{ max(14, $point['revenueY'] - 10) }}" text-anchor="middle" class="gym-finance-revenue-value">R$ {{ number_format((float) $point['revenue'], 2, ',', '.') }}</text>
-                        <text x="{{ $point['x'] }}" y="{{ min(197, $point['expensesY'] + 16) }}" text-anchor="middle" class="gym-finance-expenses-value">R$ {{ number_format((float) $point['expenses'], 2, ',', '.') }}</text>
+                        @if ($financialEvolution->count() <= 6 || $loop->index % 2 === 0 || $loop->last)
+                            <text x="{{ $point['x'] }}" y="{{ max(14, $point['revenueY'] - 10) }}" text-anchor="middle" class="gym-finance-revenue-value">R$ {{ number_format((float) $point['revenue'], 0, ',', '.') }}</text>
+                            <text x="{{ $point['x'] }}" y="{{ min(197, $point['expensesY'] + 16) }}" text-anchor="middle" class="gym-finance-expenses-value">R$ {{ number_format((float) $point['expenses'], 0, ',', '.') }}</text>
+                        @endif
                         <text x="{{ $point['x'] }}" y="207" text-anchor="middle" class="gym-chart-label">{{ $point['label'] }}</text>
                     @endforeach
                 </svg>

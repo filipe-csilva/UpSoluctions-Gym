@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -89,6 +90,7 @@ class StudentController extends Controller
 
     public function show(StudentProfile $student): View
     {
+        Gate::forUser(request()->user())->authorize('view', $student);
         $this->authorizeStudentAccess($student);
         $student->load('user.unit');
 
@@ -110,8 +112,12 @@ class StudentController extends Controller
 
     public function edit(StudentProfile $student): View
     {
+        Gate::forUser(request()->user())->authorize('update', $student);
         $this->authorizeStudentAccess($student);
         $student->load('user.unit');
+        $roles = request()->user()->role?->value === UserRole::ADMIN->value
+            ? UserRole::cases()
+            : [UserRole::STUDENT, UserRole::TEACHER];
         $units = Unit::query()
             ->where('active', true)
             ->when(request()->user()->role?->value === 'manager', function ($query): void {
@@ -120,11 +126,12 @@ class StudentController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('students.edit', compact('student', 'units'));
+        return view('students.edit', compact('student', 'units', 'roles'));
     }
 
     public function update(UpdateStudentRequest $request, StudentProfile $student): RedirectResponse
     {
+        Gate::forUser(request()->user())->authorize('update', $student);
         $this->authorizeStudentAccess($student);
         $student->load('user');
         $validated = $request->validated();
@@ -139,6 +146,7 @@ class StudentController extends Controller
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'unit_id' => $validated['unit_id'],
+                'role' => UserRole::from($validated['role']),
                 'active' => (bool) ($validated['active'] ?? false),
             ]);
             $student->update(collect($validated)->except(['name', 'email', 'unit_id', 'active'])->all());
@@ -206,6 +214,7 @@ class StudentController extends Controller
 
     public function destroy(StudentProfile $student): RedirectResponse
     {
+        Gate::forUser(request()->user())->authorize('delete', $student);
         $this->authorizeStudentAccess($student);
 
         DB::transaction(function () use ($student): void {

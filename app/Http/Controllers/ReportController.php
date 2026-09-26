@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Enrollment;
 use App\Models\FinancialTransaction;
+use App\Models\PhysicalAssessment;
 use App\Models\StudentProfile;
 use App\Models\Unit;
 use Carbon\Carbon;
@@ -46,10 +47,22 @@ class ReportController extends Controller
     public function export(Request $request): StreamedResponse
     {
         [$from, $to] = $this->period($request);
-        $report = $this->reportData($this->reportType($request), $from, $to, $request->integer('unit_id') ?: null, $request->user()->role?->value === 'manager' ? $request->user()->accessibleUnitIds() : null);
+        $reportType = $this->reportType($request);
+        $unitId = $request->integer('unit_id') ?: null;
+        $report = $this->reportData($reportType, $from, $to, $unitId, $request->user()->role?->value === 'manager' ? $request->user()->accessibleUnitIds() : null);
+        $title = $this->reportTitle($reportType);
+        $unitName = $unitId ? Unit::find($unitId)?->name ?? 'Unidade não encontrada' : 'Todas as unidades';
+        $generatedAt = now()->format('d/m/Y H:i');
 
-        return response()->streamDownload(function () use ($report): void {
+        return response()->streamDownload(function () use ($report, $title, $from, $to, $unitName, $generatedAt): void {
             $handle = fopen('php://output', 'w');
+            fwrite($handle, "\xEF\xBB\xBF");
+            fputcsv($handle, [config('app.name', 'GymControl')]);
+            fputcsv($handle, [$title]);
+            fputcsv($handle, ['Período', $from->format('d/m/Y').' até '.$to->format('d/m/Y')]);
+            fputcsv($handle, ['Unidade', $unitName]);
+            fputcsv($handle, ['Gerado em', $generatedAt]);
+            fputcsv($handle, []);
             fputcsv($handle, $report['headers']);
             foreach ($report['rows'] as $row) {
                 fputcsv($handle, $row);
@@ -62,14 +75,18 @@ class ReportController extends Controller
     {
         [$from, $to] = $this->period($request);
         $reportType = $this->reportType($request);
-        $report = $this->reportData($reportType, $from, $to, $request->integer('unit_id') ?: null, $request->user()->role?->value === 'manager' ? $request->user()->accessibleUnitIds() : null);
+        $unitId = $request->integer('unit_id') ?: null;
+        $report = $this->reportData($reportType, $from, $to, $unitId, $request->user()->role?->value === 'manager' ? $request->user()->accessibleUnitIds() : null);
 
         return view('reports.print', [
             'title' => $this->reportTitle($reportType),
             'from' => $from,
             'to' => $to,
+            'unitName' => $unitId ? Unit::find($unitId)?->name ?? 'Unidade não encontrada' : 'Todas as unidades',
+            'generatedAt' => now(),
             'headers' => $report['headers'],
             'rows' => $report['rows'],
+            'companyName' => config('app.name', 'GymControl'),
         ]);
     }
 
@@ -88,6 +105,9 @@ class ReportController extends Controller
             'students' => $this->studentReport($from, $to, $unitId, $unitIds),
             'enrollments' => $this->enrollmentReport($from, $to, $unitId, $unitIds),
             'attendance' => $this->attendanceReport($from, $to, $unitId, $unitIds),
+            'assessments' => $this->assessmentReport($from, $to, $unitId, $unitIds),
+            'cash_flow' => $this->cashFlowReport($from, $to, $unitId, $unitIds),
+            'overdue_installments' => $this->overdueInstallmentsReport($from, $to, $unitId, $unitIds),
             default => $this->financialReport($from, $to, $unitId, $unitIds),
         };
     }
@@ -99,6 +119,58 @@ class ReportController extends Controller
         return ['headers' => ['Descrição', 'Aluno', 'Vencimento', 'Valor', 'Tipo', 'Status'], 'rows' => $items->map(fn (FinancialTransaction $item): array => [$item->description, $item->student?->user?->name ?? '-', $item->due_date?->format('d/m/Y') ?? '-', (string) $item->amount, $item->transaction_type, $item->isOverdue() ? 'Em atraso' : match ($item->status) {
             'paid' => 'Pago', 'cancelled' => 'Cancelado', default => 'Pendente'
         }])->all()];
+    }
+
+    private function overdueInstallmentsReport(Carbon $from, Carbon $to, ?int $unitId, ?array $unitIds): array
+    {
+        $items = FinancialTransaction::query()
+            ->with(['student.user', 'unit', 'enrollment.plan'])
+            ->whereIn('status', ['pending', 'overdue'])
+            ->whereDate('due_date', '<', today())
+            ->whereBetween('due_date', [$from->toDateString(), $to->toDateString()])
+            ->when($unitId, fn ($query) => $query->where('unit_id', $unitId))
+            ->when($unitIds !== null, fn ($query) => $query->whereIn('unit_id', $unitIds))
+            ->orderBy('due_date')
+            ->get();
+
+        return [
+            'headers' => ['Aluno', 'Plano', 'Unidade', 'Vencimento', 'Dias em atraso', 'Valor', 'Status'],
+            'rows' => $items->map(fn (FinancialTransaction $item): array => [
+                $item->student?->user?->name ?? '-',
+                $item->enrollment?->plan?->name ?? '-',
+                $item->unit?->name ?? '-',
+                $item->due_date?->format('d/m/Y') ?? '-',
+                $item->due_date?->diffInDays(today()) ?? 0,
+                (string) $item->amount,
+                'Em atraso',
+            ])->all(),
+        ];
+    }
+
+    private function cashFlowReport(Carbon $from, Carbon $to, ?int $unitId, ?array $unitIds): array
+    {
+        $items = FinancialTransaction::query()
+            ->with(['student.user', 'unit'])
+            ->where('status', 'paid')
+            ->whereNotNull('paid_at')
+            ->whereBetween('paid_at', [$from, $to])
+            ->when($unitId, fn ($query) => $query->where('unit_id', $unitId))
+            ->when($unitIds !== null, fn ($query) => $query->whereIn('unit_id', $unitIds))
+            ->orderBy('paid_at')
+            ->get();
+
+        return [
+            'headers' => ['Data', 'Descrição', 'Aluno', 'Unidade', 'Tipo', 'Valor', 'Forma de pagamento'],
+            'rows' => $items->map(fn (FinancialTransaction $item): array => [
+                $item->paid_at?->format('d/m/Y H:i') ?? '-',
+                $item->description,
+                $item->student?->user?->name ?? '-',
+                $item->unit?->name ?? '-',
+                $item->transaction_type === 'income' ? 'Entrada' : 'Saída',
+                (string) $item->amount,
+                $item->payment_method ?? '-',
+            ])->all(),
+        ];
     }
 
     private function studentReport(Carbon $from, Carbon $to, ?int $unitId, ?array $unitIds): array
@@ -122,14 +194,29 @@ class ReportController extends Controller
         return ['headers' => ['Aluno', 'Unidade', 'Data', 'Entrada', 'Saída'], 'rows' => $items->map(fn (Attendance $item): array => [$item->student?->user?->name ?? '-', $item->unit?->name ?? '-', $item->date?->format('d/m/Y') ?? '-', $item->entry_time ?? '-', $item->exit_time ?? '-'])->all()];
     }
 
+    private function assessmentReport(Carbon $from, Carbon $to, ?int $unitId, ?array $unitIds): array
+    {
+        $items = PhysicalAssessment::query()->with(['student.user.unit', 'teacher'])->whereBetween('assessment_date', [$from->toDateString(), $to->toDateString()])->when($unitId, fn ($query) => $query->whereHas('student.user', fn ($userQuery) => $userQuery->where('unit_id', $unitId)))->when($unitIds !== null, fn ($query) => $query->whereHas('student.user', fn ($userQuery) => $userQuery->whereIn('unit_id', $unitIds)))->latest('assessment_date')->get();
+
+        return ['headers' => ['Aluno', 'Unidade', 'Data', 'Altura', 'Peso', 'IMC', 'Instrutor'], 'rows' => $items->map(fn (PhysicalAssessment $item): array => [$item->student?->user?->name ?? '-', $item->student?->user?->unit?->name ?? '-', $item->assessment_date?->format('d/m/Y') ?? '-', $item->height.' m', $item->weight.' kg', $item->bmi ?? '-', $item->teacher?->name ?? '-'])->all()];
+    }
+
     private function reportType(Request $request): string
     {
-        return in_array($request->string('type')->toString(), ['financial', 'students', 'enrollments', 'attendance'], true) ? $request->string('type')->toString() : 'financial';
+        return in_array($request->string('type')->toString(), ['financial', 'cash_flow', 'overdue_installments', 'students', 'enrollments', 'attendance', 'assessments'], true) ? $request->string('type')->toString() : 'financial';
     }
 
     private function reportTitle(string $type): string
     {
-        return ['financial' => 'Relatório financeiro', 'students' => 'Relatório de alunos', 'enrollments' => 'Relatório de matrículas', 'attendance' => 'Relatório de presença'][$type] ?? 'Relatório';
+        if ($type === 'cash_flow') {
+            return 'Relatório de fluxo de caixa';
+        }
+
+        if ($type === 'overdue_installments') {
+            return 'Relatório de parcelas vencidas';
+        }
+
+        return ['financial' => 'Relatório financeiro', 'students' => 'Relatório de alunos', 'enrollments' => 'Relatório de matrículas', 'attendance' => 'Relatório de presença', 'assessments' => 'Relatório de avaliações físicas'][$type] ?? 'Relatório';
     }
 
     /** @return array{0: Carbon, 1: Carbon} */

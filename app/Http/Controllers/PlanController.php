@@ -24,7 +24,7 @@ class PlanController extends Controller
 
     public function create(): View
     {
-        return view('plans.create', ['plan' => new Plan(['active' => true])]);
+        return view('plans.create', ['plan' => new Plan(['active' => true, 'installments' => 1])]);
     }
 
     public function store(StorePlanRequest $request): RedirectResponse

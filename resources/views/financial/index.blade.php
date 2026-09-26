@@ -5,9 +5,12 @@
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1>Financeiro</h1>
-        <a href="{{ route('financial.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> Novo lançamento
-        </a>
+        <div class="d-flex align-items-center justify-content-end gap-2 flex-wrap">
+            <a href="{{ route('financial.cash-flow') }}" class="btn btn-success"><i class="bi bi-graph-up-arrow"></i> Fluxo de caixa</a>
+            <a href="{{ route('financial.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Novo lançamento
+            </a>
+        </div>
     </div>
 @stop
 
@@ -21,7 +24,7 @@
         <div class="col-12 col-md-3"><div class="card h-100"><div class="card-body"><small class="text-muted">Em atraso</small><h3 class="mb-0">R$ {{ number_format((float) $summary['overdue'], 2, ',', '.') }}</h3></div></div></div>
     </div>
 
-    <div class="card mb-3"><div class="card-body"><form method="GET" class="row g-2 align-items-end"><div class="col-12 col-md-4"><label class="form-label">Buscar</label><input name="search" value="{{ request('search') }}" class="form-control" placeholder="Descrição ou aluno"></div><div class="col-6 col-md-2"><label class="form-label">De</label><input type="date" name="from" value="{{ request('from', $from->format('Y-m-d')) }}" class="form-control"></div><div class="col-6 col-md-2"><label class="form-label">Até</label><input type="date" name="to" value="{{ request('to', $to->format('Y-m-d')) }}" class="form-control"></div><div class="col-6 col-md-2"><label class="form-label">Tipo</label><select name="transaction_type" class="form-select"><option value="">Todos</option><option value="income" @selected(request('transaction_type') === 'income')>Receita</option><option value="expense" @selected(request('transaction_type') === 'expense')>Despesa</option></select></div><div class="col-6 col-md-2"><label class="form-label">Status</label><select name="status" class="form-select"><option value="">Todos</option><option value="pending" @selected(request('status') === 'pending')>Pendente</option><option value="paid" @selected(request('status') === 'paid')>Pago</option><option value="overdue" @selected(request('status') === 'overdue')>Em atraso</option><option value="cancelled" @selected(request('status') === 'cancelled')>Cancelado</option></select></div><div class="col-12 d-flex justify-content-end gap-2"><button class="btn btn-primary">Filtrar</button><a href="{{ route('financial.index') }}" class="btn btn-outline-secondary">Limpar</a></div></form></div></div>
+    <div class="card mb-3"><div class="card-body"><form method="GET" action="{{ route('financial.index') }}" class="row g-2 align-items-end"><div class="col-12 col-md-4"><label class="form-label">Buscar</label><input name="search" value="{{ request('search') }}" class="form-control" placeholder="Descrição ou aluno"></div><div class="col-6 col-md-2"><label class="form-label">De</label><input type="date" name="from" value="{{ request('from', $from->format('Y-m-d')) }}" class="form-control"></div><div class="col-6 col-md-2"><label class="form-label">Até</label><input type="date" name="to" value="{{ request('to', $to->format('Y-m-d')) }}" class="form-control"></div><div class="col-6 col-md-2"><label class="form-label">Tipo</label><select name="transaction_type" class="form-select"><option value="">Todos</option><option value="income" @selected(request('transaction_type') === 'income')>Receita</option><option value="expense" @selected(request('transaction_type') === 'expense')>Despesa</option></select></div><div class="col-6 col-md-2"><label class="form-label">Status</label><select name="status" class="form-select"><option value="">Todos</option><option value="pending" @selected(request('status') === 'pending')>Pendente</option><option value="paid" @selected(request('status') === 'paid')>Pago</option><option value="overdue" @selected(request('status') === 'overdue')>Em atraso</option><option value="cancelled" @selected(request('status') === 'cancelled')>Cancelado</option></select></div><div class="col-12 d-flex justify-content-end gap-2"><button class="btn btn-primary">Filtrar</button><a href="{{ route('financial.index') }}" class="btn btn-outline-secondary">Limpar</a></div></form></div></div>
 
     <div class="card">
         <div class="card-body table-responsive">
@@ -53,6 +56,9 @@
                                 @endif
                             </td>
                             <td class="text-end">
+                                @if ($transaction->status !== 'paid' && $transaction->status !== 'cancelled')
+                                    <a href="{{ route('financial.receive', $transaction) }}" class="btn btn-sm btn-success"><i class="bi bi-cash-coin"></i> Receber</a>
+                                @endif
                                 <a href="{{ route('financial.show', $transaction) }}" class="btn btn-sm btn-outline-primary">Visualizar</a>
                             </td>
                         </tr>

@@ -89,11 +89,11 @@
 
     <div class="card mb-3">
         <div class="card-body">
-            <form method="GET" action="{{ route('students.index') }}" class="row g-2 align-items-end">
+            <form method="GET" action="{{ route('teachers.index') }}" class="row g-2 align-items-end">
                 <div class="col-12 col-md-5"><label for="search" class="form-label">Buscar</label><input id="search" name="search" value="{{ request('search') }}" class="form-control" placeholder="Nome, e-mail ou CPF"></div>
                 <div class="col-12 col-md-3"><label for="unit_id" class="form-label">Unidade</label><select id="unit_id" name="unit_id" class="form-select"><option value="">Todas</option>@foreach ($units as $unit)<option value="{{ $unit->id }}" @selected(request('unit_id') == $unit->id)>{{ $unit->name }}</option>@endforeach</select></div>
                 <div class="col-12 col-md-2"><label for="active" class="form-label">Status</label><select id="active" name="active" class="form-select"><option value="">Todos</option><option value="1" @selected(request('active') === '1')>Ativos</option><option value="0" @selected(request('active') === '0')>Inativos</option></select></div>
-                <div class="col-12 col-md-2 d-flex gap-2"><button class="btn btn-primary flex-grow-1">Filtrar</button><a href="{{ route('students.index') }}" class="btn btn-outline-secondary">Limpar</a></div>
+                <div class="col-12 col-md-2 d-flex gap-2"><button class="btn btn-primary flex-grow-1">Filtrar</button><a href="{{ route('teachers.index') }}" class="btn btn-outline-secondary">Limpar</a></div>
             </form>
         </div>
     </div>

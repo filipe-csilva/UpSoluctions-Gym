@@ -1,6 +1,6 @@
 @extends('adminlte::page')
-@section('title', 'Profile')
-@section('content_header') <h1>Profile</h1> @stop
+@section('title', 'Perfil')
+@section('content_header') <h1>Perfil</h1> @stop
 @section('content')
     <x-alerts />
     <div class="row g-4">
@@ -14,15 +14,19 @@
             <form method="POST" action="{{ route('profile.avatar.update') }}" enctype="multipart/form-data">
                 @csrf
                 <label for="avatar" class="form-label text-start d-block">Avatar</label>
-                <input id="avatar" name="avatar" type="file" class="form-control" accept="image/jpeg,image/png,image/webp" required>
+                <div class="input-group flex-nowrap profile-avatar-upload">
+                    <label for="avatar" class="btn btn-outline-secondary text-nowrap">Selecionar arquivo</label>
+                    <span id="avatar-name" class="form-control text-muted text-truncate">Nenhum arquivo selecionado</span>
+                </div>
+                <input id="avatar" name="avatar" type="file" class="visually-hidden" accept="image/jpeg,image/png,image/webp" required>
                 @error('avatar')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
-                <div class="d-grid mt-2"><button type="submit" class="btn btn-primary"><i class="bi bi-upload me-1"></i> Upload avatar</button></div>
+                <div class="d-grid mt-2"><button type="submit" class="btn btn-primary"><i class="bi bi-upload me-1"></i> Enviar avatar</button></div>
             </form>
         </div></div></div>
         <div class="col-12 col-xl-8"><div class="card h-100">
             <div class="card-header p-0"><ul class="nav nav-tabs card-header-tabs px-3" role="tablist">
-                <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#change-password" type="button" role="tab">Change password</button></li>
-                <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#sessions" type="button" role="tab">Sessions</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#change-password" type="button" role="tab">Alterar senha</button></li>
+                <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#sessions" type="button" role="tab">Atividades</button></li>
             </ul></div>
             <div class="card-body tab-content">
                 <section id="change-password" class="tab-pane fade show active" role="tabpanel">@include('profile.partials.update-password-form')</section>
@@ -47,3 +51,19 @@
         </div></div>
     </div>
 @stop
+
+@push('css')
+    <style>
+        .profile-avatar-upload #avatar-name {
+            min-width: 0;
+        }
+    </style>
+@endpush
+
+@push('js')
+    <script>
+        document.getElementById('avatar')?.addEventListener('change', function () {
+            document.getElementById('avatar-name').textContent = this.files[0]?.name || 'Nenhum arquivo selecionado';
+        });
+    </script>
+@endpush

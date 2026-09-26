@@ -10,6 +10,28 @@
 @import 'overlayscrollbars/overlayscrollbars.css';
 @import 'admin-lte/dist/css/adminlte.css';
 
+.app-header .navbar-nav.ms-auto > .nav-item.dropdown {
+  position: relative;
+  margin-inline-start: .35rem;
+}
+
+.app-header .navbar-nav.ms-auto > .nav-item.dropdown > .nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  padding-inline: .75rem;
+}
+
+.app-header .navbar-nav.ms-auto > .nav-item.dropdown .navbar-badge {
+  top: 1px;
+  right: 1px;
+  min-width: 1rem;
+  text-align: center;
+  line-height: 1.15;
+}
+
 .gym-dashboard-heading {
   display: flex;
   align-items: flex-end;
@@ -592,7 +614,7 @@
 
 [data-bs-theme="dark"] .gym-dashboard-lists .table > :not(caption) > * > * {
   border-color: #3f4b59;
-  background: #20262c;
+  background: #111c30;
   color: #edf4ff;
 }
 
@@ -675,6 +697,7 @@
 
 [data-bs-theme="light"] .gym-unit-chart::after { background: #ffffff; }
 [data-bs-theme="light"] .gym-unit-chart span { color: #152640; }
+[data-bs-theme="light"] .gym-dashboard-lists .table > :not(caption) > * > * { background: #ffffff; }
 [data-bs-theme="light"] .gym-chart-grid-line { stroke: #91a4ba; stroke-width: 1.2; }
 [data-bs-theme="light"] .gym-chart-label,
 [data-bs-theme="light"] .gym-chart-scale { fill: #4f617b; }
@@ -684,6 +707,66 @@
 [data-bs-theme="light"] .gym-finance-expenses-value { fill: #dc3545; }
 [data-bs-theme="light"] .gym-finance-revenue-point { fill: #159957; stroke: #ffffff; }
 [data-bs-theme="light"] .gym-finance-expenses-point { fill: #dc3545; stroke: #ffffff; }
+
+/* Os badges do navbar devem ser compactos; os badges das tabelas mantêm a largura padrão. */
+.app-header .navbar-nav.ms-auto .navbar-badge {
+  width: auto;
+  min-width: 1rem;
+  padding: 2px 4px;
+  font-size: .6rem;
+  font-weight: 600;
+}
+
+/* Comunicação: grupo e submenus com hierarquia visual mais clara. */
+.app-sidebar .nav-item.menu-open > .nav-link {
+  color: #ffffff;
+  background: rgba(46, 140, 255, .14);
+}
+
+.app-sidebar .nav-item.menu-open > .nav-link > .nav-icon {
+  color: #65a8ff;
+}
+
+.app-sidebar .nav-treeview {
+  margin: .2rem .55rem .45rem 1.05rem;
+  padding: .2rem 0 .2rem .5rem;
+  border-left: 1px solid rgba(148, 163, 184, .28);
+}
+
+.app-sidebar .nav-treeview .nav-link {
+  min-height: 2.25rem;
+  border-radius: .45rem;
+  padding: .45rem .7rem;
+  font-size: .9rem;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+.app-sidebar .nav-treeview .nav-link:hover {
+  color: #ffffff;
+  background: rgba(46, 140, 255, .12);
+}
+
+.app-sidebar .nav-treeview .nav-link.active {
+  color: #ffffff;
+  background: #1677e8;
+  box-shadow: 0 4px 12px rgba(22, 119, 232, .2);
+}
+
+.app-sidebar .nav-treeview .nav-icon {
+  width: 1.25rem;
+  margin-right: .35rem;
+  color: #9db4d5;
+}
+
+[data-bs-theme="light"] .app-sidebar .nav-item.menu-open > .nav-link {
+  color: #14233d;
+  background: rgba(22, 119, 232, .09);
+}
+
+[data-bs-theme="light"] .app-sidebar .nav-treeview .nav-link:hover {
+  color: #14233d;
+  background: rgba(22, 119, 232, .08);
+}
 
 /*
  * Option B: compile from source to customise SCSS variables. Comment out

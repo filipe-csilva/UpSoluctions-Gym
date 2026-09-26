@@ -25,6 +25,21 @@ class PhysicalAssessmentController extends Controller
         return view('assessments.create', ['students' => StudentProfile::with('user')->get(), 'teachers' => User::where('role', 'teacher')->where('active', true)->get()]);
     }
 
+    public function history(StudentProfile $student): View
+    {
+        $student->load('user');
+        $assessments = PhysicalAssessment::query()->with('teacher')->where('student_id', $student->id)->latest('assessment_date')->get();
+
+        return view('assessments.history', compact('student', 'assessments'));
+    }
+
+    public function myHistory(Request $request): View
+    {
+        abort_unless($request->user()->studentProfile !== null, 403);
+
+        return $this->history($request->user()->studentProfile);
+    }
+
     public function store(StorePhysicalAssessmentRequest $request): RedirectResponse
     {
         $data = $request->validated();

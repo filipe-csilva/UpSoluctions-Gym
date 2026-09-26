@@ -28,7 +28,12 @@ class UpdatePlanRequest extends FormRequest
             'name' => ['required', 'string', 'max:100', Rule::unique('plans', 'name')->ignore($plan)],
             'description' => ['nullable', 'string'],
             'duration_months' => ['required', 'integer', 'min:1', 'max:120'],
+            'installments' => ['required', 'integer', 'min:1', 'max:120'],
             'price' => ['required', 'numeric', 'min:0', 'max:99999999.99'],
+            'promotion_type' => ['nullable', 'in:percentage,fixed'],
+            'promotion_value' => ['nullable', 'numeric', 'min:0', 'required_with:promotion_type', Rule::when($this->input('promotion_type') === 'percentage', ['max:100'])],
+            'promotion_start_date' => ['nullable', 'date'],
+            'promotion_end_date' => ['nullable', 'date', 'after_or_equal:promotion_start_date'],
             'active' => ['boolean'],
         ];
     }

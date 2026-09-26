@@ -7,6 +7,7 @@
         <h1>Detalhes do instrutor</h1>
         <div class="d-flex gap-2">
             <a href="{{ route('teachers.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Voltar</a>
+            <a href="{{ route('teachers.students', $teacher) }}" class="btn btn-info"><i class="bi bi-people"></i> Alunos vinculados</a>
             <a href="{{ route('teachers.edit', $teacher) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
             <form method="POST" action="{{ route('teachers.destroy', $teacher) }}" onsubmit="return confirm('Deseja excluir este instrutor?')">
                 @csrf

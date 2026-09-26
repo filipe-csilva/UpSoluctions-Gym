@@ -126,6 +126,13 @@ class DashboardController extends Controller
             ->when($isManager, fn ($query) => $query->whereIn('unit_id', $unitIds));
         $financialPeriodRevenue = (clone $financialPeriodQuery)->where('transaction_type', 'income')->sum('amount');
         $financialPeriodExpenses = (clone $financialPeriodQuery)->where('transaction_type', 'expense')->sum('amount');
+        $financialPeriodVariableExpenses = 0.0;
+        $financialContributionMarginRatio = $financialPeriodRevenue > 0
+            ? max(0, ($financialPeriodRevenue - $financialPeriodVariableExpenses) / $financialPeriodRevenue)
+            : 1.0;
+        $financialBreakEven = $financialContributionMarginRatio > 0
+            ? $financialPeriodExpenses / $financialContributionMarginRatio
+            : $financialPeriodExpenses;
 
         $upcomingDueTransactions = FinancialTransaction::query()
             ->with('student.user')
@@ -200,6 +207,9 @@ class DashboardController extends Controller
             'monthlyExpenses' => $monthlyExpenses,
             'financialPeriodRevenue' => $financialPeriodRevenue,
             'financialPeriodExpenses' => $financialPeriodExpenses,
+            'financialPeriodVariableExpenses' => $financialPeriodVariableExpenses,
+            'financialContributionMarginRatio' => $financialContributionMarginRatio,
+            'financialBreakEven' => $financialBreakEven,
             'upcomingDueTransactions' => $upcomingDueTransactions,
             'upcomingPayables' => $upcomingPayables,
             'upcomingReceivables' => $upcomingReceivables,

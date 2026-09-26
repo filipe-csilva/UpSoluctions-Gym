@@ -1,41 +1,28 @@
 @php
     $currentUser = auth()->user();
-    $currentRole = $currentUser?->role?->value;
-    $activeAnnouncements = \App\Models\Announcement::query()
-        ->where('active', true)
-        ->where(function ($query): void {
-            $query->whereNull('start_at')->orWhere('start_at', '<=', now());
-        })
-        ->where(function ($query): void {
-            $query->whereNull('end_at')->orWhere('end_at', '>=', now());
-        })
-        ->where(function ($query) use ($currentUser, $currentRole): void {
-            $query->whereNull('unit_id')->orWhere('unit_id', $currentUser?->unit_id);
-            $query->where(function ($target) use ($currentRole): void {
-                $target->whereNull('target_role')->orWhere('target_role', 'all')->orWhere('target_role', $currentRole);
-            });
-        })
-        ->latest()
-        ->limit(5)
-        ->get();
+    $unreadNotifications = $currentUser?->unreadNotifications()->latest()->limit(5)->get() ?? collect();
+    $unreadNotificationCount = $currentUser?->unreadNotifications()->count() ?? 0;
 @endphp
 <li class="nav-item dropdown">
     <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-label="Notificações">
         <i class="bi bi-bell-fill" aria-hidden="true"></i>
-        @if ($activeAnnouncements->count() > 0)<span class="navbar-badge badge text-bg-warning">{{ $activeAnnouncements->count() }}</span>@endif
+        @if ($unreadNotificationCount > 0)
+            <span class="navbar-badge badge text-bg-warning">{{ $unreadNotificationCount > 99 ? '99+' : $unreadNotificationCount }}</span>
+        @endif
     </a>
     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-        <span class="dropdown-item dropdown-header">{{ $activeAnnouncements->count() }} comunicados ativos</span>
+        <span class="dropdown-item dropdown-header">{{ $unreadNotificationCount }} notificação(ões) não lida(s)</span>
         <div class="dropdown-divider"></div>
-        @forelse ($activeAnnouncements as $announcement)
-            <a href="{{ route('announcements.show', $announcement) }}" class="dropdown-item">
-                <i class="bi bi-megaphone-fill text-warning me-2"></i>{{ $announcement->title }}
-                <span class="float-end text-secondary fs-7">{{ $announcement->created_at?->format('d/m') }}</span>
+        @forelse ($unreadNotifications as $notification)
+            <a href="{{ route('notifications.read', $notification->id) }}" class="dropdown-item">
+                <i class="bi bi-bell text-warning me-2"></i>
+                {{ $notification->data['title'] ?? 'Nova notificação' }}
+                <small class="d-block text-secondary ms-4">{{ $notification->data['message'] ?? '' }}</small>
+                <span class="float-end text-secondary fs-7">{{ $notification->created_at?->format('d/m H:i') }}</span>
             </a>
             <div class="dropdown-divider"></div>
         @empty
-            <span class="dropdown-item text-secondary">Nenhum comunicado ativo.</span>
+            <span class="dropdown-item text-secondary">Nenhuma notificação nova.</span>
         @endforelse
-        <a href="{{ route('announcements.index') }}" class="dropdown-item dropdown-footer">Ver comunicados</a>
     </div>
 </li>

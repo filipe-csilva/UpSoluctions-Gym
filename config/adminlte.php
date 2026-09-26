@@ -270,6 +270,12 @@ return [
             'can' => 'view-units',
         ],
         [
+            'text' => 'Usuários',
+            'route' => 'users.index',
+            'icon' => 'bi bi-people-fill',
+            'can' => 'manage-users',
+        ],
+        [
             'text' => 'Planos',
             'route' => 'plans.index',
             'icon' => 'bi bi-card-checklist',
@@ -283,16 +289,50 @@ return [
         ],
         [
             'text' => 'Financeiro',
-            'route' => 'financial.index',
             'icon' => 'bi bi-cash-coin',
             'can' => 'view-financial',
+            'submenu' => [
+                [
+                    'text' => 'Lançamentos',
+                    'route' => 'financial.index',
+                    'icon' => 'bi bi-list-ul',
+                    'can' => 'view-financial',
+                    'active' => ['financial', 'financial/create'],
+                ],
+                [
+                    'text' => 'Fluxo de caixa',
+                    'route' => 'financial.cash-flow',
+                    'icon' => 'bi bi-graph-up-arrow',
+                    'can' => 'view-financial',
+                    'active' => ['financial/cash-flow'],
+                ],
+            ],
         ],
         [
-            'text' => 'Comunicados',
-            'url' => 'announcements',
-            'icon' => 'bi bi-megaphone-fill',
-            'can' => 'view-announcements',
+            'text' => 'Meu financeiro',
+            'route' => 'student-financial.index',
+            'icon' => 'bi bi-wallet2',
+            'can' => 'view-student-financial',
         ],
+        [
+            'text' => 'Comunicação',
+            'icon' => 'bi bi-chat-square-text-fill',
+            'submenu' => [
+                [
+                    'text' => 'Comunicados',
+                    'url' => 'announcements',
+                    'icon' => 'bi bi-megaphone-fill',
+                    'can' => 'view-announcements',
+                ],
+                [
+                    'text' => 'Mensagens',
+                    'route' => 'messages.index',
+                    'icon' => 'bi bi-chat-dots-fill',
+                    'can' => 'view-messages',
+                ],
+            ],
+        ],
+
         [
             'text' => 'Relatórios',
             'route' => 'reports.index',
@@ -333,6 +373,12 @@ return [
             'text' => 'Perfil',
             'route' => 'profile.edit',
             'icon' => 'bi bi-person-circle',
+        ],
+        [
+            'text' => 'Configurações',
+            'route' => 'settings.index',
+            'icon' => 'bi bi-gear-fill',
+            'can' => 'manage-settings',
         ],
     ],
 

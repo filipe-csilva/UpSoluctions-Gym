@@ -31,6 +31,10 @@ class EmployeeController extends Controller
                 });
             })
             ->when($request->filled('active'), fn ($query) => $query->where('active', $request->boolean('active')))
+            ->when($request->user()->role?->value === UserRole::MANAGER->value, function ($query) use ($request): void {
+                $query->where('role', UserRole::FINANCIAL->value)
+                    ->whereIn('unit_id', $request->user()->accessibleUnitIds());
+            })
             ->orderBy('name')
             ->paginate(15)
             ->withQueryString();
@@ -62,6 +66,7 @@ class EmployeeController extends Controller
 
     public function show(EmployeeProfile $employee): View
     {
+        $this->authorizeEmployeeAccess(request(), $employee);
         $employee->load('user.unit');
 
         return view('employees.show', compact('employee'));
@@ -69,6 +74,7 @@ class EmployeeController extends Controller
 
     public function edit(EmployeeProfile $employee): View
     {
+        $this->authorizeEmployeeAccess(request(), $employee);
         $employee->load('user');
         $units = Unit::where('active', true)->orderBy('name')->get();
 
@@ -77,6 +83,7 @@ class EmployeeController extends Controller
 
     public function update(UpdateEmployeeRequest $request, EmployeeProfile $employee): RedirectResponse
     {
+        $this->authorizeEmployeeAccess($request, $employee);
         $data = $request->validated();
         abort_unless($request->user()->role?->value === 'admin' || in_array((int) $data['unit_id'], $request->user()->accessibleUnitIds(), true), 403);
         DB::transaction(function () use ($employee, $data): void {
@@ -97,5 +104,20 @@ class EmployeeController extends Controller
         ActivityLog::record('deleted', $employee, 'Funcionário excluído logicamente.');
 
         return redirect()->route('employees.index')->with('success', 'Funcionário excluído com sucesso.');
+    }
+
+    private function authorizeEmployeeAccess(Request $request, EmployeeProfile $employee): void
+    {
+        $employee->loadMissing('user');
+
+        if ($request->user()->role?->value !== UserRole::MANAGER->value) {
+            return;
+        }
+
+        abort_unless(
+            $employee->user?->role === UserRole::FINANCIAL
+                && in_array((int) $employee->user?->unit_id, $request->user()->accessibleUnitIds(), true),
+            403,
+        );
     }
 }

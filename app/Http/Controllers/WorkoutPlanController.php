@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Http\Requests\StoreWorkoutPlanRequest;
 use App\Models\ActivityLog;
-use App\Models\Exercise;
 use App\Models\StudentProfile;
 use App\Models\User;
 use App\Models\WorkoutPlan;
@@ -21,14 +21,54 @@ class WorkoutPlanController extends Controller
         return view('workout-plans.index', compact('plans'));
     }
 
-    public function create(): View
+    public function create(Request $request): View
     {
-        return view('workout-plans.create', ['students' => StudentProfile::with('user')->get(), 'teachers' => User::where('role', 'teacher')->where('active', true)->get(), 'exercises' => Exercise::where('active', true)->orderBy('name')->get()]);
+        $user = $request->user();
+        $students = StudentProfile::with('user')
+            ->whereHas('user', function ($query) use ($user): void {
+                $query->where('active', true)
+                    ->when($user->role?->value === UserRole::TEACHER->value, fn ($scope) => $scope->where('unit_id', $user->unit_id))
+                    ->when($user->role?->value === UserRole::MANAGER->value, fn ($scope) => $scope->whereIn('unit_id', $user->accessibleUnitIds()));
+            })
+            ->get();
+        $teachers = User::query()
+            ->where('role', UserRole::TEACHER->value)
+            ->where('active', true)
+            ->when($user->role?->value === UserRole::MANAGER->value, fn ($scope) => $scope->whereIn('unit_id', $user->accessibleUnitIds()))
+            ->get();
+
+        return view('workout-plans.create', compact('students', 'teachers'));
     }
 
     public function store(StoreWorkoutPlanRequest $request): RedirectResponse
     {
-        $plan = WorkoutPlan::create($request->validated());
+        $data = $request->validated();
+        $user = $request->user();
+        $student = StudentProfile::with('user')->findOrFail($data['student_id']);
+
+        abort_unless(
+            $user->role?->value === UserRole::ADMIN->value
+                || ($user->role?->value === UserRole::TEACHER->value && (int) $student->user?->unit_id === (int) $user->unit_id)
+                || ($user->role?->value === UserRole::MANAGER->value && in_array((int) $student->user?->unit_id, $user->accessibleUnitIds(), true)),
+            403,
+        );
+
+        if ($user->role?->value === UserRole::TEACHER->value) {
+            $data['teacher_id'] = $user->id;
+        } else {
+            $teacher = User::query()
+                ->whereKey($data['teacher_id'])
+                ->where('role', UserRole::TEACHER->value)
+                ->where('active', true)
+                ->firstOrFail();
+            abort_unless(
+                $user->role?->value === UserRole::ADMIN->value
+                    || in_array((int) $teacher->unit_id, $user->accessibleUnitIds(), true),
+                403,
+            );
+        }
+
+        $plan = WorkoutPlan::create($data);
         ActivityLog::record('created', $plan, 'Ficha de treino criada.');
 
         return redirect()->route('workout-plans.show', $plan)->with('success', 'Ficha de treino criada com sucesso.');

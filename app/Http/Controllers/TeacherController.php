@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -90,6 +91,7 @@ class TeacherController extends Controller
     public function show(TeacherProfile $teacher): View
     {
         $teacher->load('user.unit');
+        Gate::forUser(request()->user())->authorize('view', $teacher);
 
         abort_unless(
             request()->user()->role?->value === 'admin'
@@ -98,6 +100,21 @@ class TeacherController extends Controller
         );
 
         return view('teachers.show', compact('teacher'));
+    }
+
+    public function students(TeacherProfile $teacher): View
+    {
+        $teacher->load('user');
+        $user = request()->user();
+        abort_unless($user->can('view', $teacher), 403);
+
+        $students = $teacher->user->workoutPlansAsTeacher()
+            ->with('student.user.unit')
+            ->latest('start_date')
+            ->get()
+            ->groupBy('student_id');
+
+        return view('teachers.students', compact('teacher', 'students'));
     }
 
     public function store(StoreTeacherRequest $request): RedirectResponse
@@ -150,6 +167,7 @@ class TeacherController extends Controller
     public function destroy(TeacherProfile $teacher): RedirectResponse
     {
         $teacher->load('user');
+        Gate::forUser(request()->user())->authorize('delete', $teacher);
         $this->authorizeTeacherAccess($teacher);
 
         DB::transaction(function () use ($teacher): void {
@@ -165,6 +183,7 @@ class TeacherController extends Controller
     public function edit(TeacherProfile $teacher): View
     {
         $teacher->load('user');
+        Gate::forUser(request()->user())->authorize('update', $teacher);
         $this->authorizeTeacherAccess($teacher);
         $units = Unit::query()
             ->where('active', true)
@@ -179,6 +198,7 @@ class TeacherController extends Controller
     {
         $validated = $request->validated();
         $teacher->load('user');
+        Gate::forUser(request()->user())->authorize('update', $teacher);
         $this->authorizeTeacherAccess($teacher);
         abort_unless(
             $request->user()->role?->value === 'admin'

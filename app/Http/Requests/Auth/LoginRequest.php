@@ -4,6 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use App\Models\ActivityLog;
 use App\Models\User;
+use App\Services\StudentAccessService;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -43,6 +44,7 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+        app(StudentAccessService::class)->syncStudentStatuses();
 
         $user = User::query()
             ->where('email', $this->string('email')->toString())

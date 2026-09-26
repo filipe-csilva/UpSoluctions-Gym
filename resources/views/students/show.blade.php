@@ -5,9 +5,11 @@
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1>Detalhes do aluno</h1>
-        @if (auth()->user()?->role?->value === 'admin' && $student)
+        @if (in_array(auth()->user()?->role?->value, ['admin', 'manager'], true) && $student)
             <div class="d-flex gap-2">
                 <a href="{{ route('students.edit', $student) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
+                <a href="{{ route('students.enrollments.history', $student) }}" class="btn btn-info"><i class="bi bi-clock-history"></i> Matrículas</a>
+                <a href="{{ route('attendances.student-history', $student) }}" class="btn btn-outline-info"><i class="bi bi-calendar-check"></i> Frequência</a>
                 <form method="POST" action="{{ route('students.destroy', $student) }}" onsubmit="return confirm('Deseja excluir este aluno?')">
                     @csrf
                     @method('DELETE')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\UserRole;
 use App\Rules\ValidCpf;
 use App\Rules\ValidPhone;
 use Illuminate\Foundation\Http\FormRequest;
@@ -22,6 +23,12 @@ class UpdateStudentRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email:rfc', 'max:255', Rule::unique('users', 'email')->ignore($student?->user_id)],
             'unit_id' => ['required', 'exists:units,id'],
+            'role' => [
+                'required',
+                Rule::in($this->user()?->role?->value === UserRole::ADMIN->value
+                    ? array_map(static fn (UserRole $role): string => $role->value, UserRole::cases())
+                    : [UserRole::STUDENT->value, UserRole::TEACHER->value]),
+            ],
             'active' => ['boolean'],
             'cpf' => ['required', 'string', 'max:14', new ValidCpf, Rule::unique('student_profiles', 'cpf')->ignore($student?->id)],
             'birth_date' => ['required', 'date', 'before:today'],
