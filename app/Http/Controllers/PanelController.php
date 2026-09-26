@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Announcement;
 use App\Models\Attendance;
 use App\Models\FinancialTransaction;
+use App\Models\PhysicalAssessment;
 use App\Models\User;
 use App\Models\WorkoutPlan;
 use App\Notifications\FinancialDueSoon;
@@ -66,6 +67,14 @@ class PanelController extends Controller
                 })
                 ->latest('start_date')
                 ->first();
+        }
+
+        if ($role === 'teacher' && $request->routeIs('dashboard')) {
+            $teacherStudentCount = WorkoutPlan::query()->where('teacher_id', $user->id)->distinct('student_id')->count('student_id');
+            $teacherWorkoutCount = WorkoutPlan::query()->where('teacher_id', $user->id)->where('status', 'active')->count();
+            $teacherAssessmentCount = PhysicalAssessment::query()->where('teacher_id', $user->id)->count();
+
+            return view('teacher-dashboard', compact('announcements', 'presentStudents', 'teacherStudentCount', 'teacherWorkoutCount', 'teacherAssessmentCount'));
         }
 
         return view('panel', compact('announcements', 'presentStudents', 'workoutPlan'));
