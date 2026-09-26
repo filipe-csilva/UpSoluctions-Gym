@@ -16,7 +16,12 @@ class AttendanceController extends Controller
 {
     public function index(Request $request): View
     {
-        $attendances = Attendance::with(['student.user', 'unit'])->when($request->filled('date'), fn ($q) => $q->whereDate('date', $request->date))->when($request->filled('search'), fn ($q) => $q->whereHas('student.user', fn ($u) => $u->where('name', 'like', '%'.$request->string('search')->toString().'%')))->latest('date')->latest('entry_time')->paginate(20)->withQueryString();
+        $user = $request->user();
+        $attendances = Attendance::with(['student.user', 'unit'])
+            ->when($user->role?->value === 'teacher', fn ($query) => $query->where('unit_id', $user->unit_id))
+            ->when($request->filled('date'), fn ($q) => $q->whereDate('date', $request->date))
+            ->when($request->filled('search'), fn ($q) => $q->whereHas('student.user', fn ($u) => $u->where('name', 'like', '%'.$request->string('search')->toString().'%')))
+            ->latest('date')->latest('entry_time')->paginate(20)->withQueryString();
 
         return view('attendances.index', compact('attendances'));
     }
@@ -24,7 +29,7 @@ class AttendanceController extends Controller
     public function studentHistory(Request $request, StudentProfile $student): View
     {
         $user = $request->user();
-        abort_unless($user->can('view', $student) || ($user->role?->value === 'teacher'), 403);
+        abort_unless($user->can('view', $student) || ($user->role?->value === 'teacher' && (int) $student->user?->unit_id === (int) $user->unit_id), 403);
         $attendances = $student->load('user')->attendances()
             ->with('unit')
             ->when($request->filled('from'), fn ($query) => $query->whereDate('date', '>=', $request->date('from')))
@@ -32,6 +37,19 @@ class AttendanceController extends Controller
             ->latest('date')->latest('entry_time')->paginate(20)->withQueryString();
 
         return view('attendances.student-history', compact('student', 'attendances'));
+    }
+
+    public function myHistory(Request $request): View
+    {
+        $student = $request->user()->studentProfile;
+        abort_unless($student !== null, 403);
+
+        $attendances = $student->load('user')->attendances()->with('unit')
+            ->when($request->filled('from'), fn ($query) => $query->whereDate('date', '>=', $request->date('from')))
+            ->when($request->filled('to'), fn ($query) => $query->whereDate('date', '<=', $request->date('to')))
+            ->latest('date')->latest('entry_time')->paginate(20)->withQueryString();
+
+        return view('attendances.student-history-mine', compact('student', 'attendances'));
     }
 
     public function create(): View

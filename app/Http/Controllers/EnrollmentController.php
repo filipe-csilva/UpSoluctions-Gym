@@ -90,6 +90,16 @@ class EnrollmentController extends Controller
         return view('enrollments.history', compact('student', 'enrollments'));
     }
 
+    public function myHistory(Request $request): View
+    {
+        $student = $request->user()->studentProfile;
+        abort_unless($student !== null, 403);
+
+        $enrollments = Enrollment::query()->with(['plan', 'unit'])->where('student_id', $student->id)->latest('start_date')->get();
+
+        return view('enrollments.student-history', compact('student', 'enrollments'));
+    }
+
     public function edit(Enrollment $enrollment): View
     {
         Gate::forUser(request()->user())->authorize('update', $enrollment);

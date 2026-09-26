@@ -489,20 +489,20 @@ Aluno
 
 ### Professor
 
-* ⬜ Meus alunos
-* ⬜ Treinos
-* ⬜ Avaliações
-* ⬜ Frequência
+* 🟩 Meus alunos vinculados, filtrados pela unidade do instrutor
+* 🟩 Treinos próprios e criação de fichas para alunos da unidade
+* 🟩 Avaliações físicas dos alunos da unidade
+* 🟩 Frequência da unidade e histórico individual por aluno
 
 ### Aluno
 
-* ⬜ Perfil
-* ⬜ Plano
-* ⬜ Matrícula
-* ⬜ Financeiro
-* ⬜ Treino
-* ⬜ Avaliações
-* ⬜ Frequência
+* 🟩 Perfil e dados cadastrais em modo consulta
+* 🟩 Plano e histórico de matrícula
+* 🟩 Matrícula vigente e período contratado
+* 🟩 Financeiro e parcelas do próprio aluno
+* 🟩 Treino atual e histórico de fichas
+* 🟩 Avaliações físicas e histórico corporal
+* 🟩 Frequência, filtros por período e registro de presença
 
 ---
 
@@ -720,3 +720,35 @@ Itens implementados nesta etapa:
 - [ ] Executar validação manual no navegador por perfil.
 - [ ] Confirmar o workflow corrigido no GitHub Actions.
 
+## Visão rápida do produto
+
+> **GymControl** é um painel de gestão para academias: pessoas, unidades, planos, matrículas, treinos, avaliações, presença, comunicação e financeiro em um único fluxo.
+
+### Fase 14 entregue
+
+| Perfil | Experiência disponível |
+| --- | --- |
+| Administrador e gestor | Dashboard completo, indicadores, saúde financeira, vencimentos e atalhos operacionais |
+| Professor | Meus alunos, fichas de treino, avaliações físicas e frequência da unidade |
+| Aluno | Perfil, matrícula, financeiro, treino, avaliações, frequência, comunicados e mensagens |
+
+### Destaques
+
+- 🔐 Autorização por perfil e unidade, com dados filtrados no servidor.
+- 🏋️ Fluxo do aluno conectado a matrícula, treino, avaliação e presença.
+- 💰 Financeiro com parcelas, recebimentos, estornos, fluxo de caixa e indicadores.
+- 💬 Comunicação com mensagens diretas, respostas e leitura individual.
+- 📊 Dashboard responsivo com tema claro/dark, gráficos e atalhos.
+- 🧪 Qualidade verificada com **70 testes**, **202 asserções** e Pint.
+
+### Primeiros passos
+
+```bash
+composer install
+copy .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+```
+
+Para a experiência completa do frontend, execute também `npm install` e `npm run build`. Consulte [`TASKS.md`](TASKS.md) para o roadmap técnico e o detalhamento das próximas integrações.

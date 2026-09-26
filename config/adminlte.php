@@ -315,6 +315,30 @@ return [
             'can' => 'view-student-financial',
         ],
         [
+            'text' => 'Minha matrícula',
+            'route' => 'student-enrollment.history',
+            'icon' => 'bi bi-journal-check',
+            'can' => 'view-student-enrollment',
+        ],
+        [
+            'text' => 'Meu treino',
+            'route' => 'student-workout.history',
+            'icon' => 'bi bi-clipboard2-pulse',
+            'can' => 'view-student-workout',
+        ],
+        [
+            'text' => 'Minha frequência',
+            'route' => 'student-attendance.history',
+            'icon' => 'bi bi-calendar-check',
+            'can' => 'view-student-attendance',
+        ],
+        [
+            'text' => 'Meus alunos',
+            'route' => 'teachers.my-students',
+            'icon' => 'bi bi-people',
+            'can' => 'view-teacher-students',
+        ],
+        [
             'text' => 'Comunicação',
             'icon' => 'bi bi-chat-square-text-fill',
             'submenu' => [

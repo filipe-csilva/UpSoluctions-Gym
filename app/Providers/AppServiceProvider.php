@@ -70,10 +70,14 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('view-enrollments', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager'], true));
         Gate::define('view-financial', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager'], true));
         Gate::define('view-student-financial', fn ($user): bool => $user->role?->value === 'student');
-        Gate::define('view-attendances', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager'], true));
+        Gate::define('view-attendances', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager', 'teacher'], true));
         Gate::define('view-exercises', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager', 'teacher'], true));
         Gate::define('view-workout-plans', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager', 'teacher'], true));
         Gate::define('view-assessments', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager', 'teacher'], true));
+        Gate::define('view-teacher-students', fn ($user): bool => $user->role?->value === 'teacher');
+        Gate::define('view-student-enrollment', fn ($user): bool => $user->role?->value === 'student');
+        Gate::define('view-student-workout', fn ($user): bool => $user->role?->value === 'student');
+        Gate::define('view-student-attendance', fn ($user): bool => $user->role?->value === 'student');
         Gate::define('view-announcements', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager', 'teacher', 'student', 'financial'], true));
         Gate::define('manage-announcements', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager'], true));
         Gate::define('view-messages', fn ($user): bool => in_array($user->role?->value, ['admin', 'manager', 'teacher', 'student', 'financial'], true));

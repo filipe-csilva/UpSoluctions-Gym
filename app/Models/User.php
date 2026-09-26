@@ -75,6 +75,11 @@ class User extends Authenticatable implements CanResetPasswordContract
         return $this->hasOne(StudentProfile::class);
     }
 
+    public function teacherProfile(): HasOne
+    {
+        return $this->hasOne(TeacherProfile::class);
+    }
+
     public function employeeProfile(): HasOne
     {
         return $this->hasOne(EmployeeProfile::class);

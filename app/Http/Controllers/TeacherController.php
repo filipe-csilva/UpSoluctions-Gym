@@ -117,6 +117,14 @@ class TeacherController extends Controller
         return view('teachers.students', compact('teacher', 'students'));
     }
 
+    public function myStudents(Request $request): View
+    {
+        $teacher = $request->user()->teacherProfile;
+        abort_unless($teacher !== null, 403);
+
+        return $this->students($teacher);
+    }
+
     public function store(StoreTeacherRequest $request): RedirectResponse
     {
         $validated = $request->validated();

@@ -17,7 +17,11 @@ class WorkoutPlanController extends Controller
 {
     public function index(Request $request): View
     {
-        $plans = WorkoutPlan::with(['student.user', 'teacher'])->when($request->filled('status'), fn ($q) => $q->where('status', $request->string('status')->toString()))->latest()->paginate(15)->withQueryString();
+        $user = $request->user();
+        $plans = WorkoutPlan::with(['student.user', 'teacher'])
+            ->when($user->role?->value === 'teacher', fn ($query) => $query->where('teacher_id', $user->id))
+            ->when($request->filled('status'), fn ($q) => $q->where('status', $request->string('status')->toString()))
+            ->latest()->paginate(15)->withQueryString();
 
         return view('workout-plans.index', compact('plans'));
     }
@@ -86,9 +90,28 @@ class WorkoutPlanController extends Controller
     public function studentHistory(StudentProfile $student): View
     {
         $student->load('user');
+        $user = request()->user();
+        abort_unless(
+            $user->role?->value === 'admin'
+                || ($user->role?->value === 'student' && (int) $student->user_id === (int) $user->id)
+                || ($user->role?->value === 'manager' && in_array((int) $student->user?->unit_id, $user->accessibleUnitIds(), true))
+                || ($user->role?->value === 'teacher' && WorkoutPlan::where('teacher_id', $user->id)->where('student_id', $student->id)->exists()),
+            403,
+        );
         $plans = WorkoutPlan::query()->with(['teacher', 'exercises.exercise'])->whereBelongsTo($student)->latest('start_date')->get();
 
         return view('workout-plans.student-history', compact('student', 'plans'));
+    }
+
+    public function myHistory(Request $request): View
+    {
+        $student = $request->user()->studentProfile;
+        abort_unless($student !== null, 403);
+
+        $student->load('user');
+        $plans = WorkoutPlan::query()->with(['teacher', 'exercises.exercise'])->whereBelongsTo($student)->latest('start_date')->get();
+
+        return view('workout-plans.student-history-mine', compact('student', 'plans'));
     }
 
     public function destroy(WorkoutPlan $workout_plan): RedirectResponse

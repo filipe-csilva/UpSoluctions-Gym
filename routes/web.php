@@ -41,6 +41,15 @@ Route::get('/dashboard', DashboardController::class)
 Route::get('/meus-dados', [StudentController::class, 'myData'])
     ->middleware(['auth', 'verified'])
     ->name('students.me');
+Route::get('/minha-matricula', [EnrollmentController::class, 'myHistory'])
+    ->middleware(['auth', 'verified', 'can:view-student-enrollment'])
+    ->name('student-enrollment.history');
+Route::get('/meu-treino', [WorkoutPlanController::class, 'myHistory'])
+    ->middleware(['auth', 'verified', 'can:view-student-workout'])
+    ->name('student-workout.history');
+Route::get('/minha-frequencia', [AttendanceController::class, 'myHistory'])
+    ->middleware(['auth', 'verified', 'can:view-student-attendance'])
+    ->name('student-attendance.history');
 
 Route::resource('students', StudentController::class)
     ->middleware(['auth', 'verified', 'can:view-students']);
@@ -77,6 +86,9 @@ Route::get('/students/{student}/enrollments/history', [EnrollmentController::cla
 Route::get('/teachers/{teacher}/students', [TeacherController::class, 'students'])
     ->middleware(['auth', 'verified'])
     ->name('teachers.students');
+Route::get('/meus-alunos', [TeacherController::class, 'myStudents'])
+    ->middleware(['auth', 'verified', 'can:view-teacher-students'])
+    ->name('teachers.my-students');
 
 Route::get('/financial/cash-flow', [FinancialTransactionController::class, 'cashFlow'])
     ->middleware(['auth', 'verified', 'can:view-financial'])
@@ -124,7 +136,7 @@ Route::resource('workout-plans', WorkoutPlanController::class)
     ->only(['index', 'create', 'store', 'show', 'destroy'])
     ->middleware(['auth', 'verified', 'can:view-workout-plans']);
 Route::get('/students/{student}/workout-plans/history', [WorkoutPlanController::class, 'studentHistory'])
-    ->middleware(['auth', 'verified', 'can:view-workout-plans'])
+    ->middleware(['auth', 'verified'])
     ->name('workout-plans.student-history');
 
 Route::resource('assessments', PhysicalAssessmentController::class)
