@@ -1,39 +1,72 @@
-# Tarefas implementadas
+# Tarefas do projeto
 
-## Configuracao geral
+## Implementado
 
-- [x] Configuracoes exclusivas do administrador persistidas no banco.
-- [x] Cores da interface e dos botoes configuraveis.
-- [x] Icones dos menus configuraveis.
-- [x] Logo, favicon, moeda, formato de data e fuso horario configuraveis.
+### Configuração e acesso
 
-## Financeiro
+- [x] Configurações gerais exclusivas do administrador persistidas no banco.
+- [x] Cores, botões, ícones, logo, favicon, moeda, formato de data e fuso horário configuráveis.
+- [x] Controle de permissões para alunos, instrutores, managers, financeiro e administrador.
+- [x] Cadastro público desabilitado; a rota /register não está disponível.
+- [x] Inicialização automática do banco e das migrações.
+- [x] Home integrada ao painel principal.
 
-- [x] Auditoria financeira e classificacao de despesas fixas e variaveis.
-- [x] Separacao entre receitas, despesas e contas futuras.
-- [x] Exportacao financeira para Excel.
-- [x] Relatorio de parcelas vencidas.
+### Financeiro
 
-## Treinos e avaliacoes
+- [x] Auditoria financeira e classificação de despesas fixas e variáveis.
+- [x] Separação entre receitas, despesas e contas futuras.
+- [x] Recebimento com forma de pagamento e estorno pelo administrador.
+- [x] Fluxo de caixa e relatório de parcelas vencidas.
+- [x] Exportação financeira para Excel.
+- [x] Geração automática de contas a receber na matrícula.
 
-- [x] Historico de fichas de treino.
-- [x] Historico e comparacao de avaliacoes fisicas.
-- [x] Evolucao corporal e suporte a midia nos exercicios.
+### Alunos, treinos e avaliações
 
-## Notificacoes
+- [x] Histórico de matrículas e fichas de treino.
+- [x] Instrutor pode criar treino para seus alunos.
+- [x] Histórico e comparação de avaliações físicas.
+- [x] Evolução corporal e suporte a mídia nos exercícios.
+- [x] Aluno pode registrar treino em qualquer unidade ativa.
+- [x] Job de ativação e desativação automática conforme matrícula e situação financeira.
 
-- [x] Notificacoes de mensalidade vencida, matricula proxima do vencimento, nova ficha e nova avaliacao.
+### Mensagens e comunicados
+
+- [x] Mensagens diretas entre os perfis permitidos.
+- [x] Mensagens para alunos da unidade enviadas por admin e manager.
+- [x] Aluno pode enviar mensagem para a recepção da própria unidade.
+- [x] Responsabilidade automática da recepção para o primeiro admin, manager ou financeiro que abrir a mensagem.
+- [x] Respostas em conversas.
+- [x] Leitura individual por usuário para mensagens e comunicados.
+- [x] Aluno visualiza somente mensagens e comunicados posteriores ao próprio cadastro.
+- [x] Comunicado inicial padrão permanece visível para alunos novos.
+- [x] Alunos, instrutores, managers e financeiro disponíveis como destinatários conforme permissão.
+
+### Notificações e infraestrutura
+
+- [x] Notificações de mensalidade vencida, matrícula próxima do vencimento, nova ficha e nova avaliação.
 - [x] Job operacional para processamento em segundo plano.
-- [x] Canais configuraveis para e-mail, WhatsApp e push.
+- [x] CI configurado com PHP 8.4, SQLite e execução automática dos testes.
+- [x] Manifesto PWA e service worker disponíveis.
+- [x] 70 testes e 202 asserções aprovados localmente.
 
-## API e infraestrutura
+## Pendente
 
-- [x] API REST versionada em `/api/v1`.
-- [x] Recursos e especificacao OpenAPI.
-- [x] Estrutura inicial para cache, filas, Docker e CI/CD.
-- [x] Manifesto PWA e service worker para instalacao como aplicativo.
+### API
 
-## Validacao
+- [ ] Implementar autenticação JWT para a API.
+- [ ] Completar os endpoints dos módulos do sistema.
+- [ ] Disponibilizar login, usuários, mensagens, comunicados, financeiro, relatórios e configurações na API.
+- [ ] Publicar documentação Swagger/OpenAPI completa e atualizada.
+- [ ] Definir se o acesso web continuará ativo ou será substituído pelo frontend via API.
 
-- [x] Testes automatizados executados: 57 testes e 170 assercoes aprovados.
-- [x] Build do frontend executado com sucesso.
+### Integrações
+
+- [ ] Ativar e validar envio real por e-mail, WhatsApp e push.
+- [ ] Configurar Redis, filas, cache e monitoramento em ambiente de produção.
+- [ ] Configurar Docker, backup automatizado e pipeline de deploy.
+
+### Validação
+
+- [ ] Executar testes manuais no navegador para cada perfil de acesso.
+- [ ] Confirmar a execução bem-sucedida do workflow no GitHub Actions após a correção do SQLite.
+- [ ] Avaliar a remoção futura dos campos legados read_at e read_by da tabela de mensagens.
