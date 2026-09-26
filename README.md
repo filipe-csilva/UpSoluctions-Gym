@@ -1,24 +1,24 @@
-# ðŸ‹ï¸ UpSoluctions Gym
+# 🏋️ UpSoluctions Gym
 
-Sistema web de **gestÃ£o de academias e centros de treinamento**, desenvolvido com Laravel.
+Sistema web de **gestão de academias e centros de treinamento**, desenvolvido com Laravel.
 
-O objetivo Ã© centralizar o gerenciamento de **unidades, usuÃ¡rios, alunos, professores, planos, matrÃ­culas, financeiro, presenÃ§a, exercÃ­cios, treinos, avaliaÃ§Ãµes fÃ­sicas e comunicados**.
+O objetivo é centralizar o gerenciamento de **unidades, usuários, alunos, professores, planos, matrículas, financeiro, presença, exercícios, treinos, avaliações físicas e comunicados**.
 
-> ðŸš§ **Status:** Em desenvolvimento ativo.
+> 🚧 **Status:** Em desenvolvimento ativo.
 
-## ðŸ“Œ Legenda
+## 📌 Legenda
 
 | Status | Significado                   |
 | ------ | ----------------------------- |
-| ðŸŸ©     | ConcluÃ­do                     |
-| ðŸŸ¨     | Iniciado / Em desenvolvimento |
-| â¬œ      | NÃ£o iniciado                  |
+| 🟩     | Concluído                     |
+| 🟨     | Iniciado / Em desenvolvimento |
+| ⬜      | Não iniciado                  |
 
-> A existÃªncia de um Model ou Migration nÃ£o significa que o mÃ³dulo esteja concluÃ­do.
+> A existência de um Model ou Migration não significa que o módulo esteja concluído.
 
 ---
 
-# ðŸ› ï¸ Stack
+# 🛠️ Stack
 
 ### Backend
 
@@ -31,7 +31,7 @@ O objetivo Ã© centralizar o gerenciamento de **unidades, usuÃ¡rios, alunos, 
 
 * Blade
 * Bootstrap / AdminLTE
-* Tailwind CSS (dependÃªncia disponÃ­vel)
+* Tailwind CSS (dependência disponível)
 * Alpine.js
 * Vite
 
@@ -47,41 +47,41 @@ O objetivo Ã© centralizar o gerenciamento de **unidades, usuÃ¡rios, alunos, 
 
 ---
 
-# ðŸ“‚ Estrutura
+# 📂 Estrutura
 
 ```text
 app/
-â”œâ”€â”€ Http/
-â”‚   â”œâ”€â”€ Controllers/
-â”‚   â”œâ”€â”€ Middleware/
-â”‚   â””â”€â”€ Requests/
-â”œâ”€â”€ Models/
-â””â”€â”€ View/
+├── Http/
+│   ├── Controllers/
+│   ├── Middleware/
+│   └── Requests/
+├── Models/
+└── View/
 
 database/
-â”œâ”€â”€ factories/
-â”œâ”€â”€ migrations/
-â””â”€â”€ seeders/
+├── factories/
+├── migrations/
+└── seeders/
 
 resources/
-â”œâ”€â”€ css/
-â”œâ”€â”€ js/
-â””â”€â”€ views/
+├── css/
+├── js/
+└── views/
 
 routes/
-â”œâ”€â”€ web.php
-â””â”€â”€ auth.php
+├── web.php
+└── auth.php
 
 tests/
-â”œâ”€â”€ Feature/
-â””â”€â”€ Unit/
+├── Feature/
+└── Unit/
 ```
 
 ---
 
-# ðŸ—ƒï¸ DomÃ­nio
+# 🗃️ Domínio
 
-O projeto jÃ¡ possui Models e migrations para:
+O projeto já possui Models e migrations para:
 
 ```text
 User
@@ -99,31 +99,31 @@ PhysicalAssessment
 Announcement
 ```
 
-Os mÃ³dulos de domÃ­nio ainda precisam evoluir para CRUDs completos, regras de negÃ³cio, interfaces e testes.
+Os módulos de domínio ainda precisam evoluir para CRUDs completos, regras de negócio, interfaces e testes.
 
 ---
 
-# ðŸ” AutenticaÃ§Ã£o
+# 🔐 Autenticação
 
-A autenticaÃ§Ã£o inicial utiliza Laravel Breeze.
+A autenticação inicial utiliza Laravel Breeze.
 
-* ðŸŸ© Login
-* ðŸŸ© Logout
-* ðŸŸ© Registro
-* ðŸŸ© RecuperaÃ§Ã£o de senha
-* ðŸŸ© VerificaÃ§Ã£o de e-mail
-* ðŸŸ© Perfil
-* ðŸŸ© ProteÃ§Ã£o de rotas
-* ðŸŸ¨ Roles
-* â¬œ PermissÃµes granulares
-* â¬œ Policies
-* â¬œ Gates
+* 🟩 Login
+* 🟩 Logout
+* 🟩 Registro
+* 🟩 Recuperação de senha
+* 🟩 Verificação de e-mail
+* 🟩 Perfil
+* 🟩 Proteção de rotas
+* 🟨 Roles
+* ⬜ Permissões granulares
+* ⬜ Policies
+* ⬜ Gates
 
-A rota `/` direciona para o login e `/dashboard` Ã© protegida por autenticaÃ§Ã£o.
+A rota `/` direciona para o login e `/dashboard` é protegida por autenticação.
 
 ---
 
-# ðŸš€ InstalaÃ§Ã£o
+# 🚀 Instalação
 
 ## 1. Clonar
 
@@ -132,7 +132,7 @@ git clone https://github.com/filipe-csilva/UpSoluctions-Gym.git
 cd UpSoluctions-Gym
 ```
 
-## 2. DependÃªncias
+## 2. Dependências
 
 ```bash
 composer install
@@ -191,7 +191,7 @@ php artisan serve
 npm run dev
 ```
 
-AplicaÃ§Ã£o:
+Aplicação:
 
 ```text
 http://127.0.0.1:8000
@@ -199,7 +199,7 @@ http://127.0.0.1:8000
 
 ---
 
-# ðŸ§ª Comandos
+# 🧪 Comandos
 
 ### Testes
 
@@ -241,35 +241,35 @@ php artisan migrate
 php artisan migrate:fresh --seed
 ```
 
-> âš ï¸ `migrate:fresh` apaga as tabelas existentes.
+> ⚠️ `migrate:fresh` apaga as tabelas existentes.
 
 ---
 
-# ðŸ—ºï¸ Roadmap
+# 🗺️ Roadmap
 
-## Fase 01 â€” FundaÃ§Ã£o
+## Fase 01 — Fundação
 
-* ðŸŸ© Projeto Laravel
-* ðŸŸ© Composer / NPM
-* ðŸŸ© Vite
-* ðŸŸ© Tailwind CSS
-* ðŸŸ© Alpine.js
-* ðŸŸ© Laravel Breeze
-* ðŸŸ© AutenticaÃ§Ã£o
-* ðŸŸ© Perfil
-* ðŸŸ© Estrutura inicial do banco
+* 🟩 Projeto Laravel
+* 🟩 Composer / NPM
+* 🟩 Vite
+* 🟩 Tailwind CSS
+* 🟩 Alpine.js
+* 🟩 Laravel Breeze
+* 🟩 Autenticação
+* 🟩 Perfil
+* 🟩 Estrutura inicial do banco
 
 ---
 
-## Fase 02 â€” UsuÃ¡rios e Acesso
+## Fase 02 — Usuários e Acesso
 
-* ðŸŸ¨ Roles
-* ðŸŸ© Middleware de autorizaÃ§Ã£o
-* â¬œ Policies
-* ðŸŸ© Gates
-* â¬œ PermissÃµes por mÃ³dulo
-* ðŸŸ© PermissÃµes por unidade
-* â¬œ CRUD de usuÃ¡rios
+* 🟨 Roles
+* 🟩 Middleware de autorização
+* ⬜ Policies
+* 🟩 Gates
+* ⬜ Permissões por módulo
+* 🟩 Permissões por unidade
+* ⬜ CRUD de usuários
 
 **Perfis:**
 
@@ -282,404 +282,403 @@ Aluno
 
 ---
 
-## Fase 03 â€” Unidades
+## Fase 03 — Unidades
 
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ¨ Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Requests
-* ðŸŸ© Rotas
-* ðŸŸ© CRUD
-* ðŸŸ© AtivaÃ§Ã£o/InativaÃ§Ã£o
-* ðŸŸ© Interface
-
----
-
-## Fase 04 â€” Alunos
-
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ¨ Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Requests/validaÃ§Ãµes
-* ðŸŸ© Listagem paginada
-* ðŸŸ© Cadastro
-* ðŸŸ© Tela de detalhes
-* ðŸŸ© EdiÃ§Ã£o do cadastro
-* ðŸŸ© Seeder com 10 alunos
-* ðŸŸ© HistÃ³rico
+* 🟩 Model
+* 🟩 Migration
+* 🟨 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 Rotas
+* 🟩 CRUD
+* 🟩 Ativação/Inativação
+* 🟩 Interface
 
 ---
 
-## Fase 05 â€” Professores
+## Fase 04 — Alunos
 
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ¨ Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Requests e validaÃ§Ãµes
-* ðŸŸ© Listagem paginada com filtros
-* ðŸŸ© Cadastro
-* ðŸŸ© Tela de detalhes
-* ðŸŸ© EdiÃ§Ã£o do cadastro
-* ðŸŸ© ExclusÃ£o lÃ³gica com registro no log
-* â¬œ Alunos vinculados
-* ðŸŸ© Interface
-* ðŸŸ© Seeder com 5 instrutores distribuÃ­dos em 2 unidades
+* 🟩 Model
+* 🟩 Migration
+* 🟨 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests/validações
+* 🟩 Listagem paginada
+* 🟩 Cadastro
+* 🟩 Tela de detalhes
+* 🟩 Edição do cadastro
+* 🟩 Seeder com 10 alunos
+* 🟩 Histórico
 
 ---
 
-## Fase 06 â€” Planos
+## Fase 05 — Professores
 
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ¨ Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Requests e validaÃ§Ãµes
-* ðŸŸ© CRUD
-* ðŸŸ© Valores e periodicidade
-* ðŸŸ© Interface
-
----
-
-## Fase 07 â€” MatrÃ­culas
-
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ© Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Requests
-* ðŸŸ© Criar matrÃ­cula
-* ðŸŸ¨ Renovar
-* ðŸŸ© Suspender
-* ðŸŸ© Cancelar
-* ðŸŸ© Alterar plano
-* â¬œ HistÃ³rico
+* 🟩 Model
+* 🟩 Migration
+* 🟨 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests e validações
+* 🟩 Listagem paginada com filtros
+* 🟩 Cadastro
+* 🟩 Tela de detalhes
+* 🟩 Edição do cadastro
+* 🟩 Exclusão lógica com registro no log
+* ⬜ Alunos vinculados
+* 🟩 Interface
+* 🟩 Seeder com 5 instrutores distribuídos em 2 unidades
 
 ---
 
-## Fase 08 â€” Financeiro
+## Fase 06 — Planos
 
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ© Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Requests
-* ðŸŸ© Receitas
-* ðŸŸ© Despesas
-* ðŸŸ© Pagamentos
-* ðŸŸ© InadimplÃªncia
-* â¬œ HistÃ³rico
-* ðŸŸ© Dashboard financeiro
+* 🟩 Model
+* 🟩 Migration
+* 🟨 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests e validações
+* 🟩 CRUD
+* 🟩 Valores e periodicidade
+* 🟩 Interface
 
 ---
 
-## Fase 09 â€” PresenÃ§a
+## Fase 07 — Matrículas
 
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ¨ Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Registro de entrada/saÃ­da
-* ðŸŸ© HistÃ³rico
-* â¬œ FrequÃªncia
-* â¬œ RelatÃ³rios
+* 🟩 Model
+* 🟩 Migration
+* 🟩 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 Criar matrícula
+* 🟨 Renovar
+* 🟩 Suspender
+* 🟩 Cancelar
+* 🟩 Alterar plano
+* ⬜ Histórico
+
+---
+
+## Fase 08 — Financeiro
+
+* 🟩 Model
+* 🟩 Migration
+* 🟩 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 Receitas
+* 🟩 Despesas
+* 🟩 Pagamentos
+* 🟩 Inadimplência
+* ⬜ Histórico
+* 🟩 Dashboard financeiro
+
+---
+
+## Fase 09 — Presença
+
+* 🟩 Model
+* 🟩 Migration
+* 🟨 Relacionamentos
+* 🟩 Controller
+* 🟩 Registro de entrada/saída
+* 🟩 Histórico
+* ⬜ Frequência
+* ⬜ Relatórios
 
 **Futuro:**
 
-* â¬œ QR Code
-* â¬œ Biometria
-* â¬œ IntegraÃ§Ã£o com catracas
+* ⬜ QR Code
+* ⬜ Biometria
+* ⬜ Integração com catracas
 
 ---
 
-## Fase 10 â€” ExercÃ­cios
+## Fase 10 — Exercícios
 
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ© Controller
-* ðŸŸ© Requests
-* ðŸŸ© CRUD
-* ðŸŸ© Grupo muscular
-* ðŸŸ© Equipamento
-* ðŸŸ© InstruÃ§Ãµes
-* â¬œ Imagens/vÃ­deos
-
----
-
-## Fase 11 â€” Fichas de Treino
-
-* ðŸŸ© Models
-* ðŸŸ© Migrations
-* ðŸŸ¨ Relacionamentos
-* ðŸŸ© Controllers
-* ðŸŸ© Requests
-* ðŸŸ© Criar ficha
-* ðŸŸ© Adicionar exercÃ­cios
-* ðŸŸ© SÃ©ries
-* ðŸŸ© RepetiÃ§Ãµes
-* ðŸŸ© Carga
-* ðŸŸ© Descanso
-* â¬œ HistÃ³rico
+* 🟩 Model
+* 🟩 Migration
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 CRUD
+* 🟩 Grupo muscular
+* 🟩 Equipamento
+* 🟩 Instruções
+* ⬜ Imagens/vídeos
 
 ---
 
-## Fase 12 â€” AvaliaÃ§Ã£o FÃ­sica
+## Fase 11 — Fichas de Treino
 
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ¨ Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Requests
-* ðŸŸ© Cadastro
-* ðŸŸ© HistÃ³rico
-* â¬œ ComparaÃ§Ã£o
-* â¬œ EvoluÃ§Ã£o
-* â¬œ GrÃ¡ficos
-
----
-
-## Fase 13 â€” Comunicados
-
-* ðŸŸ© Model
-* ðŸŸ© Migration
-* ðŸŸ© Relacionamentos
-* ðŸŸ© Controller
-* ðŸŸ© Requests
-* ðŸŸ© CRUD
-* ðŸŸ© PublicaÃ§Ã£o por perÃ­odo e status
-* ðŸŸ© DestinatÃ¡rios por perfil e unidade
-* ðŸŸ© Interface
+* 🟩 Models
+* 🟩 Migrations
+* 🟨 Relacionamentos
+* 🟩 Controllers
+* 🟩 Requests
+* 🟩 Criar ficha
+* 🟩 Adicionar exercícios
+* 🟩 Séries
+* 🟩 Repetições
+* 🟩 Carga
+* 🟩 Descanso
+* ⬜ Histórico
 
 ---
 
-## Fase 14 â€” Dashboards
+## Fase 12 — Avaliação Física
+
+* 🟩 Model
+* 🟩 Migration
+* 🟨 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 Cadastro
+* 🟩 Histórico
+* ⬜ Comparação
+* ⬜ Evolução
+* ⬜ Gráficos
+
+---
+
+## Fase 13 — Comunicados
+
+* 🟩 Model
+* 🟩 Migration
+* 🟩 Relacionamentos
+* 🟩 Controller
+* 🟩 Requests
+* 🟩 CRUD
+* 🟩 Publicação por período e status
+* 🟩 Destinatários por perfil e unidade
+* 🟩 Interface
+
+---
+
+## Fase 14 — Dashboards
 
 ### Administrador
 
-#### Tasks concluÃ­das nesta atualizaÃ§Ã£o
+#### Tasks concluídas nesta atualização
 
 * Dashboard baseado no layout adotado do AdminLTE.
-* EvoluÃ§Ã£o de alunos com grÃ¡fico em linha e filtros de perÃ­odo.
-* DistribuiÃ§Ã£o de alunos por unidade com grÃ¡fico pizza.
+* Evolução de alunos com gráfico em linha e filtros de período.
+* Distribuição de alunos por unidade com gráfico pizza.
 * Atividades recentes no dashboard.
-* Perfil com avatar, iniciais e abas de senha e sessÃµes.
-* Registro de login e logout com informaÃ§Ãµes de dispositivo, navegador e IP.
+* Perfil com avatar, iniciais e abas de senha e sessões.
+* Registro de login e logout com informações de dispositivo, navegador e IP.
 
-* ðŸŸ© Dashboard inicial baseado no `demo/dashboard-v2` do AdminLTE
-* ðŸŸ© Total de alunos e instrutores
-* ðŸŸ© Lista dos 6 alunos mais recentes cadastrados no dia
-* ðŸŸ© Lista de atÃ© 6 instrutores presentes
-* ðŸŸ© Alunos ativos/inativos no dashboard
-* ðŸŸ© MatrÃ­culas ativas no dashboard
-* ðŸŸ© Receita mensal com pagamentos recebidos
-* ðŸŸ© Despesas
-* ðŸŸ© SaÃºde financeira com receita versus despesas
-* ðŸŸ© Ponto de equilÃ­brio financeiro
-* â¬œ PresenÃ§a
-* ðŸŸ© Indicadores por unidade
-* ðŸŸ© GrÃ¡ficos
-* ðŸŸ© Cores dos cards nos modos claro e dark
-* ðŸŸ© PopulaÃ§Ã£o de teste com planos, matrÃ­culas e lanÃ§amentos financeiros
-* ðŸŸ© PrÃ³ximos vencimentos financeiros
-* ðŸŸ© PrÃ³ximos vencimentos de contas a pagar e contas a receber
-* ðŸŸ© Atalhos para o financeiro com filtros especÃ­ficos
-* ðŸŸ© Filtros independentes de perÃ­odo para alunos e finanÃ§as
+* 🟩 Dashboard inicial baseado no `demo/dashboard-v2` do AdminLTE
+* 🟩 Total de alunos e instrutores
+* 🟩 Lista dos 6 alunos mais recentes cadastrados no dia
+* 🟩 Lista de até 6 instrutores presentes
+* 🟩 Alunos ativos/inativos no dashboard
+* 🟩 Matrículas ativas no dashboard
+* 🟩 Receita mensal com pagamentos recebidos
+* 🟩 Despesas
+* 🟩 Saúde financeira com receita versus despesas
+* 🟩 Ponto de equilíbrio financeiro
+* ⬜ Presença
+* 🟩 Indicadores por unidade
+* 🟩 Gráficos
+* 🟩 Cores dos cards nos modos claro e dark
+* 🟩 População de teste com planos, matrículas e lançamentos financeiros
+* 🟩 Próximos vencimentos financeiros
+* 🟩 Próximos vencimentos de contas a pagar e contas a receber
+* 🟩 Atalhos para o financeiro com filtros específicos
+* 🟩 Filtros independentes de período para alunos e finanças
 
 ### Professor
 
-* â¬œ Meus alunos
-* â¬œ Treinos
-* â¬œ AvaliaÃ§Ãµes
-* â¬œ FrequÃªncia
+* ⬜ Meus alunos
+* ⬜ Treinos
+* ⬜ Avaliações
+* ⬜ Frequência
 
 ### Aluno
 
-* â¬œ Perfil
-* â¬œ Plano
-* â¬œ MatrÃ­cula
-* â¬œ Financeiro
-* â¬œ Treino
-* â¬œ AvaliaÃ§Ãµes
-* â¬œ FrequÃªncia
+* ⬜ Perfil
+* ⬜ Plano
+* ⬜ Matrícula
+* ⬜ Financeiro
+* ⬜ Treino
+* ⬜ Avaliações
+* ⬜ Frequência
 
 ---
 
-## Fase 15 â€” RelatÃ³rios
+## Fase 15 — Relatórios
 
-* ðŸŸ¨ Alunos, matrÃ­culas e presenÃ§a
-* ðŸŸ¨ Financeiro e inadimplÃªncia
-* ðŸŸ¨ Resumo por unidade
-* ðŸŸ© ExportaÃ§Ã£o CSV financeira
-* ðŸŸ¨ ExportaÃ§Ã£o PDF para visualizaÃ§Ã£o e impressÃ£o
-* â¬œ ExportaÃ§Ã£o Excel
-
----
-
-## Fase 16 â€” NotificaÃ§Ãµes
-
-* â¬œ NotificaÃ§Ãµes internas
-* â¬œ Mensalidade prÃ³xima do vencimento
-* â¬œ Mensalidade vencida
-* â¬œ MatrÃ­cula vencendo
-* â¬œ Nova ficha de treino
-* â¬œ Nova avaliaÃ§Ã£o
-* â¬œ Comunicados
-* â¬œ E-mail
-* â¬œ WhatsApp
-* â¬œ Push
+* 🟨 Alunos, matrículas e presença
+* 🟨 Financeiro e inadimplência
+* 🟨 Resumo por unidade
+* 🟩 Exportação CSV financeira
+* 🟨 Exportação PDF para visualização e impressão
+* ⬜ Exportação Excel
 
 ---
 
-## Fase 17 â€” Testes
+## Fase 16 — Notificações
 
-* ðŸŸ¨ Estrutura inicial
-* â¬œ Testes de usuÃ¡rios
-* â¬œ Testes de unidades
-* â¬œ Testes de alunos
-* â¬œ Testes de professores
-* â¬œ Testes de planos
-* â¬œ Testes de matrÃ­culas
-* â¬œ Testes financeiros
-* â¬œ Testes de presenÃ§a
-* â¬œ Testes de treinos
-* â¬œ Testes de avaliaÃ§Ãµes
-* â¬œ Testes de autorizaÃ§Ã£o
+* ⬜ Notificações internas
+* ⬜ Mensalidade próxima do vencimento
+* ⬜ Mensalidade vencida
+* ⬜ Matrícula vencendo
+* ⬜ Nova ficha de treino
+* ⬜ Nova avaliação
+* ⬜ Comunicados
+* ⬜ E-mail
+* ⬜ WhatsApp
+* ⬜ Push
 
 ---
 
-## Fase 18 â€” API
+## Fase 17 — Testes
 
-* â¬œ API REST
-* â¬œ Versionamento
-* â¬œ AutenticaÃ§Ã£o
-* â¬œ API Resources
-* â¬œ Endpoints dos mÃ³dulos
-* â¬œ Swagger/OpenAPI
-
----
-
-## Fase 19 â€” Performance e Infraestrutura
-
-* â¬œ OtimizaÃ§Ã£o de queries
-* â¬œ Ãndices
-* â¬œ Cache
-* â¬œ Redis
-* â¬œ Jobs
-* â¬œ Filas
-* â¬œ Docker
-* â¬œ CI/CD
+* 🟨 Estrutura inicial
+* ⬜ Testes de usuários
+* ⬜ Testes de unidades
+* ⬜ Testes de alunos
+* ⬜ Testes de professores
+* ⬜ Testes de planos
+* ⬜ Testes de matrículas
+* ⬜ Testes financeiros
+* ⬜ Testes de presença
+* ⬜ Testes de treinos
+* ⬜ Testes de avaliações
+* ⬜ Testes de autorização
 
 ---
 
-## Fase 20 â€” ProduÃ§Ã£o
+## Fase 18 — API
 
-* â¬œ Servidor
-* â¬œ Nginx
-* â¬œ PHP-FPM
-* â¬œ HTTPS
-* â¬œ Backup
-* â¬œ Logs
-* â¬œ Monitoramento
-* â¬œ Deploy automatizado
+* ⬜ API REST
+* ⬜ Versionamento
+* ⬜ Autenticação
+* ⬜ API Resources
+* ⬜ Endpoints dos módulos
+* ⬜ Swagger/OpenAPI
 
 ---
 
-# ðŸ“Š Estado Atual
+## Fase 19 — Performance e Infraestrutura
 
-| Ãrea              | Status |
+* ⬜ Otimização de queries
+* ⬜ Índices
+* ⬜ Cache
+* ⬜ Redis
+* ⬜ Jobs
+* ⬜ Filas
+* ⬜ Docker
+* ⬜ CI/CD
+
+---
+
+## Fase 20 — Produção
+
+* ⬜ Servidor
+* ⬜ Nginx
+* ⬜ PHP-FPM
+* ⬜ HTTPS
+* ⬜ Backup
+* ⬜ Logs
+* ⬜ Monitoramento
+* ⬜ Deploy automatizado
+
+---
+
+# 📊 Estado Atual
+
+| Área              | Status |
 | ----------------- | ------ |
-| FundaÃ§Ã£o          | ðŸŸ©     |
-| AutenticaÃ§Ã£o      | ðŸŸ©     |
-| Modelagem         | ðŸŸ©     |
-| Migrations        | ðŸŸ©     |
-| UsuÃ¡rios / Roles  | ðŸŸ¨     |
-| Unidades          | ðŸŸ©     |
-| Alunos            | ðŸŸ©     |
-| Professores       | ðŸŸ¨     |
-| Planos            | ðŸŸ¨     |
-| MatrÃ­culas        | ðŸŸ¨     |
-| Financeiro        | ðŸŸ¨     |
-| PresenÃ§a          | ðŸŸ¨     |
-| ExercÃ­cios        | ðŸŸ¨     |
-| Treinos           | ðŸŸ¨     |
-| AvaliaÃ§Ãµes        | ðŸŸ¨     |
-| Comunicados       | ðŸŸ©     |
-| CRUDs de domÃ­nio  | ðŸŸ¨      |
-| Dashboards        | ðŸŸ©     |
-| Ãrea do aluno     | â¬œ      |
-| RelatÃ³rios        | â¬œ      |
-| NotificaÃ§Ãµes      | â¬œ      |
-| Testes de domÃ­nio | â¬œ      |
-| API               | â¬œ      |
-| Docker / CI/CD    | â¬œ      |
-| ProduÃ§Ã£o          | â¬œ      |
+| Fundação          | 🟩     |
+| Autenticação      | 🟩     |
+| Modelagem         | 🟩     |
+| Migrations        | 🟩     |
+| Usuários / Roles  | 🟨     |
+| Unidades          | 🟩     |
+| Alunos            | 🟩     |
+| Professores       | 🟨     |
+| Planos            | 🟨     |
+| Matrículas        | 🟨     |
+| Financeiro        | 🟨     |
+| Presença          | 🟨     |
+| Exercícios        | 🟨     |
+| Treinos           | 🟨     |
+| Avaliações        | 🟨     |
+| Comunicados       | 🟩     |
+| CRUDs de domínio  | 🟨      |
+| Dashboards        | 🟩     |
+| Área do aluno     | ⬜      |
+| Relatórios        | ⬜      |
+| Notificações      | ⬜      |
+| Testes de domínio | ⬜      |
+| API               | ⬜      |
+| Docker / CI/CD    | ⬜      |
+| Produção          | ⬜      |
 
 ---
 
-# ðŸŽ¯ PrÃ³xima Prioridade
+# 🎯 Próxima Prioridade
 
-A prÃ³xima sequÃªncia recomendada Ã©:
+A próxima sequência recomendada é:
 
 ```text
-1. Despesas e inadimplÃªncia no dashboard
-        â†“
-2. RelatÃ³rios operacionais
-        â†“
-3. NotificaÃ§Ãµes internas e de vencimento
-        â†“
-4. Testes de domÃ­nio e autorizaÃ§Ã£o
-        â†“
+1. Despesas e inadimplência no dashboard
+        ↓
+2. Relatórios operacionais
+        ↓
+3. Notificações internas e de vencimento
+        ↓
+4. Testes de domínio e autorização
+        ↓
 5. API REST
-        â†“
-6. Performance, CI/CD e produÃ§Ã£o
-        â†“
+        ↓
+6. Performance, CI/CD e produção
+        ↓
 ```
 
 ---
 
-# ðŸ‘¨â€ðŸ’» Desenvolvedor
+# 👨‍💻 Desenvolvedor
 
 **Filipe Silva**
 
-Projeto desenvolvido para aplicaÃ§Ã£o prÃ¡tica de:
+Projeto desenvolvido para aplicação prática de:
 
 * PHP
 * Laravel
 * Backend
 * Banco de Dados
 * Arquitetura
-* AutenticaÃ§Ã£o
-* AutorizaÃ§Ã£o
+* Autenticação
+* Autorização
 * Testes
 * DevOps
 
 ---
 
-# ðŸ“„ LicenÃ§a
+# 📄 Licença
 
-Este projeto estÃ¡ licenciado sob a licenÃ§a **MIT**.
+Este projeto está licenciado sob a licença **MIT**.
 
-Consulte o arquivo `LICENSE` para mais informaÃ§Ãµes.
+Consulte o arquivo `LICENSE` para mais informações.
 
 ---
 
-**UpSoluctions Gym â€” GestÃ£o inteligente para academias. ðŸ‹ï¸**
+**UpSoluctions Gym — Gestão inteligente para academias. 🏋️**
 
-## ImplementaÃ§Ã£o concluÃ­da - autorizaÃ§Ã£o, usuÃ¡rios e acompanhamento
+## Implementação concluída - autorização, usuários e acompanhamento
 
 Itens implementados nesta etapa:
 
-* Policies formais para alunos, instrutores, matrÃ­culas, presenÃ§as e usuÃ¡rios.
-* Gates granulares por mÃ³dulo e configuraÃ§Ãµes exclusivas do administrador.
-* CRUD completo de usuÃ¡rios com perfil, unidade, status e senha.
-* HistÃ³rico completo de matrÃ­culas por aluno.
+* Policies formais para alunos, instrutores, matrículas, presenças e usuários.
+* Gates granulares por módulo e configurações exclusivas do administrador.
+* CRUD completo de usuários com perfil, unidade, status e senha.
+* Histórico completo de matrículas por aluno.
 * Listagem de alunos vinculados ao instrutor por fichas de treino.
-* HistÃ³rico detalhado de frequÃªncia por aluno com filtros de perÃ­odo.
-* RelatÃ³rio de presenÃ§a disponÃ­vel na Ã¡rea de relatÃ³rios.
-* Testes de autorizaÃ§Ã£o e gerenciamento administrativo.
-
+* Histórico detalhado de frequência por aluno com filtros de período.
+* Relatório de presença disponível na área de relatórios.
+* Testes de autorização e gerenciamento administrativo.
 
 ---
 
