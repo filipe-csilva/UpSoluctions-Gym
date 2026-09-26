@@ -1,0 +1,4 @@
+@extends('adminlte::page')
+@section('title', 'Histórico de fichas')
+@section('content_header')<div class="d-flex justify-content-between"><h1>Histórico de fichas de treino</h1><a href="{{ route('students.show', $student) }}" class="btn btn-secondary">Voltar</a></div>@stop
+@section('content')<div class="card"><div class="card-header">{{ $student->user->name }}</div><div class="card-body table-responsive"><table class="table table-hover"><thead><tr><th>Ficha</th><th>Instrutor</th><th>Início</th><th>Fim</th><th>Status</th></tr></thead><tbody>@forelse($plans as $plan)<tr><td><a href="{{ route('workout-plans.show', $plan) }}">{{ $plan->name }}</a></td><td>{{ $plan->teacher?->name ?? '-' }}</td><td>{{ $plan->start_date?->format('d/m/Y') ?? '-' }}</td><td>{{ $plan->end_date?->format('d/m/Y') ?? '-' }}</td><td>{{ ucfirst($plan->status) }}</td></tr>@empty<tr><td colspan="5" class="text-center">Nenhuma ficha encontrada.</td></tr>@endforelse</tbody></table></div></div>@stop

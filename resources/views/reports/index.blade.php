@@ -3,7 +3,7 @@
 @section('title', 'Relatórios')
 
 @section('content_header')
-    <div class="d-flex justify-content-between align-items-center"><h1>Relatórios</h1><div class="d-flex gap-2"><a href="{{ route('reports.export', request()->only(['type', 'from', 'to', 'unit_id'])) }}" class="btn btn-success"><i class="bi bi-filetype-csv"></i> CSV</a><a href="{{ route('reports.pdf', request()->only(['type', 'from', 'to', 'unit_id'])) }}" target="_blank" class="btn btn-danger"><i class="bi bi-filetype-pdf"></i> PDF</a></div></div>
+    <div class="d-flex justify-content-between align-items-center"><h1>Relatórios</h1><div class="d-flex gap-2"><a href="{{ route('reports.export', request()->only(['type', 'from', 'to', 'unit_id'])) }}" class="btn btn-success"><i class="bi bi-filetype-csv"></i> CSV</a><a href="{{ route('reports.excel', request()->only(['type', 'from', 'to', 'unit_id'])) }}" class="btn btn-outline-success"><i class="bi bi-file-earmark-spreadsheet"></i> Excel</a><a href="{{ route('reports.pdf', request()->only(['type', 'from', 'to', 'unit_id'])) }}" target="_blank" class="btn btn-danger"><i class="bi bi-filetype-pdf"></i> PDF</a></div></div>
 @stop
 
 @section('content')

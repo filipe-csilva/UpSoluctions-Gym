@@ -7,6 +7,7 @@
         <h1>Lançamento financeiro</h1>
         <div class="d-flex gap-2">
             <a href="{{ route('financial.index') }}" class="btn btn-secondary">Voltar</a>
+            <a href="{{ route('financial.audit', $transaction) }}" class="btn btn-outline-info">Auditoria</a>
             @if ($transaction->status !== 'paid')
                 <a href="{{ route('financial.receive', $transaction) }}" class="btn btn-success"><i class="bi bi-cash-coin"></i> Receber</a>
             @endif

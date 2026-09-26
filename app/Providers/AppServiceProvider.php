@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Attendance;
 use App\Models\Enrollment;
+use App\Models\GeneralSetting;
 use App\Models\StudentProfile;
 use App\Models\TeacherProfile;
 use App\Models\User;
@@ -14,6 +15,8 @@ use App\Policies\TeacherPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+        View::share('systemSettings', Schema::hasTable('general_settings') ? GeneralSetting::values() : GeneralSetting::defaults());
 
         Gate::policy(StudentProfile::class, StudentPolicy::class);
         Gate::policy(TeacherProfile::class, TeacherPolicy::class);

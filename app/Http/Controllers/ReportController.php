@@ -90,6 +90,28 @@ class ReportController extends Controller
         ]);
     }
 
+    public function excel(Request $request): StreamedResponse
+    {
+        [$from, $to] = $this->period($request);
+        $reportType = $this->reportType($request);
+        $unitId = $request->integer('unit_id') ?: null;
+        $report = $this->reportData($reportType, $from, $to, $unitId, $request->user()->role?->value === 'manager' ? $request->user()->accessibleUnitIds() : null);
+        $title = $this->reportTitle($reportType);
+
+        return response()->streamDownload(function () use ($report, $title, $from, $to): void {
+            echo '<table><tr><th colspan="'.count($report['headers']).'">'.e(config('app.name', 'GymControl')).'</th></tr>';
+            echo '<tr><th colspan="'.count($report['headers']).'">'.e($title).' - '.e($from->format('d/m/Y').' até '.$to->format('d/m/Y')).'</th></tr><tr>';
+            foreach ($report['headers'] as $header) {
+                echo '<th>'.e($header).'</th>';
+            }
+            echo '</tr>';
+            foreach ($report['rows'] as $row) {
+                echo '<tr>'.collect($row)->map(fn ($value): string => '<td>'.e((string) $value).'</td>')->implode('').'</tr>';
+            }
+            echo '</table>';
+        }, 'relatorio-'.$reportType.'.xls', ['Content-Type' => 'application/vnd.ms-excel; charset=UTF-8']);
+    }
+
     private function financialQuery(Carbon $from, Carbon $to, ?int $unitId, ?array $unitIds)
     {
         return FinancialTransaction::query()

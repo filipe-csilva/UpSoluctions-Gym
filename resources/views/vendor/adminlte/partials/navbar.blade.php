@@ -1,6 +1,25 @@
 @php
     $navLeft = app('adminlte')->menu('navbar-left');
 @endphp
+<style>
+    :root {
+        --gym-primary: {{ $systemSettings['brand_primary_color'] ?? '#0d6efd' }};
+        --gym-sidebar: {{ $systemSettings['brand_sidebar_color'] ?? '#343a40' }};
+        --gym-button-primary: {{ $systemSettings['button_primary_color'] ?? '#0d6efd' }};
+        --gym-button-secondary: {{ $systemSettings['button_secondary_color'] ?? '#6c757d' }};
+        --gym-button-success: {{ $systemSettings['button_success_color'] ?? '#198754' }};
+        --gym-button-danger: {{ $systemSettings['button_danger_color'] ?? '#dc3545' }};
+        --gym-button-warning: {{ $systemSettings['button_warning_color'] ?? '#ffc107' }};
+        --gym-button-info: {{ $systemSettings['button_info_color'] ?? '#0dcaf0' }};
+    }
+    .app-sidebar { --lte-sidebar-bg: var(--gym-sidebar); }
+    .btn-primary { background-color: var(--gym-button-primary); border-color: var(--gym-button-primary); }
+    .btn-secondary { background-color: var(--gym-button-secondary); border-color: var(--gym-button-secondary); }
+    .btn-success { background-color: var(--gym-button-success); border-color: var(--gym-button-success); }
+    .btn-danger { background-color: var(--gym-button-danger); border-color: var(--gym-button-danger); }
+    .btn-warning { background-color: var(--gym-button-warning); border-color: var(--gym-button-warning); }
+    .btn-info { background-color: var(--gym-button-info); border-color: var(--gym-button-info); }
+</style>
 <nav class="app-header {{ config('adminlte.classes_topnav', 'navbar-expand bg-body') }} navbar">
     <div class="{{ config('adminlte.classes_topnav_container', 'container-fluid') }}">
         <ul class="navbar-nav">

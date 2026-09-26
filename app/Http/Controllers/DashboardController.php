@@ -126,13 +126,20 @@ class DashboardController extends Controller
             ->when($isManager, fn ($query) => $query->whereIn('unit_id', $unitIds));
         $financialPeriodRevenue = (clone $financialPeriodQuery)->where('transaction_type', 'income')->sum('amount');
         $financialPeriodExpenses = (clone $financialPeriodQuery)->where('transaction_type', 'expense')->sum('amount');
-        $financialPeriodVariableExpenses = 0.0;
+        $financialPeriodFixedExpenses = (float) (clone $financialPeriodQuery)
+            ->where('transaction_type', 'expense')
+            ->where('cost_classification', 'fixed')
+            ->sum('amount');
+        $financialPeriodVariableExpenses = (float) (clone $financialPeriodQuery)
+            ->where('transaction_type', 'expense')
+            ->where('cost_classification', 'variable')
+            ->sum('amount');
         $financialContributionMarginRatio = $financialPeriodRevenue > 0
             ? max(0, ($financialPeriodRevenue - $financialPeriodVariableExpenses) / $financialPeriodRevenue)
             : 1.0;
         $financialBreakEven = $financialContributionMarginRatio > 0
-            ? $financialPeriodExpenses / $financialContributionMarginRatio
-            : $financialPeriodExpenses;
+            ? $financialPeriodFixedExpenses / $financialContributionMarginRatio
+            : $financialPeriodFixedExpenses;
 
         $upcomingDueTransactions = FinancialTransaction::query()
             ->with('student.user')
@@ -208,6 +215,7 @@ class DashboardController extends Controller
             'financialPeriodRevenue' => $financialPeriodRevenue,
             'financialPeriodExpenses' => $financialPeriodExpenses,
             'financialPeriodVariableExpenses' => $financialPeriodVariableExpenses,
+            'financialPeriodFixedExpenses' => $financialPeriodFixedExpenses,
             'financialContributionMarginRatio' => $financialContributionMarginRatio,
             'financialBreakEven' => $financialBreakEven,
             'upcomingDueTransactions' => $upcomingDueTransactions,

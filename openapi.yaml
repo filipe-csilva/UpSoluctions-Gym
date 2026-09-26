@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: GymControl API
+  version: 1.0.0
+  description: API versionada para integração com o GymControl.
+servers:
+  - url: /api/v1
+paths:
+  /students:
+    get:
+      summary: Lista alunos ativos
+      security: [{ sessionAuth: [] }]
+      responses: { '200': { description: OK } }
+  /students/{student}:
+    get:
+      summary: Consulta um aluno
+      security: [{ sessionAuth: [] }]
+      parameters: [{ name: student, in: path, required: true, schema: { type: integer } }]
+      responses: { '200': { description: OK } }
+  /financial-transactions:
+    get:
+      summary: Lista lançamentos financeiros
+      security: [{ sessionAuth: [] }]
+      responses: { '200': { description: OK } }
+  /workout-plans:
+    get:
+      summary: Lista fichas de treino
+      security: [{ sessionAuth: [] }]
+      responses: { '200': { description: OK } }
+components:
+  securitySchemes:
+    sessionAuth: { type: apiKey, in: cookie, name: laravel-session }

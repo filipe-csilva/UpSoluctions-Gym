@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FinancialTransaction extends Model
 {
-    protected $fillable = ['enrollment_id', 'student_id', 'unit_id', 'description', 'amount', 'due_date', 'paid_at', 'status', 'payment_method', 'transaction_type', 'notes'];
+    protected $fillable = ['enrollment_id', 'student_id', 'unit_id', 'description', 'amount', 'due_date', 'paid_at', 'status', 'payment_method', 'transaction_type', 'cost_classification', 'notes'];
 
     protected function casts(): array
     {
         return ['amount' => 'decimal:2', 'due_date' => 'date', 'paid_at' => 'datetime'];
+    }
+
+    public function isFixedExpense(): bool
+    {
+        return $this->transaction_type === 'expense' && $this->cost_classification === 'fixed';
     }
 
     public function isOverdue(): bool

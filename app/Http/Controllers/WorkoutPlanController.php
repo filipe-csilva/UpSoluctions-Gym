@@ -8,6 +8,7 @@ use App\Models\ActivityLog;
 use App\Models\StudentProfile;
 use App\Models\User;
 use App\Models\WorkoutPlan;
+use App\Notifications\WorkoutPlanCreated;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -70,6 +71,7 @@ class WorkoutPlanController extends Controller
 
         $plan = WorkoutPlan::create($data);
         ActivityLog::record('created', $plan, 'Ficha de treino criada.');
+        $student->user?->notify(new WorkoutPlanCreated($plan));
 
         return redirect()->route('workout-plans.show', $plan)->with('success', 'Ficha de treino criada com sucesso.');
     }
@@ -79,6 +81,14 @@ class WorkoutPlanController extends Controller
         $workout_plan->load(['student.user', 'teacher', 'exercises.exercise']);
 
         return view('workout-plans.show', ['plan' => $workout_plan]);
+    }
+
+    public function studentHistory(StudentProfile $student): View
+    {
+        $student->load('user');
+        $plans = WorkoutPlan::query()->with(['teacher', 'exercises.exercise'])->whereBelongsTo($student)->latest('start_date')->get();
+
+        return view('workout-plans.student-history', compact('student', 'plans'));
     }
 
     public function destroy(WorkoutPlan $workout_plan): RedirectResponse

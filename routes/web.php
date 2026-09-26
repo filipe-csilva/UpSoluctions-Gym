@@ -57,6 +57,9 @@ Route::get('/configuracoes', [GeneralSettingsController::class, 'index'])
 Route::put('/configuracoes', [GeneralSettingsController::class, 'update'])
     ->middleware(['auth', 'verified', 'can:manage-settings'])
     ->name('settings.update');
+Route::get('/configuracoes/theme', [GeneralSettingsController::class, 'theme'])
+    ->middleware(['auth', 'verified'])
+    ->name('settings.theme');
 
 Route::resource('plans', PlanController::class)
     ->middleware(['auth', 'verified', 'can:view-plans']);
@@ -82,6 +85,9 @@ Route::post('/financial/{financial}/mark-paid', [FinancialTransactionController:
 Route::get('/financial/{financial}/receive', [FinancialTransactionController::class, 'receive'])
     ->middleware(['auth', 'verified', 'can:view-financial'])
     ->name('financial.receive');
+Route::get('/financial/{financial}/audit', [FinancialTransactionController::class, 'audit'])
+    ->middleware(['auth', 'verified', 'can:view-financial'])
+    ->name('financial.audit');
 Route::post('/financial/{financial}/reverse', [FinancialTransactionController::class, 'reversePayment'])
     ->middleware(['auth', 'verified', 'can:view-financial'])
     ->name('financial.reverse');
@@ -112,6 +118,9 @@ Route::resource('exercises', ExerciseController::class)
 Route::resource('workout-plans', WorkoutPlanController::class)
     ->only(['index', 'create', 'store', 'show', 'destroy'])
     ->middleware(['auth', 'verified', 'can:view-workout-plans']);
+Route::get('/students/{student}/workout-plans/history', [WorkoutPlanController::class, 'studentHistory'])
+    ->middleware(['auth', 'verified', 'can:view-workout-plans'])
+    ->name('workout-plans.student-history');
 
 Route::resource('assessments', PhysicalAssessmentController::class)
     ->only(['index', 'create', 'store'])
@@ -119,6 +128,9 @@ Route::resource('assessments', PhysicalAssessmentController::class)
 Route::get('/assessments/{student}/history', [PhysicalAssessmentController::class, 'history'])
     ->middleware(['auth', 'verified', 'can:view-assessments'])
     ->name('assessments.history');
+Route::get('/assessments/{student}/comparison', [PhysicalAssessmentController::class, 'comparison'])
+    ->middleware(['auth', 'verified', 'can:view-assessments'])
+    ->name('assessments.comparison');
 Route::get('/minhas-avaliacoes', [PhysicalAssessmentController::class, 'myHistory'])
     ->middleware(['auth', 'verified'])
     ->name('assessments.mine');
@@ -146,6 +158,9 @@ Route::get('/reports/export', [ReportController::class, 'export'])
 Route::get('/reports/pdf', [ReportController::class, 'pdf'])
     ->middleware(['auth', 'verified', 'can:view-reports'])
     ->name('reports.pdf');
+Route::get('/reports/excel', [ReportController::class, 'excel'])
+    ->middleware(['auth', 'verified', 'can:view-reports'])
+    ->name('reports.excel');
 
 // Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 //     require __DIR__.'/admin.php';

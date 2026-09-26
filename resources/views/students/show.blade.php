@@ -10,6 +10,8 @@
                 <a href="{{ route('students.edit', $student) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Editar</a>
                 <a href="{{ route('students.enrollments.history', $student) }}" class="btn btn-info"><i class="bi bi-clock-history"></i> Matrículas</a>
                 <a href="{{ route('attendances.student-history', $student) }}" class="btn btn-outline-info"><i class="bi bi-calendar-check"></i> Frequência</a>
+                <a href="{{ route('assessments.history', $student) }}" class="btn btn-outline-info"><i class="bi bi-graph-up"></i> Avaliações</a>
+                <a href="{{ route('workout-plans.student-history', $student) }}" class="btn btn-outline-info"><i class="bi bi-clipboard2-pulse"></i> Treinos</a>
                 <form method="POST" action="{{ route('students.destroy', $student) }}" onsubmit="return confirm('Deseja excluir este aluno?')">
                     @csrf
                     @method('DELETE')

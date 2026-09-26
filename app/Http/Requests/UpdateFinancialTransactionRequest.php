@@ -25,6 +25,7 @@ class UpdateFinancialTransactionRequest extends FormRequest
         return [
             'status' => ['required', 'in:pending,paid,overdue,cancelled'],
             'payment_method' => ['nullable', 'string', 'max:30'],
+            'cost_classification' => ['required', 'in:fixed,variable'],
             'notes' => ['nullable', 'string'],
         ];
     }

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateFinancialTransactionRequest;
 use App\Models\ActivityLog;
 use App\Models\Enrollment;
 use App\Models\FinancialTransaction;
+use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -134,16 +135,16 @@ class FinancialTransactionController extends Controller
 
     public function create(): View
     {
-        return view('financial.create', ['enrollments' => Enrollment::with(['student.user', 'plan'])->where('status', 'active')->get()]);
+        return view('financial.create', ['enrollments' => Enrollment::with(['student.user', 'plan'])->where('status', 'active')->get(), 'units' => Unit::query()->where('active', true)->orderBy('name')->get()]);
     }
 
     public function store(StoreFinancialTransactionRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $enrollment = Enrollment::findOrFail($data['enrollment_id']);
+        $enrollment = ! empty($data['enrollment_id']) ? Enrollment::findOrFail($data['enrollment_id']) : null;
         $transaction = FinancialTransaction::create($data + [
-            'student_id' => $enrollment->student_id,
-            'unit_id' => $enrollment->unit_id,
+            'student_id' => $enrollment?->student_id,
+            'unit_id' => $enrollment?->unit_id ?? $data['unit_id'],
             'paid_at' => $data['status'] === 'paid' ? now() : null,
         ]);
         ActivityLog::record('created', $transaction, 'Lançamento financeiro criado.');
@@ -156,6 +157,13 @@ class FinancialTransactionController extends Controller
         $financial->load(['student.user', 'unit', 'enrollment.plan']);
 
         return view('financial.show', ['transaction' => $financial]);
+    }
+
+    public function audit(FinancialTransaction $financial): View
+    {
+        $audits = ActivityLog::query()->with('user')->where('subject_type', FinancialTransaction::class)->where('subject_id', $financial->id)->latest()->get();
+
+        return view('financial.audit', compact('financial', 'audits'));
     }
 
     public function receive(FinancialTransaction $financial): View
@@ -177,7 +185,9 @@ class FinancialTransactionController extends Controller
         }
 
         $data = $request->validated();
+        $before = $financial->only(['status', 'payment_method', 'cost_classification', 'notes']);
         $financial->update($data + ['paid_at' => $data['status'] === 'paid' ? now() : null]);
+        ActivityLog::record('updated', $financial, 'Financial transaction updated.', ['before' => $before, 'after' => $financial->only(array_keys($before))]);
         ActivityLog::record('updated', $financial, 'Lançamento financeiro atualizado.');
 
         return redirect()->route('financial.show', $financial)->with('success', 'Lançamento atualizado com sucesso.');
@@ -185,12 +195,14 @@ class FinancialTransactionController extends Controller
 
     public function markPaid(MarkFinancialTransactionPaidRequest $request, FinancialTransaction $financial): RedirectResponse
     {
+        $before = $financial->only(['status', 'paid_at', 'payment_method']);
         $data = $request->validated();
         $financial->update([
             'status' => 'paid',
             'paid_at' => now(),
             'payment_method' => $data['payment_method'] ?? $financial->payment_method,
         ]);
+        ActivityLog::record('updated', $financial, 'Payment received.', ['before' => $before, 'after' => $financial->only(array_keys($before))]);
         ActivityLog::record('updated', $financial, 'Pagamento registrado.');
 
         return redirect()->route('financial.show', $financial)->with('success', 'Pagamento registrado com sucesso.');
@@ -201,11 +213,13 @@ class FinancialTransactionController extends Controller
         abort_unless($request->user()->role === UserRole::ADMIN, 403);
         abort_unless($financial->status === 'paid', 422, 'Somente pagamentos confirmados podem ser estornados.');
         $data = $request->validate(['reason' => ['nullable', 'string', 'max:255']]);
+        $before = $financial->only(['status', 'paid_at', 'notes']);
         $financial->update([
             'status' => 'pending',
             'paid_at' => null,
             'notes' => trim(($financial->notes ? $financial->notes.' | ' : '').'Estorno: '.($data['reason'] ?? 'Sem motivo informado')),
         ]);
+        ActivityLog::record('updated', $financial, 'Payment reversed.', ['before' => $before, 'after' => $financial->only(array_keys($before)), 'reason' => $data['reason'] ?? null]);
         ActivityLog::record('updated', $financial, 'Pagamento estornado pelo administrador.');
 
         return redirect()->route('financial.show', $financial)->with('success', 'Pagamento estornado com sucesso.');

@@ -2,6 +2,15 @@
 
 return [
 
+    'whatsapp' => [
+        'url' => env('WHATSAPP_API_URL'),
+        'token' => env('WHATSAPP_API_TOKEN'),
+    ],
+    'push' => [
+        'url' => env('PUSH_API_URL'),
+        'token' => env('PUSH_API_TOKEN'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

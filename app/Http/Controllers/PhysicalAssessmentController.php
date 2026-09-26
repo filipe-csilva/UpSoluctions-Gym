@@ -7,6 +7,7 @@ use App\Models\ActivityLog;
 use App\Models\PhysicalAssessment;
 use App\Models\StudentProfile;
 use App\Models\User;
+use App\Notifications\PhysicalAssessmentCreated;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -33,6 +34,14 @@ class PhysicalAssessmentController extends Controller
         return view('assessments.history', compact('student', 'assessments'));
     }
 
+    public function comparison(StudentProfile $student): View
+    {
+        $student->load('user');
+        $assessments = PhysicalAssessment::query()->with('teacher')->whereBelongsTo($student)->latest('assessment_date')->get()->reverse()->values();
+
+        return view('assessments.comparison', compact('student', 'assessments'));
+    }
+
     public function myHistory(Request $request): View
     {
         abort_unless($request->user()->studentProfile !== null, 403);
@@ -48,6 +57,9 @@ class PhysicalAssessmentController extends Controller
         }
         $assessment = PhysicalAssessment::create($data);
         ActivityLog::record('created', $assessment, 'Avaliação física criada.');
+
+        $assessment->load('student.user');
+        $assessment->student?->user?->notify(new PhysicalAssessmentCreated($assessment));
 
         return redirect()->route('assessments.index')->with('success', 'Avaliação física registrada com sucesso.');
     }

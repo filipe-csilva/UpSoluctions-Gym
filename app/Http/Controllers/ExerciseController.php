@@ -8,6 +8,7 @@ use App\Models\ActivityLog;
 use App\Models\Exercise;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ExerciseController extends Controller
@@ -26,7 +27,12 @@ class ExerciseController extends Controller
 
     public function store(StoreExerciseRequest $request): RedirectResponse
     {
-        $exercise = Exercise::create($request->validated());
+        $data = $request->validated();
+        if ($request->hasFile('image_file')) {
+            $data['image_path'] = $request->file('image_file')->store('exercises', 'public');
+        }
+        unset($data['image_file']);
+        $exercise = Exercise::create($data);
         ActivityLog::record('created', $exercise, 'Exercício criado.');
 
         return redirect()->route('exercises.show', $exercise)->with('success', 'Exercício cadastrado com sucesso.');
@@ -44,7 +50,15 @@ class ExerciseController extends Controller
 
     public function update(UpdateExerciseRequest $request, Exercise $exercise): RedirectResponse
     {
-        $exercise->update($request->validated());
+        $data = $request->validated();
+        if ($request->hasFile('image_file')) {
+            if ($exercise->image_path) {
+                Storage::disk('public')->delete($exercise->image_path);
+            }
+            $data['image_path'] = $request->file('image_file')->store('exercises', 'public');
+        }
+        unset($data['image_file']);
+        $exercise->update($data);
         ActivityLog::record('updated', $exercise, 'Exercício atualizado.');
 
         return redirect()->route('exercises.show', $exercise)->with('success', 'Exercício atualizado com sucesso.');

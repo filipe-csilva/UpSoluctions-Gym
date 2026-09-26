@@ -3,7 +3,7 @@
 @section('title', 'Histórico de avaliação física')
 
 @section('content_header')
-    <div class="d-flex justify-content-between align-items-center"><div><h1>Histórico de avaliação física</h1><p class="text-muted mb-0">{{ $student->user->name }}</p></div><a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a></div>
+    <div class="d-flex justify-content-between align-items-center"><div><h1>Histórico de avaliação física</h1><p class="text-muted mb-0">{{ $student->user->name }}</p></div><div class="d-flex gap-2"><a href="{{ route('assessments.comparison', $student) }}" class="btn btn-info">Comparar evolução</a><a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a></div></div>
 @stop
 
 @section('content')

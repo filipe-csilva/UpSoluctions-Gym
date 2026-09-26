@@ -31,13 +31,44 @@ function whenReady(fn) {
 }
 
 function setGymControlFavicon() {
-  if (document.querySelector('link[rel="icon"]')) return
+  fetch('/configuracoes/theme', { headers: { Accept: 'application/json' } })
+    .then((response) => response.ok ? response.json() : null)
+    .then((theme) => {
+      if (!theme) return
+      const favicon = document.querySelector('link[rel="icon"]') || document.createElement('link')
+      favicon.rel = 'icon'
+      favicon.href = theme.favicon_url
+      document.head.appendChild(favicon)
+      if (theme.logo_url) {
+        document.querySelectorAll('.brand-image').forEach((image) => { image.src = theme.logo_url })
+      }
+      if (theme.company_name) {
+        document.querySelectorAll('.brand-text').forEach((brand) => { brand.textContent = theme.company_name })
+      }
+      Object.entries(theme.colors || {}).forEach(([key, value]) => {
+        document.documentElement.style.setProperty('--gym-' + key.replace('_color', ''), value)
+      })
+      const iconByText = { Dashboard: 'icon_dashboard', Alunos: 'icon_students', Instrutores: 'icon_teachers', Funcionários: 'icon_employees', Unidades: 'icon_units', Planos: 'icon_plans', Matrículas: 'icon_enrollments', Financeiro: 'icon_financial', Comunicação: 'icon_communication', Comunicados: 'icon_announcements', Mensagens: 'icon_messages', Relatórios: 'icon_reports', Presença: 'icon_attendance', Exercícios: 'icon_exercises', 'Fichas de treino': 'icon_workout_plans', 'Avaliações físicas': 'icon_assessments', Perfil: 'icon_profile' }
+      document.querySelectorAll('.app-sidebar .nav-link').forEach((link) => {
+        const label = link.querySelector('.nav-label')?.textContent.trim() || link.textContent.trim().replace(/\s+$/, '')
+        const icon = link.querySelector('.nav-icon')
+        const configured = theme.icons?.[iconByText[label]]
+        if (icon && configured) icon.className = configured + ' nav-icon'
+      })
+    }).catch(() => {})
+}
 
-  const favicon = document.createElement('link')
-  favicon.rel = 'icon'
-  favicon.type = 'image/svg+xml'
-  favicon.href = '/favicon.svg'
-  document.head.appendChild(favicon)
+function initPwa() {
+  if (!document.querySelector('link[rel="manifest"]')) {
+    const manifest = document.createElement('link')
+    manifest.rel = 'manifest'
+    manifest.href = '/manifest.webmanifest'
+    document.head.appendChild(manifest)
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {})
+  }
 }
 
 // Keep the user's fullscreen preference while navigating through the app.
@@ -291,6 +322,7 @@ function initViaCep() {
 
 whenReady(() => {
   setGymControlFavicon()
+  initPwa()
   initFullscreenPersistence()
   // Wire OverlayScrollbars to the sidebar (matches the AdminLTE demo behaviour)
   const sidebar = document.querySelector('.sidebar-wrapper')
