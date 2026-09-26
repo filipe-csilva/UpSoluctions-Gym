@@ -73,8 +73,9 @@ class PanelController extends Controller
             $teacherStudentCount = WorkoutPlan::query()->where('teacher_id', $user->id)->distinct('student_id')->count('student_id');
             $teacherWorkoutCount = WorkoutPlan::query()->where('teacher_id', $user->id)->where('status', 'active')->count();
             $teacherAssessmentCount = PhysicalAssessment::query()->where('teacher_id', $user->id)->count();
+            $teacherAttendanceCount = Attendance::query()->where('unit_id', $user->unit_id)->whereDate('date', today())->count();
 
-            return view('teacher-dashboard', compact('announcements', 'presentStudents', 'teacherStudentCount', 'teacherWorkoutCount', 'teacherAssessmentCount'));
+            return view('teacher-dashboard', compact('announcements', 'presentStudents', 'teacherStudentCount', 'teacherWorkoutCount', 'teacherAssessmentCount', 'teacherAttendanceCount'));
         }
 
         return view('panel', compact('announcements', 'presentStudents', 'workoutPlan'));

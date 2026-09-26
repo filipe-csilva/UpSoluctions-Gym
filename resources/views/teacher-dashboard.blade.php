@@ -8,9 +8,10 @@
 
 @section('content')
     <div class="row g-3 mb-4">
-        <div class="col-md-4"><div class="small-box bg-primary"><div class="inner"><h3>{{ $teacherStudentCount }}</h3><p>Meus alunos</p></div><div class="icon"><i class="bi bi-people-fill"></i></div><a href="{{ route('teachers.my-students') }}" class="small-box-footer">Acessar <i class="bi bi-arrow-right"></i></a></div></div>
-        <div class="col-md-4"><div class="small-box bg-success"><div class="inner"><h3>{{ $teacherWorkoutCount }}</h3><p>Treinos ativos</p></div><div class="icon"><i class="bi bi-clipboard2-pulse"></i></div><a href="{{ route('workout-plans.index') }}" class="small-box-footer">Gerenciar <i class="bi bi-arrow-right"></i></a></div></div>
-        <div class="col-md-4"><div class="small-box bg-info"><div class="inner"><h3>{{ $teacherAssessmentCount }}</h3><p>Avaliações registradas</p></div><div class="icon"><i class="bi bi-clipboard2-data"></i></div><a href="{{ route('assessments.index') }}" class="small-box-footer">Consultar <i class="bi bi-arrow-right"></i></a></div></div>
+        <div class="col-md-3"><div class="small-box bg-primary"><div class="inner"><h3>{{ $teacherStudentCount }}</h3><p>Meus alunos</p></div><div class="icon"><i class="bi bi-people-fill"></i></div><a href="{{ route('teachers.my-students') }}" class="small-box-footer">Acessar <i class="bi bi-arrow-right"></i></a></div></div>
+        <div class="col-md-3"><div class="small-box bg-success"><div class="inner"><h3>{{ $teacherWorkoutCount }}</h3><p>Treinos ativos</p></div><div class="icon"><i class="bi bi-clipboard2-pulse"></i></div><a href="{{ route('workout-plans.index') }}" class="small-box-footer">Gerenciar <i class="bi bi-arrow-right"></i></a></div></div>
+        <div class="col-md-3"><div class="small-box bg-info"><div class="inner"><h3>{{ $teacherAssessmentCount }}</h3><p>Avaliações registradas</p></div><div class="icon"><i class="bi bi-clipboard2-data"></i></div><a href="{{ route('assessments.index') }}" class="small-box-footer">Consultar <i class="bi bi-arrow-right"></i></a></div></div>
+        <div class="col-md-3"><div class="small-box bg-warning"><div class="inner"><h3>{{ $teacherAttendanceCount }}</h3><p>Frequências hoje</p></div><div class="icon"><i class="bi bi-calendar-check"></i></div><a href="{{ route('attendances.index') }}" class="small-box-footer">Consultar <i class="bi bi-arrow-right"></i></a></div></div>
     </div>
 
     <div class="card mb-4 gym-dashboard-panel"><div class="card-header"><span class="gym-panel-icon text-success"><i class="bi bi-people-fill"></i></span><div class="gym-panel-heading"><h2 class="card-title">Alunos presentes hoje</h2><small>Alunos da sua unidade com presença registrada</small></div></div><div class="card-body">
