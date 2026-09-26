@@ -17,6 +17,9 @@ class DashboardController extends Controller
     public function __invoke(Request $request): View
     {
         $user = request()->user();
+        if ($user->role?->value === 'teacher') {
+            return app(PanelController::class)($request);
+        }
         $isManager = $user->role?->value === 'manager';
         $unitIds = $isManager ? $user->accessibleUnitIds() : [];
         $periodOptions = ['week', 'month', '3m', '6m', 'year'];

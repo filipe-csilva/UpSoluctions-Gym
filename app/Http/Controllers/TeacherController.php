@@ -9,6 +9,7 @@ use App\Models\ActivityLog;
 use App\Models\TeacherProfile;
 use App\Models\Unit;
 use App\Models\User;
+use App\Models\WorkoutPlan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -119,10 +120,15 @@ class TeacherController extends Controller
 
     public function myStudents(Request $request): View
     {
-        $teacher = $request->user()->teacherProfile;
-        abort_unless($teacher !== null, 403);
+        $teacher = $request->user();
+        $students = WorkoutPlan::query()
+            ->with('student.user.unit')
+            ->where('teacher_id', $teacher->id)
+            ->latest('start_date')
+            ->get()
+            ->groupBy('student_id');
 
-        return $this->students($teacher);
+        return view('teachers.my-students', compact('teacher', 'students'));
     }
 
     public function store(StoreTeacherRequest $request): RedirectResponse

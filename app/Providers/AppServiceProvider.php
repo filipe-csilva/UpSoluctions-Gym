@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(User::class, UserPolicy::class);
 
         Gate::define('view-dashboard', function ($user): bool {
-            return $user->role?->value === 'admin' || $user->role?->value === 'manager';
+            return in_array($user->role?->value, ['admin', 'manager', 'teacher'], true);
         });
 
         Gate::define('view-students', function ($user): bool {
