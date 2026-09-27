@@ -743,6 +743,35 @@ Itens implementados nesta etapa:
 
 ### Primeiros passos
 
+## Atualizacao atual — 27/09/2026
+
+### Experiencia por perfil
+
+| Perfil | Dashboard e recursos |
+| --- | --- |
+| Admin / Manager | Indicadores da academia, financeiro, fluxo de caixa, vencimentos, comunicacao e relatorios |
+| Instrutor | Meus alunos, treinos, avaliacoes, frequencia e dashboard operacional da unidade |
+| Aluno | Matricula, financeiro, treino, avaliacoes, frequencia, comunicados e mensagens |
+
+### Interface responsiva
+
+- Relatorios adaptados para celulares e tablets.
+- Filtros reorganizados por tamanho de tela.
+- Botoes de exportacao com quebra automatica.
+- Cards empilhados em telas estreitas.
+- Tabelas com rolagem horizontal interna, sem quebrar o layout.
+- Dashboards com o mesmo padrao visual entre os perfis.
+
+### Validacao tecnica
+
+- 73 testes automatizados aprovados.
+- 208 assercoes aprovadas.
+- Blade compilado com sucesso.
+- Frontend Vite compilado com sucesso.
+- Codigo PHP formatado com Laravel Pint.
+
+Consulte [`TASKS.md`](TASKS.md) para acompanhar o roadmap e as proximas integracoes.
+
 ```bash
 composer install
 copy .env.example .env
