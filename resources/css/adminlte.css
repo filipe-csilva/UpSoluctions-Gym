@@ -780,6 +780,35 @@
   .reports-results-table td {
     white-space: nowrap;
   }
+
+  .content-header .d-flex.justify-content-between {
+    align-items: flex-start !important;
+    flex-wrap: wrap;
+  }
+
+  .content-header .d-flex.justify-content-between > h1,
+  .content-header .d-flex.justify-content-between > div:first-child {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .content-header .d-flex.justify-content-between > .d-flex.gap-2,
+  .content-header .d-flex.justify-content-between > div > .d-flex.gap-2 {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .content-header .d-flex.gap-2 > .btn {
+    flex: 1 1 auto;
+  }
+
+  .card-header {
+    flex-wrap: wrap;
+  }
+
+  .table-responsive {
+    max-width: 100%;
+  }
 }
 
 .app-sidebar .nav-treeview .nav-link.active {
