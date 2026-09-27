@@ -99,6 +99,9 @@ Route::resource('financial', FinancialTransactionController::class)
 Route::post('/financial/{financial}/mark-paid', [FinancialTransactionController::class, 'markPaid'])
     ->middleware(['auth', 'verified', 'can:view-financial'])
     ->name('financial.mark-paid');
+Route::get('/financial/{financial}/receipt', [FinancialTransactionController::class, 'receipt'])
+    ->middleware(['auth', 'verified', 'can:view-financial'])
+    ->name('financial.receipt');
 Route::get('/financial/{financial}/receive', [FinancialTransactionController::class, 'receive'])
     ->middleware(['auth', 'verified', 'can:view-financial'])
     ->name('financial.receive');

@@ -11,6 +11,9 @@
             @if ($transaction->status !== 'paid')
                 <a href="{{ route('financial.receive', $transaction) }}" class="btn btn-success"><i class="bi bi-cash-coin"></i> Receber</a>
             @endif
+            @if ($transaction->status === 'paid')
+                <a href="{{ route('financial.receipt', ['financial' => $transaction, 'format' => 'a4']) }}" target="_blank" class="btn btn-outline-success"><i class="bi bi-receipt"></i> Recibo</a>
+            @endif
             @if ($transaction->status === 'paid' && auth()->user()->role?->value === 'admin')
                 <form method="POST" action="{{ route('financial.reverse', $transaction) }}" onsubmit="return confirm('Deseja estornar este pagamento?')">
                     @csrf

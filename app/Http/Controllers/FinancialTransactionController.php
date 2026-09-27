@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateFinancialTransactionRequest;
 use App\Models\ActivityLog;
 use App\Models\Enrollment;
 use App\Models\FinancialTransaction;
+use App\Models\GeneralSetting;
 use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -171,6 +172,22 @@ class FinancialTransactionController extends Controller
         return view('financial.receive', ['transaction' => $financial]);
     }
 
+    public function receipt(Request $request, FinancialTransaction $financial): View
+    {
+        abort_unless($financial->status === 'paid', 404);
+        $request->validate(['format' => ['nullable', 'in:a4,80mm']]);
+        $financial->load(['student.user', 'unit']);
+        $settings = GeneralSetting::values();
+
+        return view('financial.receipt', [
+            'transaction' => $financial,
+            'format' => $request->string('format', 'a4')->toString(),
+            'companyName' => $settings['company_name'] ?? config('app.name', 'GymControl'),
+            'companyDocument' => $settings['company_document'] ?? '',
+            'companyPhone' => $settings['company_phone'] ?? '',
+        ]);
+    }
+
     public function edit(FinancialTransaction $financial): View
     {
         abort_if($financial->enrollment_id !== null, 404);
@@ -205,7 +222,7 @@ class FinancialTransactionController extends Controller
         ActivityLog::record('updated', $financial, 'Payment received.', ['before' => $before, 'after' => $financial->only(array_keys($before))]);
         ActivityLog::record('updated', $financial, 'Pagamento registrado.');
 
-        return redirect()->route('financial.show', $financial)->with('success', 'Pagamento registrado com sucesso.');
+        return redirect()->route('financial.receipt', ['financial' => $financial, 'format' => 'a4'])->with('success', 'Pagamento registrado com sucesso. Recibo disponível para impressão.');
     }
 
     public function reversePayment(Request $request, FinancialTransaction $financial): RedirectResponse

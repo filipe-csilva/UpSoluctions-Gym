@@ -8,6 +8,8 @@ use App\Models\Unit;
 use App\Models\User;
 
 it('creates an accounts receivable transaction when an enrollment is created', function () {
+    $startDate = today();
+
     $unit = Unit::create(['name' => 'Unidade Centro', 'code' => 'CENTRO', 'active' => true]);
     $studentUser = User::factory()->create(['role' => UserRole::STUDENT, 'unit_id' => $unit->id]);
     $student = StudentProfile::create([
@@ -33,8 +35,8 @@ it('creates an accounts receivable transaction when an enrollment is created', f
         'student_id' => $student->id,
         'plan_id' => $plan->id,
         'unit_id' => $unit->id,
-        'start_date' => '2026-09-26',
-        'end_date' => '2026-09-27',
+        'start_date' => $startDate->toDateString(),
+        'end_date' => $startDate->copy()->addDay()->toDateString(),
         'price' => '89.90',
         'status' => 'active',
         'payment_day' => 10,
@@ -44,15 +46,15 @@ it('creates an accounts receivable transaction when an enrollment is created', f
     $this->assertDatabaseHas('enrollments', [
         'student_id' => $student->id,
         'plan_id' => $plan->id,
-        'start_date' => '2026-09-26 00:00:00',
-        'end_date' => '2026-10-25 00:00:00',
+        'start_date' => $startDate->toDateString().' 00:00:00',
+        'end_date' => $startDate->copy()->addMonth()->subDay()->toDateString().' 00:00:00',
     ]);
     $this->assertDatabaseHas('financial_transactions', [
         'student_id' => $student->id,
         'unit_id' => $unit->id,
         'description' => 'Mensalidade - Plano Mensal',
         'amount' => 80.91,
-        'due_date' => '2026-09-26 00:00:00',
+        'due_date' => $startDate->toDateString().' 00:00:00',
         'status' => 'pending',
         'transaction_type' => 'income',
     ]);
@@ -60,10 +62,11 @@ it('creates an accounts receivable transaction when an enrollment is created', f
     $transaction = FinancialTransaction::query()->where('student_id', $student->id)->firstOrFail();
     $this->actingAs($admin)
         ->post(route('financial.mark-paid', $transaction), ['payment_method' => 'pix'])
-        ->assertRedirect(route('financial.show', $transaction));
+        ->assertRedirect(route('financial.receipt', ['financial' => $transaction, 'format' => 'a4']));
     $this->assertDatabaseHas('financial_transactions', ['id' => $transaction->id, 'status' => 'paid', 'payment_method' => 'pix']);
+    $this->actingAs($admin)->get(route('financial.receipt', ['financial' => $transaction, 'format' => '80mm']))->assertOk()->assertSee('Recibo de pagamento')->assertSee('80mm');
     $this->actingAs($admin)->get(route('financial.cash-flow'))->assertOk()->assertSee('Entradas recebidas')->assertSee('80,91');
-    $this->actingAs($admin)->get(route('reports.index', ['type' => 'cash_flow', 'from' => '2026-09-26', 'to' => '2026-09-26']))->assertOk()->assertSee('Fluxo de caixa')->assertSee('Mensalidade - Plano Mensal');
+    $this->actingAs($admin)->get(route('reports.index', ['type' => 'cash_flow', 'from' => $startDate->toDateString(), 'to' => $startDate->toDateString()]))->assertOk()->assertSee('Fluxo de caixa')->assertSee('Mensalidade - Plano Mensal');
     expect($admin->fresh()->role?->value)->toBe('admin');
     $this->actingAs($admin->fresh())->post(route('financial.reverse', $transaction), ['reason' => 'Pagamento devolvido'])->assertRedirect(route('financial.show', $transaction));
     $this->assertDatabaseHas('financial_transactions', ['id' => $transaction->id, 'status' => 'pending', 'paid_at' => null]);
@@ -71,6 +74,8 @@ it('creates an accounts receivable transaction when an enrollment is created', f
 });
 
 it('creates one receivable per installment for an installment plan', function () {
+    $startDate = today();
+
     $unit = Unit::create(['name' => 'Unidade Norte', 'code' => 'NORTE', 'active' => true]);
     $studentUser = User::factory()->create(['role' => UserRole::STUDENT, 'unit_id' => $unit->id]);
     $student = StudentProfile::create([
@@ -87,8 +92,8 @@ it('creates one receivable per installment for an installment plan', function ()
         'student_id' => $student->id,
         'plan_id' => $plan->id,
         'unit_id' => $unit->id,
-        'start_date' => '2026-09-26',
-        'end_date' => '2026-12-25',
+        'start_date' => $startDate->toDateString(),
+        'end_date' => $startDate->copy()->addMonths(3)->subDay()->toDateString(),
         'price' => '239.90',
         'status' => 'active',
         'payment_day' => 10,
@@ -97,6 +102,6 @@ it('creates one receivable per installment for an installment plan', function ()
     $response->assertRedirect();
     expect($student->fresh()->user->active)->toBeTrue();
     expect($plan->enrollments()->first()->financialTransactions)->toHaveCount(3);
-    $this->assertDatabaseHas('financial_transactions', ['description' => 'Mensalidade - Plano Trimestral - Parcela 1/3', 'amount' => 79.97, 'due_date' => '2026-09-26 00:00:00']);
-    $this->assertDatabaseHas('financial_transactions', ['description' => 'Mensalidade - Plano Trimestral - Parcela 3/3', 'amount' => 79.96, 'due_date' => '2026-11-26 00:00:00']);
+    $this->assertDatabaseHas('financial_transactions', ['description' => 'Mensalidade - Plano Trimestral - Parcela 1/3', 'amount' => 79.97, 'due_date' => $startDate->toDateString().' 00:00:00']);
+    $this->assertDatabaseHas('financial_transactions', ['description' => 'Mensalidade - Plano Trimestral - Parcela 3/3', 'amount' => 79.96, 'due_date' => $startDate->copy()->addMonths(2)->toDateString().' 00:00:00']);
 });
