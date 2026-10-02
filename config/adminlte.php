@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'logo' => '<b><span style="color: #ffffff; font-size: 24px;">Gym</span><span style="color: #ef4444; font-size: 24px;">Control</span></b>',
+    'logo' => '',
     'logo_img' => 'vendor/adminlte/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image opacity-75 shadow',
     'logo_img_alt' => '',
@@ -125,7 +125,7 @@ return [
     */
 
     'footer_left' => 'Copyright &copy; 2024-'.date('Y').' <a href="" class="text-decoration-none">Logic Sharp</a>. All rights reserved.',
-    'footer_right' => '',
+    'footer_right' => '<span class="gym-footer-brand"><span>Gym</span><strong>Control</strong></span>',
     'preloader' => false,
     'control_sidebar' => false,
     'control_sidebar_theme' => 'dark',
@@ -246,35 +246,66 @@ return [
             // ],
         ],
         [
-            'text' => 'Alunos',
-            'route' => 'students.index',
-            'icon' => 'bi bi-person-vcard',
-            'can' => 'view-students',
-        ],
-        [
-            'text' => 'Instrutores',
+            'text' => 'Cadastros',
             'route' => 'teachers.index',
             'icon' => 'bi bi-person-workspace',
-            'can' => 'view-teachers',
+            'submenu' => [
+                [
+                    'text' => 'Alunos',
+                    'route' => 'students.index',
+                    'icon' => 'bi bi-person-vcard',
+                    'can' => 'view-students',
+                ],
+                [
+                    'text' => 'Instrutores',
+                    'route' => 'teachers.index',
+                    'icon' => 'bi bi-person-workspace',
+                    'can' => 'view-teachers',
+                ],
+                [
+                    'text' => 'Funcionários',
+                    'route' => 'employees.index',
+                    'icon' => 'bi bi-person-badge',
+                    'can' => 'view-employees',
+                ],
+                [
+                    'text' => 'Unidades',
+                    'route' => 'units.index',
+                    'icon' => 'bi bi-building',
+                    'can' => 'view-units',
+                ],
+            ],
         ],
-        [
-            'text' => 'Funcionários',
-            'route' => 'employees.index',
-            'icon' => 'bi bi-person-badge',
-            'can' => 'view-employees',
-        ],
-        [
-            'text' => 'Unidades',
-            'route' => 'units.index',
-            'icon' => 'bi bi-building',
-            'can' => 'view-units',
-        ],
-        [
-            'text' => 'Usuários',
-            'route' => 'users.index',
-            'icon' => 'bi bi-people-fill',
-            'can' => 'manage-users',
-        ],
+        // [
+        //     'text' => 'Alunos',
+        //     'route' => 'students.index',
+        //     'icon' => 'bi bi-person-vcard',
+        //     'can' => 'view-students',
+        // ],
+        // [
+        //     'text' => 'Instrutores',
+        //     'route' => 'teachers.index',
+        //     'icon' => 'bi bi-person-workspace',
+        //     'can' => 'view-teachers',
+        // ],
+        // [
+        //     'text' => 'Funcionários',
+        //     'route' => 'employees.index',
+        //     'icon' => 'bi bi-person-badge',
+        //     'can' => 'view-employees',
+        // ],
+        // [
+        //     'text' => 'Unidades',
+        //     'route' => 'units.index',
+        //     'icon' => 'bi bi-building',
+        //     'can' => 'view-units',
+        // ],
+        // [
+        //     'text' => 'Usuários',
+        //     'route' => 'users.index',
+        //     'icon' => 'bi bi-people-fill',
+        //     'can' => 'manage-users',
+        // ],
         [
             'text' => 'Planos',
             'route' => 'plans.index',

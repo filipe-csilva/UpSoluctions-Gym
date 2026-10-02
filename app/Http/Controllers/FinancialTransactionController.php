@@ -182,6 +182,7 @@ class FinancialTransactionController extends Controller
         return view('financial.receipt', [
             'transaction' => $financial,
             'format' => $request->string('format', 'a4')->toString(),
+            'projectName' => config('app.name', 'GymControl'),
             'companyName' => $settings['company_name'] ?? config('app.name', 'GymControl'),
             'companyDocument' => $settings['company_document'] ?? '',
             'companyPhone' => $settings['company_phone'] ?? '',

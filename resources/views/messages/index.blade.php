@@ -17,7 +17,7 @@
                 <thead><tr><th>Assunto</th><th>De</th><th>Destino</th><th>Status</th><th>Data</th><th></th></tr></thead>
                 <tbody>
                     @forelse ($messages as $message)
-                        @php($isRead = $message->reads->isNotEmpty() || $message->sender_id === auth()->id())
+                        @php($isRead = $message->reads->isNotEmpty())
                         <tr>
                             <td>{{ $message->subject }}</td>
                             <td>{{ $message->sender?->name ?? '-' }}</td>

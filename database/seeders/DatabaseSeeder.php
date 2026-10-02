@@ -4,11 +4,13 @@ namespace Database\Seeders;
 
 use App\Enums\UserRole;
 use App\Models\EmployeeProfile;
+use App\Models\GeneralSetting;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,6 +45,15 @@ class DatabaseSeeder extends Seeder
         );
 
         EmployeeProfile::firstOrCreate(['user_id' => $admin->id]);
+
+        foreach ([
+            'brand_logo_path' => 'settings/QT5RuUU0oaR1fT14E9Swktb4ibTCw8hGyvVsZ0SI.png',
+            'favicon_path' => 'settings/ovUYBSJFRJmtr9yYixV4S7Q08Kol9B6ovJtZpHIj.png',
+        ] as $key => $path) {
+            if (Storage::disk('public')->exists($path)) {
+                GeneralSetting::firstOrCreate(['key' => $key], ['value' => $path]);
+            }
+        }
 
         $this->call(StudentSeeder::class);
         $this->call(TeacherSeeder::class);

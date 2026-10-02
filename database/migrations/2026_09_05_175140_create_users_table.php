@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->boolean('active')->default(true)->index();
+            $table->foreignId('unit_id')->nullable()->constrained('units')->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

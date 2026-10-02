@@ -24,7 +24,7 @@ class StudentDemoAccountSeeder extends Seeder
         );
         $student = StudentProfile::updateOrCreate(
             ['user_id' => $user->id],
-            ['cpf' => '12345678909', 'birth_date' => '1995-05-15', 'phone' => '85999999999', 'gender' => 'M', 'address' => 'Rua da Academia', 'number' => '100', 'neighborhood' => 'Centro', 'city' => 'Fortaleza', 'state' => 'CE', 'zip_code' => '60000000', 'notes' => 'Usuário demonstrativo para testes.'],
+            ['cpf' => '12345678909', 'birth_date' => '1995-05-15', 'phone' => '85999999999', 'gender' => 'male', 'address' => 'Rua da Academia', 'number' => '100', 'neighborhood' => 'Centro', 'city' => 'Fortaleza', 'state' => 'CE', 'zip_code' => '60000000', 'notes' => 'Usuário demonstrativo para testes.'],
         );
         $plan = Plan::query()->where('name', 'Plano Mensal')->firstOrFail();
         $enrollment = Enrollment::firstOrCreate(

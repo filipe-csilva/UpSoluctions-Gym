@@ -33,7 +33,7 @@ class UpdateStudentRequest extends FormRequest
             'cpf' => ['required', 'string', 'max:14', new ValidCpf, Rule::unique('student_profiles', 'cpf')->ignore($student?->id)],
             'birth_date' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:20', new ValidPhone],
-            'gender' => ['nullable', 'string', 'max:20'],
+            'gender' => ['nullable', 'string', 'in:male,female,other'],
             'address' => ['nullable', 'string', 'max:255'],
             'number' => ['nullable', 'string', 'max:20'],
             'neighborhood' => ['nullable', 'string', 'max:100'],
@@ -54,7 +54,22 @@ class UpdateStudentRequest extends FormRequest
             'emergency_phone' => $this->filled('emergency_phone') ? preg_replace('/\D/', '', $this->string('emergency_phone')->toString()) : null,
             'state' => $this->filled('state') ? strtoupper(trim($this->string('state')->toString())) : null,
             'zip_code' => $this->filled('zip_code') ? preg_replace('/\D/', '', $this->string('zip_code')->toString()) : null,
+            'gender' => $this->normalizeGender(),
             'active' => $this->boolean('active'),
         ]);
+    }
+
+    private function normalizeGender(): ?string
+    {
+        if (! $this->filled('gender')) {
+            return null;
+        }
+
+        return match (mb_strtolower(trim($this->string('gender')->toString()))) {
+            'm', 'masculino', 'male' => 'male',
+            'f', 'feminino', 'female' => 'female',
+            'outro', 'other' => 'other',
+            default => $this->string('gender')->toString(),
+        };
     }
 }

@@ -39,12 +39,18 @@ function setGymControlFavicon() {
       favicon.rel = 'icon'
       favicon.href = theme.favicon_url
       document.head.appendChild(favicon)
-      if (theme.logo_url) {
-        document.querySelectorAll('.brand-image').forEach((image) => { image.src = theme.logo_url })
-      }
-      if (theme.company_name) {
-        document.querySelectorAll('.brand-text').forEach((brand) => { brand.textContent = theme.company_name })
-      }
+      document.querySelectorAll('.brand-image').forEach((image) => {
+        image.style.display = theme.logo_url ? '' : 'none'
+        if (theme.logo_url) {
+          image.src = theme.logo_url
+          image.alt = theme.company_name || 'Logo da academia'
+        }
+      })
+      document.querySelectorAll('.brand-text').forEach((brand) => {
+        brand.innerHTML = theme.logo_url
+          ? ''
+          : '<span class="gym-brand-project">Gym</span><span class="gym-brand-control">Control</span>'
+      })
       Object.entries(theme.colors || {}).forEach(([key, value]) => {
         document.documentElement.style.setProperty('--gym-' + key.replace('_color', ''), value)
       })

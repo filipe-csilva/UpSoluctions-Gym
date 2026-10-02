@@ -196,6 +196,7 @@ it('does not mark a message as read when its sender opens it', function () {
     $message = Message::create(['sender_id' => $admin->id, 'audience' => 'all', 'subject' => 'Aviso', 'body' => 'Mensagem enviada.']);
 
     $this->actingAs($admin)->get(route('messages.show', $message))->assertOk();
+    $this->actingAs($admin)->get(route('messages.index'))->assertOk()->assertSee('status-pill-warning');
 
     expect($message->fresh()->read_at)->toBeNull()
         ->and($message->fresh()->read_by)->toBeNull();

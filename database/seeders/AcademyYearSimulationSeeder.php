@@ -2,13 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Announcement;
 use App\Models\Attendance;
 use App\Models\Enrollment;
 use App\Models\FinancialTransaction;
+use App\Models\Message;
 use App\Models\PhysicalAssessment;
 use App\Models\Plan;
 use App\Models\StudentProfile;
 use App\Models\TeacherProfile;
+use App\Models\User;
 use App\Models\WorkoutPlan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +24,9 @@ class AcademyYearSimulationSeeder extends Seeder
             $unitIds = DB::table('units')->orderBy('id')->pluck('id')->values();
             $teachers = TeacherProfile::query()->with('user')->get();
             $students = StudentProfile::query()->with('user')->orderBy('id')->get();
-            $simulationStart = today()->subMonths(11)->startOfMonth();
+            $simulationMonths = 24;
+            $simulationStart = today()->subMonths($simulationMonths - 1)->startOfMonth();
+            $simulationEnd = $simulationStart->copy()->addMonths($simulationMonths)->subDay();
             $plans = collect([
                 ['name' => 'Plano Mensal', 'description' => 'Acesso mensal à academia.', 'duration_months' => 1, 'installments' => 1, 'price' => 89.90, 'active' => true],
                 ['name' => 'Plano Trimestral', 'description' => 'Acesso por três meses, parcelado em três vezes.', 'duration_months' => 3, 'installments' => 3, 'price' => 239.90, 'active' => true],
@@ -36,12 +41,12 @@ class AcademyYearSimulationSeeder extends Seeder
                 $enrollmentPrice = round((float) $plan->price * (1 - $discountRate), 2);
                 $enrollment = Enrollment::create([
                     'student_id' => $student->id, 'plan_id' => $plan->id, 'unit_id' => $unitId,
-                    'start_date' => $simulationStart, 'end_date' => today()->addMonth(),
+                    'start_date' => $simulationStart, 'end_date' => $simulationEnd,
                     'price' => $enrollmentPrice, 'status' => 'active', 'payment_day' => 10 + ($index % 10),
                     'notes' => 'Matrícula criada pela simulação anual da academia.',
                 ]);
 
-                for ($month = 0; $month < 12; $month++) {
+                for ($month = 0; $month < $simulationMonths; $month++) {
                     $dueDate = $simulationStart->copy()->addMonths($month)->day(10 + ($index % 10));
                     $isOpen = ($month === 11 && $index >= 7)
                         || ($month === 6 && $index === 4)
@@ -87,7 +92,7 @@ class AcademyYearSimulationSeeder extends Seeder
                     ]);
                 }
 
-                for ($month = 0; $month < 12; $month++) {
+                for ($month = 0; $month < $simulationMonths; $month++) {
                     Attendance::create([
                         'student_id' => $student->id, 'unit_id' => $unitId, 'registered_by' => $teacher?->id,
                         'date' => $simulationStart->copy()->addMonths($month)->day(15),
@@ -96,7 +101,7 @@ class AcademyYearSimulationSeeder extends Seeder
                     ]);
                 }
 
-                for ($month = 0; $month < 12; $month += 3) {
+                for ($month = 0; $month < $simulationMonths; $month += 3) {
                     $assessmentDate = $simulationStart->copy()->addMonths($month)->day(20);
                     $height = 1.60 + (($index % 8) * 0.02);
                     $weight = 78 - ($index * 0.4) - ($month * 0.2);
@@ -110,14 +115,14 @@ class AcademyYearSimulationSeeder extends Seeder
 
             $firstEnrollment = Enrollment::query()->firstOrFail();
             $firstStudent = $students->firstOrFail();
-            for ($month = 0; $month < 12; $month++) {
+            for ($month = 0; $month < $simulationMonths; $month++) {
                 $dueDate = $simulationStart->copy()->addMonths($month)->day(5);
                 $utilities = [85, 92, 110, 120, 115, 105, 90, 88, 96, 102, 118, 125];
                 $cleaning = [55, 60, 65, 58, 70, 62, 68, 60, 75, 64, 72, 80];
                 $monthlyExpenses = [
                     ['Aluguel da unidade', 390],
-                    ['Energia elétrica', $utilities[$month]],
-                    ['Limpeza e manutenção', $cleaning[$month]],
+                    ['Energia elétrica', $utilities[$month % count($utilities)]],
+                    ['Limpeza e manutenção', $cleaning[$month % count($cleaning)]],
                     ['Sistema e serviços', 49.90],
                 ];
 
@@ -150,6 +155,28 @@ class AcademyYearSimulationSeeder extends Seeder
                     'amount' => $amount, 'due_date' => today()->addDays($daysUntilDue),
                     'status' => 'pending', 'transaction_type' => 'expense',
                     'notes' => 'Conta futura incluída na simulação financeira.',
+                ]);
+            }
+
+            $admin = User::query()->where('email', 'admin@upsoluctions.com.br')->firstOrFail();
+            for ($month = 0; $month < $simulationMonths; $month++) {
+                $referenceDate = $simulationStart->copy()->addMonths($month)->day(12);
+                Announcement::create([
+                    'created_by' => $admin->id,
+                    'title' => 'Notícia da academia - mês '.str_pad((string) ($month + 1), 2, '0', STR_PAD_LEFT),
+                    'message' => 'Confira as novidades, horários e orientações da academia neste período.',
+                    'target_role' => 'all',
+                    'start_at' => $referenceDate,
+                    'end_at' => $simulationEnd,
+                    'active' => true,
+                    'is_default' => false,
+                ]);
+
+                Message::create([
+                    'sender_id' => $admin->id,
+                    'audience' => 'all',
+                    'subject' => 'Comunicado da academia - mês '.str_pad((string) ($month + 1), 2, '0', STR_PAD_LEFT),
+                    'body' => 'Mensagem de acompanhamento da academia referente ao período simulado de '.$referenceDate->format('m/Y').'.',
                 ]);
             }
         });

@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
             $table->string('name', 150);
-            $table->text('description') ->nullable();
+            $table->text('description')->nullable();
             $table->string('muscle_group', 100);
-            $table->string('equipment', 100) ->nullable();
-            $table->text('instructions') ->nullable();
-            $table->boolean('active') ->default(true);
+            $table->string('equipment', 100)->nullable();
+            $table->text('instructions')->nullable();
+            $table->string('image_path')->nullable();
+            $table->string('video_url')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

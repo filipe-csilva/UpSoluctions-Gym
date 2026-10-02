@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('cpf', 14)->unique();
             $table->date('birth_date');
             $table->string('phone', 11);
-            $table->string('gender', 6)->nullable();
+            $table->string('gender', 20)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('number', 10);
             $table->string('neighborhood', 100)->nullable();

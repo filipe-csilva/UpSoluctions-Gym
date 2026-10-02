@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('parent_id')->nullable()->constrained('messages')->cascadeOnDelete();
             $table->foreignId('sender_id')->constrained('users')->restrictOnDelete();
             $table->foreignId('recipient_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('unit_id')->nullable()->constrained('units')->nullOnDelete();
+            $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('assigned_at')->nullable();
             $table->string('audience', 20);
             $table->string('subject', 150);
             $table->text('body');

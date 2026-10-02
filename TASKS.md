@@ -49,6 +49,19 @@
 - [x] Manifesto PWA e service worker disponíveis.
 - [x] 70 testes e 202 asserções aprovados localmente.
 
+## Atualizacao - 02/10/2026
+
+- [x] Recibo financeiro em formatos A4 e bobina de 80 mm, com abertura em nova aba.
+- [x] Botao de fechamento do recibo com retorno seguro para o financeiro.
+- [x] Simulacao de 24 meses com receitas, despesas, mensagens e noticias.
+- [x] Logo da academia, favicon e identidade visual persistidos nas configuracoes.
+- [x] Restricao de cadastro de unidades exclusivamente ao administrador.
+- [x] Cabecalhos HTTP de seguranca e cookies de sessao seguros em producao.
+- [x] Limitacao de requisicoes na recuperacao de senha.
+- [x] Auditoria de dependencias sem vulnerabilidades conhecidas.
+- [x] GIF de demonstracao incluido em [`docs/gymcontrol-demo.gif`](docs/gymcontrol-demo.gif).
+- [x] 75 testes e 224 assercoes aprovados localmente.
+
 ## Pendente
 
 ### API

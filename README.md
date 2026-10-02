@@ -684,6 +684,17 @@ Itens implementados nesta etapa:
 
 # Tasks atualizadas
 
+## Atualizacao - 02/10/2026
+
+- Recibos financeiros em A4 e bobina de 80 mm, com fechamento e abertura em nova aba.
+- Simulacao de 24 meses com receitas, despesas, mensagens e noticias.
+- Logo, favicon e identidade visual persistidos nas configuracoes.
+- Restricao de cadastro de unidades exclusivamente ao administrador.
+- Seguranca de producao: cabecalhos HTTP, cookies seguros e limite de recuperacao de senha.
+- Auditoria de dependencias concluida sem vulnerabilidades conhecidas.
+- GIF de demonstracao: [`docs/gymcontrol-demo.gif`](docs/gymcontrol-demo.gif).
+- Suite atual: 75 testes e 224 assercoes aprovados.
+
 > Esta seção complementa o roadmap histórico acima e representa o estado atual do projeto.
 
 ## Concluído

@@ -26,8 +26,9 @@
     <x-alerts />
     @php($isActive = $student?->user?->active ?? $user?->active ?? false)
     @php($gender = match (strtolower((string) $student?->gender)) {
-        'f' => 'Feminino',
-        'm' => 'Masculino',
+        'f', 'female' => 'Feminino',
+        'm', 'male' => 'Masculino',
+        'other' => 'Outro',
         default => $student?->gender ?: '-',
     })
     <div class="card">

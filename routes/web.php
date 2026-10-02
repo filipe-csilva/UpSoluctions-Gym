@@ -58,7 +58,7 @@ Route::resource('teachers', TeacherController::class)
     ->middleware(['auth', 'verified', 'can:view-teachers']);
 
 Route::resource('units', UnitController::class)
-    ->middleware(['auth', 'verified', 'can:view-units']);
+    ->middleware(['auth', 'verified', 'role:admin', 'can:view-units']);
 
 Route::resource('employees', EmployeeController::class)
     ->middleware(['auth', 'verified', 'can:view-employees']);

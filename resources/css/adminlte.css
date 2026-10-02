@@ -751,6 +751,14 @@
   min-width: 7rem;
 }
 
+@media (min-width: 768px) {
+  .reports-export-actions {
+    width: auto !important;
+    margin-left: auto;
+    justify-content: flex-end;
+  }
+}
+
 .reports-table-wrapper {
   max-width: 100%;
   overflow-x: auto;
@@ -844,3 +852,50 @@
  *
  * See https://adminlte.io/themes/v4/docs/customization.html
  */
+.gym-brand-project,
+.gym-brand-control {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.gym-brand-project {
+    color: #ffffff;
+}
+
+.gym-brand-control {
+    color: #ef4444;
+}
+
+.app-sidebar .brand-image {
+    width: auto !important;
+    height: 52px !important;
+    max-width: 205px;
+    max-height: 52px;
+    margin: 0 auto !important;
+    object-fit: contain;
+    opacity: 1 !important;
+    box-shadow: none !important;
+    transform: scale(1.45);
+}
+
+.app-sidebar .brand-link {
+    display: flex;
+    min-height: 56px;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+}
+
+.gym-footer-brand {
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.gym-footer-brand span {
+    color: #ffffff;
+}
+
+.gym-footer-brand strong {
+    color: #ef4444;
+    font-weight: 400;
+}

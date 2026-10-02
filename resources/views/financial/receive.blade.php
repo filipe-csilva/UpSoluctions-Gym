@@ -19,7 +19,7 @@
                 <dt class="col-sm-3">Valor</dt><dd class="col-sm-9">R$ {{ number_format((float) $transaction->amount, 2, ',', '.') }}</dd>
                 <dt class="col-sm-3">Vencimento</dt><dd class="col-sm-9">{{ $transaction->due_date->format('d/m/Y') }}</dd>
             </dl>
-            <form method="POST" action="{{ route('financial.mark-paid', $transaction) }}" class="row g-3">
+            <form method="POST" action="{{ route('financial.mark-paid', $transaction) }}" target="_blank" class="row g-3">
                 @csrf
                 <div class="col-md-6">
                     <label for="payment_method" class="form-label">Forma de pagamento *</label>

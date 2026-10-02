@@ -14,6 +14,13 @@ it('restricts general settings and user management to administrators', function 
     $this->actingAs($admin)->get(route('settings.index'))->assertOk();
 });
 
+it('prevents managers from accessing unit registration', function () {
+    $manager = User::factory()->create(['role' => UserRole::MANAGER]);
+
+    $this->actingAs($manager)->get(route('units.index'))->assertForbidden();
+    $this->actingAs($manager)->get(route('units.create'))->assertForbidden();
+});
+
 it('allows an administrator to create and update users', function () {
     $admin = User::factory()->create(['role' => UserRole::ADMIN]);
     $unit = Unit::create(['name' => 'Unidade Centro', 'code' => 'CENTRO', 'active' => true]);

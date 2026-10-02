@@ -25,8 +25,8 @@ it('creates an accounts receivable transaction when an enrollment is created', f
         'price' => 89.90,
         'promotion_type' => 'percentage',
         'promotion_value' => 10,
-        'promotion_start_date' => '2026-09-01',
-        'promotion_end_date' => '2026-09-30',
+        'promotion_start_date' => $startDate->copy()->startOfMonth()->toDateString(),
+        'promotion_end_date' => $startDate->copy()->endOfMonth()->toDateString(),
         'active' => true,
     ]);
     $admin = User::factory()->create(['role' => UserRole::ADMIN]);
