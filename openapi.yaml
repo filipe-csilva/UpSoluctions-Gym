@@ -2,31 +2,206 @@ openapi: 3.0.3
 info:
   title: GymControl API
   version: 1.0.0
-  description: API versionada para integração com o GymControl.
+  description: API REST versionada do GymControl com autenticacao JWT.
 servers:
   - url: /api/v1
+tags:
+  - name: Autenticacao
+  - name: Alunos
+  - name: Financeiro
+  - name: Treinos
+  - name: Comunicacao
+  - name: Notificacoes
+  - name: Relatorios
 paths:
+  /auth/login:
+    post:
+      tags: [Autenticacao]
+      summary: Autentica um usuario e retorna um JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/LoginRequest'}
+      responses:
+        '200':
+          description: Token emitido
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/LoginResponse'}
+        '422': {description: Credenciais invalidas}
+  /auth/me:
+    get:
+      tags: [Autenticacao]
+      security: [{bearerAuth: []}]
+      summary: Retorna o usuario autenticado
+      responses: {'200': {description: Usuario autenticado}}
+  /auth/logout:
+    post:
+      tags: [Autenticacao]
+      security: [{bearerAuth: []}]
+      summary: Encerra a sessao no cliente
+      responses: {'200': {description: Token descartado pelo cliente}}
   /students:
     get:
-      summary: Lista alunos ativos
-      security: [{ sessionAuth: [] }]
-      responses: { '200': { description: OK } }
+      tags: [Alunos]
+      security: [{bearerAuth: []}]
+      summary: Lista alunos conforme o perfil e a unidade
+      parameters:
+        - {$ref: '#/components/parameters/Page'}
+        - {name: search, in: query, schema: {type: string}}
+      responses: {'200': {description: Lista paginada de alunos}}
   /students/{student}:
     get:
-      summary: Consulta um aluno
-      security: [{ sessionAuth: [] }]
-      parameters: [{ name: student, in: path, required: true, schema: { type: integer } }]
-      responses: { '200': { description: OK } }
+      tags: [Alunos]
+      security: [{bearerAuth: []}]
+      summary: Consulta um aluno autorizado
+      parameters:
+        - {$ref: '#/components/parameters/StudentId'}
+      responses:
+        '200': {description: Aluno}
+        '403': {description: Sem permissao}
+        '404': {description: Nao encontrado}
+  /units:
+    get:
+      tags: [Cadastros]
+      security: [{bearerAuth: []}]
+      summary: Lista unidades disponiveis para o perfil
+      responses: {'200': {description: Lista paginada de unidades}}
+  /users:
+    get:
+      tags: [Cadastros]
+      security: [{bearerAuth: []}]
+      summary: Lista usuarios para administradores
+      responses: {'200': {description: Lista paginada de usuarios}}
+  /plans:
+    get:
+      tags: [Cadastros]
+      security: [{bearerAuth: []}]
+      summary: Lista planos ativos
+      responses: {'200': {description: Lista paginada de planos}}
+  /enrollments:
+    get:
+      tags: [Cadastros]
+      security: [{bearerAuth: []}]
+      summary: Lista matriculas conforme o perfil
+      responses: {'200': {description: Lista paginada de matriculas}}
+  /attendances:
+    get:
+      tags: [Presenca]
+      security: [{bearerAuth: []}]
+      summary: Lista registros de presenca conforme o perfil
+      responses: {'200': {description: Lista paginada de presencas}}
+  /assessments:
+    get:
+      tags: [Treinos]
+      security: [{bearerAuth: []}]
+      summary: Lista avaliacoes fisicas conforme o perfil
+      responses: {'200': {description: Lista paginada de avaliacoes}}
+  /exercises:
+    get:
+      tags: [Treinos]
+      security: [{bearerAuth: []}]
+      summary: Lista exercicios ativos
+      responses: {'200': {description: Lista paginada de exercicios}}
   /financial-transactions:
     get:
-      summary: Lista lançamentos financeiros
-      security: [{ sessionAuth: [] }]
-      responses: { '200': { description: OK } }
+      tags: [Financeiro]
+      security: [{bearerAuth: []}]
+      summary: Lista lancamentos financeiros
+      parameters:
+        - {$ref: '#/components/parameters/Page'}
+        - {name: status, in: query, schema: {type: string}}
+        - {name: type, in: query, schema: {type: string, enum: [income, expense]}}
+      responses: {'200': {description: Lista paginada de lancamentos}}
   /workout-plans:
     get:
-      summary: Lista fichas de treino
-      security: [{ sessionAuth: [] }]
-      responses: { '200': { description: OK } }
+      tags: [Treinos]
+      security: [{bearerAuth: []}]
+      summary: Lista fichas de treino autorizadas
+      responses: {'200': {description: Lista paginada de fichas}}
+  /announcements:
+    get:
+      tags: [Comunicacao]
+      security: [{bearerAuth: []}]
+      summary: Lista comunicados visiveis ao usuario
+      responses: {'200': {description: Lista paginada de comunicados}}
+  /announcements/{announcement}:
+    get:
+      tags: [Comunicacao]
+      security: [{bearerAuth: []}]
+      summary: Consulta um comunicado
+      parameters:
+        - {$ref: '#/components/parameters/AnnouncementId'}
+      responses: {'200': {description: Comunicado}}
+  /messages:
+    get:
+      tags: [Comunicacao]
+      security: [{bearerAuth: []}]
+      summary: Lista mensagens visiveis ao usuario
+      responses: {'200': {description: Lista paginada de mensagens}}
+  /messages/{message}:
+    get:
+      tags: [Comunicacao]
+      security: [{bearerAuth: []}]
+      summary: Consulta uma mensagem
+      parameters:
+        - {$ref: '#/components/parameters/MessageId'}
+      responses: {'200': {description: Mensagem}}
+  /notifications:
+    get:
+      tags: [Notificacoes]
+      security: [{bearerAuth: []}]
+      summary: Lista notificacoes do usuario
+      responses: {'200': {description: Lista paginada de notificacoes}}
+  /notifications/{notification}/read:
+    post:
+      tags: [Notificacoes]
+      security: [{bearerAuth: []}]
+      summary: Marca uma notificacao como lida
+      parameters:
+        - {$ref: '#/components/parameters/NotificationId'}
+      responses: {'200': {description: Notificacao marcada como lida}}
+  /reports/summary:
+    get:
+      tags: [Relatorios]
+      security: [{bearerAuth: []}]
+      summary: Retorna resumo financeiro e de alunos
+      parameters:
+        - {name: from, in: query, schema: {type: string, format: date}}
+        - {name: to, in: query, schema: {type: string, format: date}}
+      responses: {'200': {description: Resumo do periodo}}
 components:
   securitySchemes:
-    sessionAuth: { type: apiKey, in: cookie, name: laravel-session }
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    Page: {name: page, in: query, schema: {type: integer, minimum: 1}}
+    StudentId: {name: student, in: path, required: true, schema: {type: integer}}
+    AnnouncementId: {name: announcement, in: path, required: true, schema: {type: integer}}
+    MessageId: {name: message, in: path, required: true, schema: {type: integer}}
+    NotificationId: {name: notification, in: path, required: true, schema: {type: string, format: uuid}}
+  schemas:
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: {type: string, format: email}
+        password: {type: string, format: password}
+    LoginResponse:
+      type: object
+      properties:
+        token: {type: string}
+        token_type: {type: string, example: Bearer}
+        expires_in: {type: integer, example: 3600}
+        user: {$ref: '#/components/schemas/User'}
+    User:
+      type: object
+      properties:
+        id: {type: integer}
+        name: {type: string}
+        email: {type: string, format: email}
+        role: {type: string}
+        active: {type: boolean}

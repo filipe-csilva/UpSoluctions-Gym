@@ -30,6 +30,11 @@ Route::get('/', function () {
         : app(AuthenticatedSessionController::class)->create();
 })->name('login');
 
+Route::view('/api/docs', 'api.docs')->name('api.docs');
+Route::get('/api/openapi.yaml', function () {
+    return response()->file(base_path('openapi.yaml'), ['Content-Type' => 'application/yaml']);
+})->name('api.openapi');
+
 Route::get('/home', HomeController::class)
     ->middleware(['auth', 'verified'])
     ->name('home');

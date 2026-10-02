@@ -684,6 +684,16 @@ Itens implementados nesta etapa:
 
 # Tasks atualizadas
 
+## Fases 15 a 18 concluídas
+
+- Relatórios financeiros e operacionais com exportações CSV, Excel e PDF.
+- Notificações internas operacionais processadas por fila.
+- API REST versionada em `/api/v1` com autenticação JWT Bearer.
+- Endpoints de alunos, unidades, usuários, planos, matrículas, financeiro, presença, exercícios, treinos, avaliações, comunicados, mensagens e notificações.
+- API Resources e resumo de relatórios por período.
+- Swagger UI disponível em `/api/docs` e especificação em `openapi.yaml`.
+- Suíte atual: 77 testes e 239 asserções aprovados.
+
 ## Atualizacao - 02/10/2026
 
 - Recibos financeiros em A4 e bobina de 80 mm, com fechamento e abertura em nova aba.

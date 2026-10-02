@@ -62,15 +62,27 @@
 - [x] GIF de demonstracao incluido em [`docs/gymcontrol-demo.gif`](docs/gymcontrol-demo.gif).
 - [x] 75 testes e 224 assercoes aprovados localmente.
 
+### Fases 15 a 18
+
+- [x] Relatorios financeiros, alunos, matriculas, presenca, avaliacoes, fluxo de caixa e parcelas vencidas.
+- [x] Exportacoes CSV, Excel e PDF.
+- [x] Notificacoes internas operacionais e processamento em fila.
+- [x] Testes de autorizacao, financeiro, comunicacao, seguranca e autenticacao JWT.
+- [x] API REST versionada em `/api/v1`.
+- [x] Login, usuario atual e logout via JWT Bearer.
+- [x] API dos modulos principais, comunicados, mensagens, notificacoes e resumo de relatorios.
+- [x] API Resources para respostas principais.
+- [x] Documentacao OpenAPI e Swagger UI disponiveis em `/api/docs`.
+
 ## Pendente
 
-### API
+### API - evolucoes futuras
 
-- [ ] Implementar autenticação JWT para a API.
-- [ ] Completar os endpoints dos módulos do sistema.
-- [ ] Disponibilizar login, usuários, mensagens, comunicados, financeiro, relatórios e configurações na API.
-- [ ] Publicar documentação Swagger/OpenAPI completa e atualizada.
-- [ ] Definir se o acesso web continuará ativo ou será substituído pelo frontend via API.
+- [ ] Completar endpoints de escrita e CRUD para todos os módulos.
+- [ ] Adicionar revogação server-side de tokens JWT.
+- [ ] Adicionar filtros e ordenação avançados nos endpoints.
+- [ ] Integrar documentação OpenAPI ao pipeline de publicação.
+- [ ] Avaliar frontend exclusivo via API.
 
 ### Integrações
 

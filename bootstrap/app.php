@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ApiJwtMiddleware;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
@@ -21,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             fn () => route('panel')
         );
         $middleware->alias(
-            ['role' => RoleMiddleware::class]
+            ['role' => RoleMiddleware::class, 'auth.jwt' => ApiJwtMiddleware::class]
         );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
